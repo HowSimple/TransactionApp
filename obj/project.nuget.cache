@@ -1,10 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "IEnBxg+BtLwp5vcq0TKboIUddR8E7KuovPsRHpcq9fv2Iln50Y5LZsrgDi9OZg4RWpTlGxdvkneQ2tbokoc5Vg==",
+  "dgSpecHash": "UfUaS+POIWshwncym8cmr7pbrEvUTX6rx34ncG5xBUFfecCSJ6fCbuZPKIsR8lON++ZhOZJ/ygzBa3vz4QoHUQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Caleb\\Code\\Capstone\\Commerce-TransactionApp\\Commerce-TransactionApp.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\Caleb\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.18\\microsoft.netcore.app.host.win-x64.3.1.18.nupkg.sha512"
-  ],
+  "projectFilePath": "C:\\Dev\\Capstone\\Commerce-TransactionApp.csproj",
+  "expectedPackageFiles": [],
   "logs": []
 }
