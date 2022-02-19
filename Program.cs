@@ -22,15 +22,7 @@ namespace Commerce_TransactionApp
 
 
         }
-        public String GetConnectionString()
-        {
-            var key = "testkey";
-
-            string value = ConfigurationManager.ConnectionStrings[key]
-                .ConnectionString;
-            Console.WriteLine(value);
-            return key;
-        }
+        
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
