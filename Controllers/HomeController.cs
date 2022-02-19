@@ -37,8 +37,7 @@ namespace Commerce_TransactionApp.Controllers
             ViewBag.connection = Environment.GetEnvironmentVariable("SQLCONNSTR_database ");
             ViewBag.test = ConfigurationManager.ConnectionStrings["testkey"];
 
-            ViewBag.connection = connectionString;
-            ViewBag.test = connectionString;
+            
             return View();
         }
 
