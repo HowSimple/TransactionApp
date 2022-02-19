@@ -28,14 +28,13 @@ namespace Commerce_TransactionApp.Controllers
             
 
         }
-     
+        
 
         public IActionResult Index()
         {
 
 
-            //ViewBag.connection = Environment.GetEnvironmentVariable("SQLCONNSTR_database ");
-            ///ViewBag.test = ConfigurationManager.ConnectionStrings["testkey"];
+            
             ViewBag.connection = _configuration.GetConnectionString("testkey");
             ViewBag.test = _configuration["SQLCONNSTR_database"];
 

@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Commerce_TransactionApp
 {
@@ -16,6 +17,7 @@ namespace Commerce_TransactionApp
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+             
         }
 
         public IConfiguration Configuration { get; }
@@ -24,6 +26,9 @@ namespace Commerce_TransactionApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            
+            services.AddDbContext<Models.TransactionContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("database")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,7 +46,7 @@ namespace Commerce_TransactionApp
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            
             app.UseRouting();
 
             app.UseAuthorization();
