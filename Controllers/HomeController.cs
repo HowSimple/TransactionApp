@@ -19,18 +19,18 @@ namespace Commerce_TransactionApp.Controllers
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
-            var key = "testkey";
-           // connectionString = ConfigurationManager.ConnectionStrings[key]
-            //    .ConnectionString;
-            //ViewBag.connection = connectionString;
-          
             
+            ViewBag.connection = ConfigurationManager.ConnectionStrings["database"];
+            ViewBag.test = ConfigurationManager.ConnectionStrings["testkey"];
+
+
         }
      
 
         public IActionResult Index()
         {
-            ViewBag.test = "test string";
+            ViewBag.connection = connectionString;
+            ViewBag.test = connectionString;
             return View();
         }
 
