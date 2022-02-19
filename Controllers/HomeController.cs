@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Configuration;
+using Microsoft.Extensions.Configuration;
 
 namespace Commerce_TransactionApp.Controllers
 {
@@ -15,14 +16,16 @@ namespace Commerce_TransactionApp.Controllers
     { 
         String connectionString;
         private readonly ILogger<HomeController> _logger;
+        private readonly IConfiguration configuration;
 
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
             
-            ViewBag.connection = ConfigurationManager.ConnectionStrings["database"];
+            ViewBag.connection = Environment.GetEnvironmentVariable("SQLCONNSTR_database ");
             ViewBag.test = ConfigurationManager.ConnectionStrings["testkey"];
 
+            
 
         }
      
