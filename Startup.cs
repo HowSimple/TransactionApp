@@ -17,6 +17,7 @@ namespace Commerce_TransactionApp
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            c
              
         }
 
@@ -25,10 +26,11 @@ namespace Commerce_TransactionApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<Models.TransactionContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("database"))); 
             services.AddControllersWithViews();
             
-            services.AddDbContext<Models.TransactionContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("database")));
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -14,9 +14,11 @@ namespace Commerce_TransactionApp.Controllers
    
     public class HomeController : Controller
     { 
-        String connectionString;
+        //private readonly 
+        
         private readonly ILogger<HomeController> _logger;
         private readonly IConfiguration _configuration;
+        private readonly TransactionDbService db;
 
         public HomeController(ILogger<HomeController> logger, IConfiguration configuration)
         {
@@ -28,15 +30,16 @@ namespace Commerce_TransactionApp.Controllers
             
 
         }
-        
+
 
         public IActionResult Index()
         {
 
 
             
-            ViewBag.connection = _configuration.GetConnectionString("testkey");
-            ViewBag.test = _configuration["SQLCONNSTR_database"];
+            IEnumerable<TransactionContext> data = 
+            
+
 
             
             return View();
