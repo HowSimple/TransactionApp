@@ -36,8 +36,8 @@ namespace Commerce_TransactionApp.Controllers
         {
 
 
-            
-            IEnumerable<TransactionContext> data = 
+            var transactionList = db.GetAllTransactions();
+            ViewBag.Transactions = transactionList;
             
 
 
