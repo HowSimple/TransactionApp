@@ -3,6 +3,7 @@ using System.Data;
 using System.Linq;
 using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
+using System;
 
 namespace Commerce_TransactionApp.Models
 {
@@ -15,8 +16,11 @@ namespace Commerce_TransactionApp.Models
         {
             _configuration = configuration;
             connectionString = _configuration.GetConnectionString("database");
-            
-            //_db = new TransactionContext<Transaction>(options =>options.UseSqlServer(connection));
+            //System.Diagnostics.Debug.WriteLine("Test");
+            //System.Diagnostics.Debug.WriteLine(connectionString);
+
+
+
 
         }
         public bool IsDatabaseConnected() {

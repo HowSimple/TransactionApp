@@ -16,8 +16,10 @@ namespace Commerce_TransactionApp
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            
-             
+
+            System.Diagnostics.Debug.WriteLine("Test");
+
+
         }
 
         public IConfiguration Configuration { get; }

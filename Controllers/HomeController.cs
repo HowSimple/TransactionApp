@@ -25,6 +25,7 @@ namespace Commerce_TransactionApp.Controllers
             this._logger = logger;
             this._configuration = configuration;
             this.db = new TransactionDbService(this._configuration);
+            
 
             
 
@@ -36,10 +37,12 @@ namespace Commerce_TransactionApp.Controllers
 
             //var transactionList = db.GetAllTransactions();
             //ViewBag.Transactions = transactionList;
-            
+
+            //var connectionString = _configuration.GetConnectionString("database");
+            ViewBag.test = _configuration.GetConnectionString("testkey");
 
 
-            
+
             return View();
         }
 
