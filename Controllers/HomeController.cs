@@ -24,8 +24,7 @@ namespace Commerce_TransactionApp.Controllers
         {
             this._logger = logger;
             this._configuration = configuration;
-            
-           
+            this.db = new TransactionDbService(this._configuration);
 
             
 
@@ -46,6 +45,8 @@ namespace Commerce_TransactionApp.Controllers
 
         public IActionResult Privacy()
         {
+            var transactionList = db.GetAllTransactions();
+            ViewBag.Transactions = transactionList;
             return View();
         }
 

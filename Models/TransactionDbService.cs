@@ -9,16 +9,18 @@ namespace Commerce_TransactionApp.Models
 {
     public class TransactionDbService
     {
-        private readonly TransactionContext _db;
+        //private readonly TransactionContext _db;
         private readonly IConfiguration _configuration;
-        public TransactionDbService(TransactionContext db)
+        private string connectionString;
+        public TransactionDbService(IConfiguration configuration)
         {
-            var connection = _configuration.GetConnectionString("database");
+            _configuration = _configuration;
+            connectionString = _configuration.GetConnectionString("database");
             //_db = new TransactionContext<Transaction>(options =>options.UseSqlServer(connection));
             
         }
         public bool IsDatabaseConnected() {
-            var connectionString = _configuration.GetConnectionString("database");
+            //var connectionString = _configuration.GetConnectionString("database");
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 try
@@ -32,19 +34,31 @@ namespace Commerce_TransactionApp.Models
                 }
             }
         }
-        public List<Transaction> GetAllTransactions()
+        public DataTable GetAllTransactions()
         {
 
             if (IsDatabaseConnected())
             {
-                using (var context = _db)
+                using (SqlConnection _con = new SqlConnection(connectionString))
                 {
-                    return context.AccountId.ToList();
+                    string queryStatement = "SELECT * FROM dbo.Transactions e ORDER BY account_id";
+
+                    using (SqlCommand _cmd = new SqlCommand(queryStatement, _con))
+                    {
+                        DataTable customerTable = new DataTable("Accounts");
+
+                        SqlDataAdapter _dap = new SqlDataAdapter(_cmd);
+
+                        _con.Open();
+                        _dap.Fill(customerTable);
+                        _con.Close();
+                        return customerTable;
+
+                    }
                 }
             }
             else return null;
-            //var accounts = from id in _transactionContext.AccountIds 
-            //var transactions = _db.Set<Transaction>();
+           
 
             
         }
