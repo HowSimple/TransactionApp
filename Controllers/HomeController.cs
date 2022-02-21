@@ -35,9 +35,8 @@ namespace Commerce_TransactionApp.Controllers
         public IActionResult Index()
         {
 
-
-            var transactionList = db.GetAllTransactions();
-            ViewBag.Transactions = transactionList;
+            //var transactionList = db.GetAllTransactions();
+            //ViewBag.Transactions = transactionList;
             
 
 
