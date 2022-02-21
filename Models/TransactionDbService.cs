@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
 
@@ -14,7 +13,7 @@ namespace Commerce_TransactionApp.Models
         private string connectionString;
         public TransactionDbService(IConfiguration configuration)
         {
-            _configuration = _configuration;
+            _configuration = configuration;
             connectionString = _configuration.GetConnectionString("database");
             
             //_db = new TransactionContext<Transaction>(options =>options.UseSqlServer(connection));

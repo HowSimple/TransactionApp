@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace Commerce_TransactionApp
 {
@@ -27,11 +26,10 @@ namespace Commerce_TransactionApp
         public void ConfigureServices(IServiceCollection services)
         {
             var connection = Configuration.GetConnectionString("database");
-            services.AddDbContext<Models.TransactionContext>(options =>
-            options.UseSqlServer(connection));
+            //services.AddDbContext<Models.TransactionContext>(options =>            options.UseSqlServer(connection));
             System.Diagnostics.Debug.WriteLine(connection);
             services.AddControllersWithViews();
-            
+
            
         }
 

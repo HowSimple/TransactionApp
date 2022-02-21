@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+
 using System.Collections.Generic;
 
 namespace Commerce_TransactionApp.Models
@@ -10,16 +10,4 @@ namespace Commerce_TransactionApp.Models
 
     }
 
-public class TransactionContext : DbContext {
-        public TransactionContext(DbContextOptions<TransactionContext> options) : base(options)
-        {
-        }
-        public TransactionContext() { 
-        }
-
-        public DbSet<Transaction> AccountId { get; set; }
-      
-
-   
-
-}}
+}
