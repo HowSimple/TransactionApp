@@ -16,8 +16,9 @@ namespace Commerce_TransactionApp.Models
         {
             _configuration = _configuration;
             connectionString = _configuration.GetConnectionString("database");
-            //_db = new TransactionContext<Transaction>(options =>options.UseSqlServer(connection));
             
+            //_db = new TransactionContext<Transaction>(options =>options.UseSqlServer(connection));
+
         }
         public bool IsDatabaseConnected() {
             //var connectionString = _configuration.GetConnectionString("database");
@@ -37,8 +38,7 @@ namespace Commerce_TransactionApp.Models
         public DataTable GetAllTransactions()
         {
 
-            if (IsDatabaseConnected())
-            {
+          
                 using (SqlConnection _con = new SqlConnection(connectionString))
                 {
                     string queryStatement = "SELECT * FROM dbo.Transactions e ORDER BY account_id";
@@ -56,8 +56,7 @@ namespace Commerce_TransactionApp.Models
 
                     }
                 }
-            }
-            else return null;
+           
            
 
             
