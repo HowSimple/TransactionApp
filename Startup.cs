@@ -27,9 +27,9 @@ namespace Commerce_TransactionApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connection = Configuration.GetConnectionString("database");
+            //var connection = Configuration.GetConnectionString("database");
             //services.AddDbContext<Models.TransactionContext>(options =>            options.UseSqlServer(connection));
-            System.Diagnostics.Debug.WriteLine(connection);
+            //System.Diagnostics.Debug.WriteLine(connection);
             services.AddControllersWithViews();
 
            

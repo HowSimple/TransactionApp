@@ -17,7 +17,7 @@ namespace Commerce_TransactionApp.Models
             _configuration = configuration;
             connectionString = _configuration.GetConnectionString("database");
             //System.Diagnostics.Debug.WriteLine("Test");
-            //System.Diagnostics.Debug.WriteLine(connectionString);
+            System.Diagnostics.Debug.WriteLine(connectionString);
 
 
 
@@ -48,7 +48,7 @@ namespace Commerce_TransactionApp.Models
 
                     using (SqlCommand _cmd = new SqlCommand(queryStatement, _con))
                     {
-                        DataTable customerTable = new DataTable("Accounts");
+                    System.Data.DataTable customerTable = new System.Data.DataTable("Accounts");
 
                         SqlDataAdapter _dap = new SqlDataAdapter(_cmd);
 

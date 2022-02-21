@@ -48,7 +48,7 @@ namespace Commerce_TransactionApp.Controllers
 
         public IActionResult Privacy()
         {
-            var transactionList = db.GetAllTransactions();
+            System.Data.DataTable transactionList = db.GetAllTransactions();
             ViewBag.Transactions = transactionList;
             return View();
         }
