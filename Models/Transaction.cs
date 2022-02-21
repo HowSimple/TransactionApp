@@ -6,23 +6,20 @@ namespace Commerce_TransactionApp.Models
     public class Transaction
     {
 
-        public int AccountId { get; set; }
+        public int AccountId {get; set;}
 
     }
 
-    public class TransactionContext : DbContext
-    {
+public class TransactionContext : DbContext {
         public TransactionContext(DbContextOptions<TransactionContext> options) : base(options)
         {
         }
-        public TransactionContext()
-        {
+        public TransactionContext() { 
         }
 
-        public DbSet<Transaction> AccountIds { get; set; }
+        public DbSet<Transaction> AccountId { get; set; }
+      
 
+   
 
-
-
-    }
-}
+}}
