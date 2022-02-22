@@ -2,7 +2,7 @@
 using System.Data;
 using System.Linq;
 using Microsoft.Extensions.Configuration;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System;
 
 namespace Commerce_TransactionApp.Models
