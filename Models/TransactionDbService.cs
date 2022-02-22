@@ -44,7 +44,7 @@ namespace Commerce_TransactionApp.Models
           
                 using (SqlConnection _con = new SqlConnection(connectionString))
                 {
-                    string queryStatement = "SELECT * FROM dbo.Transactions e ORDER BY account_id";
+                    string queryStatement = "SELECT * FROM dbo.Transactions";
 
                     using (SqlCommand _cmd = new SqlCommand(queryStatement, _con))
                     {
@@ -55,6 +55,7 @@ namespace Commerce_TransactionApp.Models
                         _con.Open();
                         _dap.Fill(customerTable);
                         _con.Close();
+                     
                         return customerTable;
 
                     }
