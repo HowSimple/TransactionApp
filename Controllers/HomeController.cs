@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Configuration;
 using Microsoft.Extensions.Configuration;
 
+
 namespace Commerce_TransactionApp.Controllers
 {
    
@@ -35,15 +36,21 @@ namespace Commerce_TransactionApp.Controllers
         public IActionResult Index()
         {
 
-            //var transactionList = db.GetAllTransactions();
-            //ViewBag.Transactions = transactionList;
-
-            //var connectionString = _configuration.GetConnectionString("database");
-            ViewBag.test = _configuration.GetConnectionString("testkey");
+            
 
 
 
             return View();
+        }
+ 
+        [HttpPost]
+        public ActionResult Index(Transaction response)
+        {
+          
+            //string zipcode = Request.Form["accountId"];
+            ViewBag.Transaction = response;
+            return View();
+           
         }
 
         public IActionResult Privacy()
