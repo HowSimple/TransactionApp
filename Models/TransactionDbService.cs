@@ -38,6 +38,30 @@ namespace Commerce_TransactionApp.Models
                 }
             }
         }
+        public int AddNewTransaction(Transaction transaction) {
+            using (SqlConnection _con = new SqlConnection(connectionString))
+            {
+                string queryStatement = "INSERT INTO dbo.Transactions VALUES (@id, @balance, @amount, @type, @location, @description, @date)";
+
+                using (SqlCommand _cmd = new SqlCommand(queryStatement, _con))
+                {
+                    _cmd.Parameters.AddWithValue("@id", transaction.accountId);
+                    _cmd.Parameters.AddWithValue("@balance", transaction.accountBalance);
+                    _cmd.Parameters.AddWithValue("@amount", transaction.transactionAmount);
+                    _cmd.Parameters.AddWithValue("@type", transaction.transactionType);
+                    _cmd.Parameters.AddWithValue("@location", transaction.transactionLocation);
+                    _cmd.Parameters.AddWithValue("@description", transaction.transactionDescription);
+                    _cmd.Parameters.AddWithValue("@date", transaction.processingDate);
+                                    
+                    _con.Open();
+                    int rows_effected = _cmd.ExecuteNonQuery();
+                    _con.Close();
+
+                    return rows_effected;
+
+                }
+            }
+        }
         public DataTable GetAllTransactions()
         {
 

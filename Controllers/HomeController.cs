@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Configuration;
 using Microsoft.Extensions.Configuration;
-
+using System.Globalization;
 
 namespace Commerce_TransactionApp.Controllers
 {
@@ -55,12 +55,20 @@ namespace Commerce_TransactionApp.Controllers
 
         public IActionResult Privacy()
         {
+            //ViewBag.Transactions = transactionList;
+            return View();
+        }
+
+        public IActionResult Summary()
+        {
+            
+           // Transaction tx = new Transaction(101, 6.50, "CR", "Kansas City", "Pizza", new DateTime(2022, 3, 1), 250.99);
+           // db.AddNewTransaction(tx);
+            
             System.Data.DataTable transactionList = db.GetAllTransactions();
             ViewBag.Transactions = transactionList;
             return View();
         }
-
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
