@@ -5,10 +5,10 @@
 
     <h4>Transaction</h4>
     <hr />
-      @using ( Html.BeginForm("Index" , "Home" , FormMethod.Post) )
+      @using ( Html.BeginForm("Summary" , "Home" , FormMethod.Post) )
     {
         <dl class="row">
-         <dt class = "col-sm-10">
+         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.accountId)
         </dt>
         <dd class = "col-sm-10">
@@ -24,31 +24,31 @@
             @Html.DisplayNameFor(model => model.transactionType)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.transactionType)
+            @Html.EditorFor(model => model.transactionType)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.transactionLocation)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.transactionLocation)
+            @Html.EditorFor(model => model.transactionLocation)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.transactionDescription)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.transactionDescription)
+            @Html.EditorFor(model => model.transactionDescription)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.processingDate)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.processingDate)
+            @Html.EditorFor(model => model.processingDate)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.accountBalance)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.accountBalance)
+            @Html.EditorFor(model => model.accountBalance)
         </dd>
     </dl>
 

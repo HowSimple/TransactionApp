@@ -43,15 +43,7 @@ namespace Commerce_TransactionApp.Controllers
             return View();
         }
  
-        [HttpPost]
-        public ActionResult Index(Transaction response)
-        {
-          
-            //string zipcode = Request.Form["accountId"];
-            ViewBag.Transaction = response;
-            return View();
-           
-        }
+        
 
         public IActionResult Privacy()
         {
@@ -67,7 +59,23 @@ namespace Commerce_TransactionApp.Controllers
             
             System.Data.DataTable transactionList = db.GetAllTransactions();
             ViewBag.Transactions = transactionList;
+            ViewBag.Total = transactionList.Rows.Count;
             return View();
+        }
+        [HttpPost]
+        public IActionResult Summary(Transaction response)
+        {
+
+
+            //string zipcode = Request.Form["accountId"];
+            db.AddNewTransaction(response);
+           // ViewBag.AddedTransaction = response;
+            System.Data.DataTable transactionList = db.GetAllTransactions();
+            ViewBag.Transactions = transactionList;
+            ViewBag.Total = transactionList.Rows.Count;
+
+            return View();
+
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

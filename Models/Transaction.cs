@@ -16,6 +16,7 @@ namespace Commerce_TransactionApp.Models
             this.processingDate = processingDate;
             this.accountBalance = accountBalance;
         }
+        public Transaction() { }
 
         public int accountId {get; set;}
         public double transactionAmount { get; set; }
