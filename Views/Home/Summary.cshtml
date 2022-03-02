@@ -1,24 +1,14 @@
 ﻿
 <div class="text-center">
     <h1 class="display-4">Summary</h1>
-    <
-    <partial name="TransactionDetails" model="ViewBag.test"/>
+    
+    @*<partial name="TransactionDetails" model="ViewBag.test"/>*@
     <partial name="TransactionForm" model="ViewBag.test"/>
 
 
-
-    @using ( Html.BeginForm("Index" , "Home" , FormMethod.Post) )
-{
-	
-    @model Transaction
-    <p>Enter your account ID: @Html.TextBoxFor(x => x.accountId)</p>
-
-	<input type="submit" value="Submit" />
-}
-    <div>
     
-    Transaction: @ViewBag.Transactions.Rows[0][0]
-}
+    Total: @ViewBag.Total transactions
+
    
 
     </div>
