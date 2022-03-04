@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31424.327
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commerce-TransactionApp", "Commerce-TransactionApp.csproj", "{D35BCA02-84E8-4289-91B5-FE559612BD23}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Commerce-TransactionApp", "Commerce-TransactionApp.csproj", "{D35BCA02-84E8-4289-91B5-FE559612BD23}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commerce-TransactionApp-Test", "Test\Commerce-TransactionApp-Test\Commerce-TransactionApp-Test.csproj", "{00D58DF5-20E0-4983-BC7C-974BDFC44B00}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{D35BCA02-84E8-4289-91B5-FE559612BD23}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D35BCA02-84E8-4289-91B5-FE559612BD23}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D35BCA02-84E8-4289-91B5-FE559612BD23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00D58DF5-20E0-4983-BC7C-974BDFC44B00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00D58DF5-20E0-4983-BC7C-974BDFC44B00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00D58DF5-20E0-4983-BC7C-974BDFC44B00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00D58DF5-20E0-4983-BC7C-974BDFC44B00}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
