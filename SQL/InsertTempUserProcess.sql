@@ -17,7 +17,7 @@ VALUES (123, 'password', 'MO', 'morgan');
 INSERT INTO Account (accountNumber, userID)
 VALUES (211111110, 123);
 
--- Imported values from Project Data Excel Sheet
+-- Imported values from Project Data Excel Sheet to UserTransactions table
 
 -- Insert updated balance for user
 INSERT INTO Balance (balanceID, amount, accountNumber)
