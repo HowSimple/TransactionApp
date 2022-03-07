@@ -1,4 +1,5 @@
-```USE CommerceTransactionDB;
+USE CommerceTransactionDB;
+
 
 
 --------------------------------------------------------------------------------------
@@ -69,12 +70,24 @@ EXECUTE NotificationProcedure
 
 DROP PROCEDURE IF EXISTS TransactionProcedure;
 GO
-CREATE PROCEDURE TransactionProcedure(@userID AS INT, @transactionAmount AS FLOAT, @transactionLocation AS VARCHAR,@transactionType as VARCHAR, @processingDate as Date, @transactionDescription as VARCHAR)
-AS
 
-     INSERT INTO UserTransactions (transactionType,processingDate,description,locations,amount,accountNumber)
-	 VALUES (@transactionType, @processingDate, @transactionDescription, @transactionLocation, @transactionAmount, 
-			(SELECT accountNumber FROM Account INNER JOIN Users On Account.userID = @userID WHERE Account.userID = Users.userId));	
+CREATE PROCEDURE TransactionProcedure(@userID AS INT, @transactionAmount AS FLOAT, @transactionLocation AS VARCHAR(2),@transactionType as VARCHAR(2), @processingDate as Date, @transactionDescription as VARCHAR(15))
+AS
+	BEGIN TRANSACTION 
+		 INSERT INTO UserTransactions (transactionType,processingDate,description,locations,amount,accountNumber)
+		 VALUES (@transactionType, @processingDate, @transactionDescription, @transactionLocation, @transactionAmount, 
+				(SELECT accountNumber FROM Account INNER JOIN Users On Account.userID = @userID WHERE Account.userID = Users.userId));
+	
+	
+		 IF (@transactionType = 'CR')
+			 UPDATE Balance
+			 SET amount = amount + @transactionAmount
+			 Where Balance.accountNumber = (SELECT accountNumber FROM Account INNER JOIN Users On Account.userID = @userID WHERE Account.userID = Users.userId);
+		 ELSE
+			UPDATE Balance
+			 SET amount = amount - @transactionAmount
+			 Where Balance.accountNumber = (SELECT accountNumber FROM Account INNER JOIN Users On Account.userID = @userID WHERE Account.userID = Users.userId);
+	COMMIT;
 GO
 
 Select *
@@ -85,7 +98,12 @@ EXECUTE TransactionProcedure
           @userID = 123,
 		  @transactionAmount = 200,
 		  @transactionLocation = "MO",
-		  @transactionType = "CR",
-		  @processingDate = "2020-01-02",
+		  @transactionType = "DR",
+		  @processingDate = '2020-03-07',
 		  @transactionDescription = "Starbucks";
- ```
+
+SELECT * 
+FROM UserTransactions;
+
+SELECT *
+FROM Balance
