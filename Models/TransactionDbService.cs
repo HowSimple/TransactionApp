@@ -41,18 +41,20 @@ namespace Commerce_TransactionApp.Models
         public int AddNewTransaction(Transaction transaction) {
             using (SqlConnection _con = new SqlConnection(connectionString))
             {
-                string queryStatement = "INSERT INTO dbo.Transactions VALUES (@id, @balance, @amount, @type, @location, @description, @date)";
+                string queryStatement = "INSERT INTO dbo.Transactions VALUES (@transactionid,@type, @date, @description, @location,@amount, @accountnumber)";
 
                 using (SqlCommand _cmd = new SqlCommand(queryStatement, _con))
                 {
-                    _cmd.Parameters.AddWithValue("@id", transaction.accountId);
+                    _cmd.Parameters.AddWithValue("@transactionid", transaction.transactionID);
                     _cmd.Parameters.AddWithValue("@balance", transaction.accountBalance);
                     _cmd.Parameters.AddWithValue("@amount", transaction.transactionAmount);
                     _cmd.Parameters.AddWithValue("@type", transaction.transactionType);
                     _cmd.Parameters.AddWithValue("@location", transaction.transactionLocation);
                     _cmd.Parameters.AddWithValue("@description", transaction.transactionDescription);
                     _cmd.Parameters.AddWithValue("@date", transaction.processingDate);
-                                    
+                    _cmd.Parameters.AddWithValue("@accountnumber", transaction.accountNumber);
+
+
                     _con.Open();
                     int rows_effected = _cmd.ExecuteNonQuery();
                     _con.Close();

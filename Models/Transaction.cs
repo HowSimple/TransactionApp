@@ -6,8 +6,10 @@ namespace Commerce_TransactionApp.Models
 {
     public class Transaction
     {
-        public Transaction(int accountId, double transactionAmount, string transactionType, string transactionLocation, string transactionDescription, DateTime processingDate, double accountBalance)
+     /*   public Transaction(int accountId, double transactionAmount, string transactionType, string transactionLocation, string transactionDescription, DateTime processingDate, double accountBalance)
         {
+            
+            
             this.accountId = accountId;
             this.transactionAmount = transactionAmount;
             this.transactionType = transactionType;
@@ -15,19 +17,36 @@ namespace Commerce_TransactionApp.Models
             this.transactionDescription = transactionDescription;
             this.processingDate = processingDate;
             this.accountBalance = accountBalance;
-        }
+        }*/
         public Transaction() { }
 
-        public int accountId {get; set;}
-        public double transactionAmount { get; set; }
+        public Transaction(int transactionID, string transactionType, DateTime processingDate, string transactionDescription, string transactionLocation, double transactionAmount, int accountNumber, double accountBalance)
+        {
+            this.transactionID = transactionID;
+            this.transactionType = transactionType;
+            this.processingDate = processingDate;
+            this.transactionDescription = transactionDescription;
+            this.transactionLocation = transactionLocation;
+            this.transactionAmount = transactionAmount;
+            this.accountNumber = accountNumber;
+            this.accountBalance = accountBalance;
+        }
+
+        public int transactionID { get; set; }
         public string transactionType { get; set; }
-        public string transactionLocation { get; set; }
+
+        public DateTime processingDate { get; set; }
         public string transactionDescription { get; set; }
-        public DateTime processingDate { get; set; } 
+
+        public string transactionLocation { get; set; }
+
+        public double transactionAmount { get; set; }
+
+        public int accountNumber { get; set; }
         public double accountBalance { get; set; }
-        
-        
-    
+
+
+
 
     }
 
