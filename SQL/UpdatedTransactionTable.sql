@@ -9,4 +9,3 @@ accountNumber INT,
 PRIMARY KEY (transactionID),
 FOREIGN KEY (accountNumber) REFERENCES Account(accountNumber)
 );
-
