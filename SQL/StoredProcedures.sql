@@ -1,6 +1,7 @@
 USE CommerceTransactionDB;
 
 
+
 --------------------------------------------------------------------------------------
 -- Stored Procedures
 
@@ -69,6 +70,7 @@ EXECUTE NotificationProcedure
 
 DROP PROCEDURE IF EXISTS TransactionProcedure;
 GO
+
 CREATE PROCEDURE TransactionProcedure(@userID AS INT, @transactionAmount AS FLOAT, @transactionLocation AS VARCHAR(2),@transactionType as VARCHAR(2), @processingDate as Date, @transactionDescription as VARCHAR(15))
 AS
 	BEGIN TRANSACTION 
@@ -86,7 +88,6 @@ AS
 			 SET amount = amount - @transactionAmount
 			 Where Balance.accountNumber = (SELECT accountNumber FROM Account INNER JOIN Users On Account.userID = @userID WHERE Account.userID = Users.userId);
 	COMMIT;
-	
 GO
 
 Select *
