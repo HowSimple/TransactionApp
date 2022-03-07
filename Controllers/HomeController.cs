@@ -39,8 +39,6 @@ namespace Commerce_TransactionApp.Controllers
 
             
 
-
-
             return View();
         }
  
@@ -48,16 +46,12 @@ namespace Commerce_TransactionApp.Controllers
 
         public IActionResult Privacy()
         {
-            //ViewBag.Transactions = transactionList;
             return View();
         }
 
         public IActionResult Summary()
         {
-            
-           // Transaction tx = new Transaction(101, 6.50, "CR", "Kansas City", "Pizza", new DateTime(2022, 3, 1), 250.99);
-           // db.AddNewTransaction(tx);
-            
+                 
             System.Data.DataTable transactionList = db.GetAllTransactions();
             ViewBag.Transactions = transactionList;
             ViewBag.Total = transactionList.Rows.Count;
@@ -66,11 +60,7 @@ namespace Commerce_TransactionApp.Controllers
         [HttpPost]
         public IActionResult Summary(Transaction response)
         {
-
-
-            //string zipcode = Request.Form["accountId"];
             db.AddNewTransaction(response);
-           // ViewBag.AddedTransaction = response;
             System.Data.DataTable transactionList = db.GetAllTransactions();
             ViewBag.Transactions = transactionList;
             ViewBag.Total = transactionList.Rows.Count;
