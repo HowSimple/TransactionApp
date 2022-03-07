@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Dev\\Capstone\\Commerce-TransactionApp.csproj": {}
+    "C:\\Users\\Caleb\\Code\\Capstone\\Commerce-TransactionApp.csproj": {}
   },
   "projects": {
-    "C:\\Dev\\Capstone\\Commerce-TransactionApp.csproj": {
+    "C:\\Users\\Caleb\\Code\\Capstone\\Commerce-TransactionApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Dev\\Capstone\\Commerce-TransactionApp.csproj",
+        "projectUniqueName": "C:\\Users\\Caleb\\Code\\Capstone\\Commerce-TransactionApp.csproj",
         "projectName": "Commerce-TransactionApp",
-        "projectPath": "C:\\Dev\\Capstone\\Commerce-TransactionApp.csproj",
-        "packagesPath": "C:\\Users\\marcu\\.nuget\\packages\\",
-        "outputPath": "C:\\Dev\\Capstone\\obj\\",
+        "projectPath": "C:\\Users\\Caleb\\Code\\Capstone\\Commerce-TransactionApp.csproj",
+        "packagesPath": "C:\\Users\\Caleb\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Caleb\\Code\\Capstone\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\marcu\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Caleb\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -89,7 +89,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.200\\RuntimeIdentifierGraph.json"
         }
       }
     }
