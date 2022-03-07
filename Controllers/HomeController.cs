@@ -32,11 +32,7 @@ namespace Commerce_TransactionApp.Controllers
 
         }
         
-        public HomeController()
-        {
-            
-        }
-
+      
 
         public IActionResult Index()
         {
