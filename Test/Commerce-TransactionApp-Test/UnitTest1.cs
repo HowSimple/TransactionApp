@@ -11,7 +11,7 @@ namespace Commerce_TransactionApp_Test
 {
     public class UnitTest1
     {
-        [Fact]
+       /* [Fact]
         public void Test1()
         {
             //Arrange
@@ -46,7 +46,7 @@ namespace Commerce_TransactionApp_Test
                 //Assert
                 Assert.NotNull(result);
             
-        }
+        }*/
 
     }
 
