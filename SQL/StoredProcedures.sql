@@ -114,6 +114,9 @@ DROP PROCEDURE IF EXISTS SelectNotification;
 GO
 CREATE PROCEDURE SelectNotification(@userID as INT, @userNotificationID as INT)
 AS
+	EXECUTE UnselectNotification
+			@userID = @userID,
+			@userNotificationID = @userNotificationID;
 	INSERT INTO HasNotification (userID,userNotificationID,hasNotification) VALUES (@userID, @userNotificationID,1)
 GO
 
