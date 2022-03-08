@@ -17,7 +17,6 @@ namespace Commerce_TransactionApp
         {
             Configuration = configuration;
 
-            System.Diagnostics.Debug.WriteLine("Test");
 
 
         }
