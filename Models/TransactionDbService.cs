@@ -38,6 +38,37 @@ namespace Commerce_TransactionApp.Models
                 }
             }
         }
+
+        public int Login(User user)
+            {
+            const int username_varcharSize = 10;
+            const int password_varcharSize = 15;
+
+            
+            using (SqlConnection _con = new SqlConnection(connectionString))
+                using (SqlCommand _cmd = new SqlCommand(null, _con))
+                {
+                    _con.Open();
+                    _cmd.CommandText = "EXECUTE LoginProcedure @username, @password;";
+                    _cmd.Parameters.Add(new SqlParameter("@username", SqlDbType.VarChar, username_varcharSize));
+                    _cmd.Parameters.Add(new SqlParameter("@password", SqlDbType.VarChar,password_varcharSize));
+                    _cmd.Prepare();
+                    _cmd.Parameters["@username"].Value = user.username;
+                    _cmd.Parameters["@password"].Value = user.password;
+                                 
+
+
+                    int userId = 0;
+                    var result = _cmd.ExecuteScalar();
+                    if (result != null)
+                        userId = int.Parse(result.ToString());
+                    _con.Close();
+
+                    return userId;
+
+                }
+            }
+        
         public int AddNewTransaction(Transaction transaction) {
             using (SqlConnection _con = new SqlConnection(connectionString))
             {
