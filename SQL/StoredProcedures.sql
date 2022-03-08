@@ -102,6 +102,49 @@ EXECUTE TransactionProcedure
 		  @processingDate = '2020-03-07',
 		  @transactionDescription = "Starbucks";
 
+--------------------------------------------------------------------------------------
+-- Select Notification Procedures
+
+--Login Procedure:
+    --Inputs: userID, userNotificationID
+    --Output: None
+	--Action: Adds row to HasNotification Table that indicates selected notification
+
+DROP PROCEDURE IF EXISTS SelectNotification;
+GO
+CREATE PROCEDURE SelectNotification(@userID as INT, @userNotificationID as INT)
+AS
+	INSERT INTO HasNotification (userID,userNotificationID,hasNotification) VALUES (@userID, @userNotificationID,1)
+GO
+
+
+--------------------------------------------------------------------------------------
+-- Unselect Notification Procedures
+
+--Login Procedure:
+    --Inputs: userID, userNotificationID
+    --Output: None
+	--Action: Deletes row from HasNotification table
+DROP PROCEDURE IF EXISTS UnselectNotification;
+GO
+CREATE PROCEDURE UnselectNotification(@userID as INT, @userNotificationID as INT)
+AS
+	DELETE FROM HasNotification WHERE (userID = @userID and @userNotificationID = userNotificationID);
+GO
+--------------------------------------------------------------------------------------
+-- Show Notification Procedures
+
+--Login Procedure:
+    --Inputs: userID
+    --Output: List of Notifications active on user by number.
+	--Action: Adds row to HasNotification Table that indicates selected notification
+DROP PROCEDURE IF EXISTS ShowNotification
+GO
+CREATE PROCEDURE ShowNotification(@userID AS INT)
+AS
+   SELECT userNotificationID FROM HasNotification WHERE userID=@userID;
+GO
+
 SELECT * 
 FROM UserTransactions;
 
