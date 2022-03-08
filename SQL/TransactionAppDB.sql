@@ -52,7 +52,7 @@ FOREIGN KEY (accountNumber) REFERENCES Account(accountNumber)
 
 CREATE TABLE UserNotification
 (
- userNotificatonID INT NOT NULL PRIMARY KEY,
+ userNotificatonID INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
  description VARCHAR(255),
 
 );
