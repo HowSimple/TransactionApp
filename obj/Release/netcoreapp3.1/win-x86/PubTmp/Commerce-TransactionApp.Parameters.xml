@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<parameters>
-  <parameter name="IIS Web Application Name" description="" value="Commerce-TransactionApp20220215124842" tags="IisApp">
-    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\Caleb\\Code\\Capstone\\Commerce-TransactionApp\\obj\\Release\\netcoreapp3\.1\\win-x86\\PubTmp\\Out\\$" />
-  </parameter>
-</parameters>
