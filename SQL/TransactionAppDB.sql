@@ -62,7 +62,7 @@ CREATE TABLE HasNotification
  userID INT,
  hasNotificationID INT IDENTITY(1,1),
  userNotificationID INT,
- hasNotification BIT, -- used as boolean 0 false, 1 true
+ hasNotification BIT Not Null, -- used as boolean 0 false, 1 true
  FOREIGN KEY (userNotificationID) REFERENCES UserNotification(userNotificatonID),
  FOREIGN KEY(userID) REFERENCES Users(userID),
  PRIMARY KEY (hasNotificationID)
