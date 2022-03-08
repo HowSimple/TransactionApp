@@ -6,18 +6,7 @@ namespace Commerce_TransactionApp.Models
 {
     public class Transaction
     {
-     /*   public Transaction(int accountId, double transactionAmount, string transactionType, string transactionLocation, string transactionDescription, DateTime processingDate, double accountBalance)
-        {
-            
-            
-            this.accountId = accountId;
-            this.transactionAmount = transactionAmount;
-            this.transactionType = transactionType;
-            this.transactionLocation = transactionLocation;
-            this.transactionDescription = transactionDescription;
-            this.processingDate = processingDate;
-            this.accountBalance = accountBalance;
-        }*/
+   
         public Transaction() { }
 
         public Transaction(int transactionID, string transactionType, DateTime processingDate, string transactionDescription, string transactionLocation, double transactionAmount, int accountNumber, double accountBalance)
