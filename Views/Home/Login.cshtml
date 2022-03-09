@@ -4,6 +4,34 @@
 {
     
 <section class="vh-100">
+    <div>
+    <h4>@ViewBag.id</h4>
+    <hr />
+    
+    
+        
+        <dl class="row">
+                <dt class = "col-sm-2">
+                    @Html.DisplayNameFor(model => model.username)
+                <dd class = "col-sm-10">
+                    @Html.EditorFor(model => model.username, new { @class = "form-control form-control-lg", @placeholder = "Username" })
+                </dd>
+                <dt class = "col-sm-2">
+                    @Html.DisplayNameFor(model => model.password)
+                </dt>
+   
+                <dt class = "col-sm-2">
+                    @Html.EditorFor(model => model.password)
+                </dt>
+        
+            </dl>
+            <div>
+        <input type="submit" value="Submit" />
+
+    
+</div>
+
+   @*bootstrap form: based on https://mdbootstrap.com/docs/standard/extended/login/*@
   <div class="container-fluid h-custom">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-md-9 col-lg-6 col-xl-5">
@@ -18,9 +46,12 @@
             <p class="text-center fw-bold mx-3 mb-0">Login to your account</p>
           </div>
 
-          <!-- Email input -->
+          <!-- Username input -->
           <div class="form-outline mb-4">
-            <input type="text" id="username" class="form-control form-control-lg"
+              @Html.EditorFor(model => model.username, new { @class = "form-control form-control-lg", @placeholder = "Username" })
+  
+              @Html.EditorFor(model => model.username, new { @class = "form-control", @placeholder = "Username" })
+            <input type="text"  asp-for="username" class="form-control form-control-lg"
               placeholder="Username" />
             <label class="form-label" for="form3Example3">Username</label>
           </div>
@@ -59,36 +90,6 @@
  
 </section>
 }
-<div>
-    <h4>@ViewBag.id</h4>
-    <hr />
-    
-    {
-        
-        <dl class="row">
-                <dt class = "col-sm-2">
-                    @Html.DisplayNameFor(model => model.username)
-                <dd class = "col-sm-10">
-                    @Html.EditorFor(model => model.username)
-                </dd>
-                <dt class = "col-sm-2">
-                    @Html.DisplayNameFor(model => model.password)
-                </dt>
-   
-                <dt class = "col-sm-2">
-                    @Html.EditorFor(model => model.password)
-                </dt>
-        
-            </dl>
-            <div>
-        <input type="submit" value="Submit" />
-
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
-</div>
-
-    }
 
 
 
-</div>
