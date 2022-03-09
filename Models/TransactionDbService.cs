@@ -17,7 +17,6 @@ namespace Commerce_TransactionApp.Models
             connectionString = _configuration.GetConnectionString("database");
         }
         public bool IsDatabaseConnected() {
-            //var connectionString = _configuration.GetConnectionString("database");
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 try
@@ -32,39 +31,87 @@ namespace Commerce_TransactionApp.Models
             }
         }
 
-
-
+        
+        // Uses LoginProcedure
         public int Login(User user)
         {
-            const int username_varcharSize = 10;
-            const int password_varcharSize = 15;
-
-      
+            
             using (SqlConnection _con = new SqlConnection(connectionString))
             using (SqlCommand _cmd = new SqlCommand(null, _con))
             {
                 _con.Open();
                 _cmd.CommandText = "EXECUTE LoginProcedure @username, @password;";
+                const int username_varcharSize = 10;
+                const int password_varcharSize = 15;
                 _cmd.Parameters.Add(new SqlParameter("@username", SqlDbType.VarChar, username_varcharSize));
                 _cmd.Parameters.Add(new SqlParameter("@password", SqlDbType.VarChar,password_varcharSize));
-                //_cmd.Parameters.AddWithValue("@username", user.username);
-                //_cmd.Parameters.AddWithValue("@password", user.password);
-
-                //_cmd.Prepare();
-                // _cmd.Parameters["@username"].Value = user.username;
-                //_cmd.Parameters["@password"].Value = user.password;
-
-
+              
+              
 
                 int userId = 0;
+                // ExecuteScalar runs the command and returns only a single entry
                 var result = _cmd.ExecuteScalar();
                 if (result != null)
+                    // converts returned ID to int
                     userId = int.Parse(result.ToString());
+                
                 _con.Close();
 
                 return userId;
 
             }
+        }
+
+        // Uses ShowNotification
+        public DataTable GetUserNotifications(int userId)
+        {
+            return null;
+        }
+        // Uses NotificationProcedure
+        public DataTable GetAllNotifications(int userId)
+        {
+            return null;
+        }
+        // Uses TransactionSummaryProcedure 
+        public DataTable GetTransactionSummary(int userId)
+        {
+            return null;
+        }
+        // GetAllTransactions may be a good reference for GetTransactionSummary
+
+        public DataTable GetAllTransactions()
+        {
+
+            using (SqlConnection _con = new SqlConnection(connectionString))
+            {
+                string queryStatement = "SELECT * FROM dbo.Transactions";
+
+                using (SqlCommand _cmd = new SqlCommand(queryStatement, _con))
+                {
+                    System.Data.DataTable customerTable = new System.Data.DataTable("Accounts");
+
+                    SqlDataAdapter _dap = new SqlDataAdapter(_cmd);
+
+                    _con.Open();
+                    _dap.Fill(customerTable);
+                    _con.Close();
+
+                    return customerTable;
+
+                }
+            }
+
+        }
+            
+        // Uses SelectNotification procedure
+        public void SelectNotification(int userId, int notificationId)
+        {
+            
+        }
+        // Uses UnselectNotification procedure
+        public void UnselectNotification(int userId, int notificationId)
+        {
+
         }
 
         public int AddNewTransaction(Transaction transaction)
@@ -93,29 +140,6 @@ namespace Commerce_TransactionApp.Models
 
                 }
             }
-        }
-        public DataTable GetAllTransactions()
-        {
-
-            using (SqlConnection _con = new SqlConnection(connectionString))
-            {
-                string queryStatement = "SELECT * FROM dbo.Transactions";
-
-                using (SqlCommand _cmd = new SqlCommand(queryStatement, _con))
-                {
-                    System.Data.DataTable customerTable = new System.Data.DataTable("Accounts");
-
-                    SqlDataAdapter _dap = new SqlDataAdapter(_cmd);
-
-                    _con.Open();
-                    _dap.Fill(customerTable);
-                    _con.Close();
-
-                    return customerTable;
-
-                }
-            }
-
         }
 
     }
