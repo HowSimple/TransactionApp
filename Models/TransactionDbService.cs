@@ -9,15 +9,22 @@ namespace Commerce_TransactionApp.Models
 {
     public class TransactionDbService
     {
+        //private readonly TransactionContext _db;
         private readonly IConfiguration _configuration;
         private string connectionString;
         public TransactionDbService(IConfiguration configuration)
         {
             _configuration = configuration;
             connectionString = _configuration.GetConnectionString("database");
+            //System.Diagnostics.Debug.WriteLine("Test");
+            System.Diagnostics.Debug.WriteLine(connectionString);
+
+
+
+
         }
-        public bool IsDatabaseConnected()
-        {
+        public bool IsDatabaseConnected() {
+            //var connectionString = _configuration.GetConnectionString("database");
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 try
@@ -31,42 +38,7 @@ namespace Commerce_TransactionApp.Models
                 }
             }
         }
-
-        public int Login(User user)
-        {
-            const int username_varcharSize = 10;
-            const int password_varcharSize = 15;
-
-      
-            using (SqlConnection _con = new SqlConnection(connectionString))
-            using (SqlCommand _cmd = new SqlCommand(null, _con))
-            {
-                _con.Open();
-                _cmd.CommandText = "EXECUTE LoginProcedure @username, @password;";
-                _cmd.Parameters.Add(new SqlParameter("@username", SqlDbType.VarChar, username_varcharSize));
-                _cmd.Parameters.Add(new SqlParameter("@password", SqlDbType.VarChar,password_varcharSize));
-                //_cmd.Parameters.AddWithValue("@username", user.username);
-                //_cmd.Parameters.AddWithValue("@password", user.password);
-
-                //_cmd.Prepare();
-                // _cmd.Parameters["@username"].Value = user.username;
-                //_cmd.Parameters["@password"].Value = user.password;
-
-
-
-                int userId = 0;
-                var result = _cmd.ExecuteScalar();
-                if (result != null)
-                    userId = int.Parse(result.ToString());
-                _con.Close();
-
-                return userId;
-
-            }
-        }
-
-        public int AddNewTransaction(Transaction transaction)
-        {
+        public int AddNewTransaction(Transaction transaction) {
             using (SqlConnection _con = new SqlConnection(connectionString))
             {
                 string queryStatement = "INSERT INTO dbo.Transactions VALUES (@transactionid,@type, @date, @description, @location,@amount, @accountnumber)";
@@ -95,25 +67,29 @@ namespace Commerce_TransactionApp.Models
         public DataTable GetAllTransactions()
         {
 
-            using (SqlConnection _con = new SqlConnection(connectionString))
-            {
-                string queryStatement = "SELECT * FROM dbo.Transactions";
-
-                using (SqlCommand _cmd = new SqlCommand(queryStatement, _con))
+          
+                using (SqlConnection _con = new SqlConnection(connectionString))
                 {
+                    string queryStatement = "SELECT * FROM dbo.Transactions";
+
+                    using (SqlCommand _cmd = new SqlCommand(queryStatement, _con))
+                    {
                     System.Data.DataTable customerTable = new System.Data.DataTable("Accounts");
 
-                    SqlDataAdapter _dap = new SqlDataAdapter(_cmd);
+                        SqlDataAdapter _dap = new SqlDataAdapter(_cmd);
 
-                    _con.Open();
-                    _dap.Fill(customerTable);
-                    _con.Close();
+                        _con.Open();
+                        _dap.Fill(customerTable);
+                        _con.Close();
+                     
+                        return customerTable;
 
-                    return customerTable;
-
+                    }
                 }
-            }
+           
+           
 
+            
         }
 
     }

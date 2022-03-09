@@ -41,40 +41,14 @@ namespace Commerce_TransactionApp.Controllers
 
             return View();
         }
-
-       
+ 
+        
 
         public IActionResult Privacy()
         {
             return View();
         }
 
-
-
-
-        public IActionResult Login()
-        {
-            ViewBag.user = "";
-            ViewBag.id = "";
-            
-            return View();
-        }
-        [HttpPost]
-        public IActionResult Login(User response)
-        {
-            int userID = db.Login(response);
-            db.GetAllTransactions();
-            /*if (userID != 0)
-            {
-                return View("Index");
-            }*/
-
-            ViewBag.user = response.username;
-            ViewBag.id = userID;
-            return View();
-           // return View("Index", );
-
-        }
         public IActionResult Summary()
         {
                  
