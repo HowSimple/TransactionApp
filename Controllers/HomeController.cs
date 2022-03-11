@@ -64,24 +64,19 @@ namespace Commerce_TransactionApp.Controllers
         {
             int userID = db.Login(response);
             db.GetAllTransactions();
-            /*if (userID != 0)
-            {
-                return View("Index");
-            }*/
+         
 
             ViewBag.user = response.username;
             ViewBag.id = userID;
             return View();
-           // return View("Index", );
-
         }
         public IActionResult Summary()
         {
-                 
             System.Data.DataTable transactionList = db.GetAllTransactions();
-            ViewBag.Transactions = transactionList;
             ViewBag.Total = transactionList.Rows.Count;
-            return View();
+
+            // passes the transaction table to webpage to display
+            return View(transactionList);
         }
         [HttpPost]
         public IActionResult Summary(Transaction response)

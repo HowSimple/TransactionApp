@@ -84,7 +84,7 @@ namespace Commerce_TransactionApp.Models
 
             using (SqlConnection _con = new SqlConnection(connectionString))
             {
-                string queryStatement = "SELECT * FROM dbo.Transactions";
+                string queryStatement = "SELECT * FROM dbo.UserTransactions";
 
                 using (SqlCommand _cmd = new SqlCommand(queryStatement, _con))
                 {
@@ -118,11 +118,12 @@ namespace Commerce_TransactionApp.Models
         {
             using (SqlConnection _con = new SqlConnection(connectionString))
             {
-                string queryStatement = "INSERT INTO dbo.Transactions VALUES (@transactionid,@type, @date, @description, @location,@amount, @accountnumber)";
+                string queryStatement = "INSERT INTO dbo.UserTransactions(transactionType,processingDate,description,locations, amount,accountNumber)" +
+                    " VALUES (@type, @date, @description, @location,@amount, @accountnumber)";
 
                 using (SqlCommand _cmd = new SqlCommand(queryStatement, _con))
                 {
-                    _cmd.Parameters.AddWithValue("@transactionid", transaction.transactionID);
+                    //_cmd.Parameters.AddWithValue("@transactionid", transaction.transactionID);
                     _cmd.Parameters.AddWithValue("@balance", transaction.accountBalance);
                     _cmd.Parameters.AddWithValue("@amount", transaction.transactionAmount);
                     _cmd.Parameters.AddWithValue("@type", transaction.transactionType);
