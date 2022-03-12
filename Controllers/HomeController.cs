@@ -31,38 +31,18 @@ namespace Commerce_TransactionApp.Controllers
             
 
         }
-        
-      
-
-        public IActionResult Index()
-        {
-
-            
-
-            return View();
-        }
-
-       
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-
-
 
         public IActionResult Login()
         {
             ViewBag.user = "";
             ViewBag.id = "";
-            
+
             return View();
         }
         [HttpPost]
         public IActionResult Login(User response)
         {
-            int userID = db.Login(response); 
+            int userID = db.Login(response);
             db.GetAllTransactions();
 
             //TESTING BUTTON< I USE IT LOL>> > I USE WHAT I GOT.
@@ -72,27 +52,34 @@ namespace Commerce_TransactionApp.Controllers
 
             ViewBag.user = response.username;
             ViewBag.id = userID;
+            //return View("Summary", "Transactions");
+            return RedirectToAction("Summary","Transactions");
+        }
+
+
+        public IActionResult Index()
+        {
+
+            
+
             return View();
         }
+
+
         public IActionResult Summary()
-        {
-            System.Data.DataTable transactionList = db.GetAllTransactions();
-            ViewBag.Total = transactionList.Rows.Count;
-
-            // passes the transaction table to webpage to display
-            return View(transactionList);
+        { // requires the user to login to access Summary
+            return RedirectToAction("Login");
         }
-        [HttpPost]
-        public IActionResult Summary(Transaction response)
-        {
-            db.AddNewTransaction(response);
-            System.Data.DataTable transactionList = db.GetAllTransactions();
-            ViewBag.Transactions = transactionList;
-            ViewBag.Total = transactionList.Rows.Count;
 
+
+
+        public IActionResult Privacy()
+        {
             return View();
-
         }
+
+
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
