@@ -62,9 +62,13 @@ namespace Commerce_TransactionApp.Controllers
         [HttpPost]
         public IActionResult Login(User response)
         {
-            int userID = db.Login(response);
+            int userID = db.Login(response); 
             db.GetAllTransactions();
-         
+
+            //TESTING BUTTON< I USE IT LOL>> > I USE WHAT I GOT.
+            //db.UnselectNotification(userID, 1);
+            //db.UnselectNotification(userID, 2);
+            //db.UnselectNotification(userID, 3);
 
             ViewBag.user = response.username;
             ViewBag.id = userID;

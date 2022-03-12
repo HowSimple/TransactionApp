@@ -9,16 +9,33 @@ namespace Commerce_TransactionApp.Models
 {
     public class TransactionDbService
     {
-        private readonly IConfiguration _configuration;
+        private readonly IConfiguration configuration;
         private string connectionString;
+        private SqlConnection connection;
+        private SqlCommand command;
+
+
         public TransactionDbService(IConfiguration configuration)
         {
-            _configuration = configuration;
-            connectionString = _configuration.GetConnectionString("database");
+            this.configuration = configuration;
+            connectionString = this.configuration.GetConnectionString("database");
+        }
+
+        public bool ConnectDatabase()
+        {
+            try
+            {
+                this.connection = new SqlConnection(connectionString);
+                this.command = new SqlCommand(null, connection);
+                return true;
+            }
+            catch(SqlException)
+            {
+                return false;
+            }
         }
         public bool IsDatabaseConnected() {
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
+            
                 try
                 {
                     connection.Open();
@@ -28,38 +45,53 @@ namespace Commerce_TransactionApp.Models
                 {
                     return false;
                 }
-            }
+            
         }
 
         
         // Uses LoginProcedure
-        public int Login(User user)
+        public int Login(User response)
         {
-            
-            using (SqlConnection _con = new SqlConnection(connectionString))
-            using (SqlCommand _cmd = new SqlCommand(null, _con))
-            {
-                _con.Open();
-                _cmd.CommandText = "EXECUTE LoginProcedure @username, @password;";
+                this.ConnectDatabase();
+           
+                this.connection.Open();
+                this.command.CommandText = "EXECUTE LoginProcedure @username, @password;";
+
                 const int username_varcharSize = 10;
                 const int password_varcharSize = 15;
-                _cmd.Parameters.Add(new SqlParameter("@username", SqlDbType.VarChar, username_varcharSize));
-                _cmd.Parameters.Add(new SqlParameter("@password", SqlDbType.VarChar,password_varcharSize));
-              
-              
+
+                //set up parameters
+                SqlParameter username = this.command.Parameters.Add(new SqlParameter("@username", SqlDbType.VarChar, username_varcharSize));
+                SqlParameter password = this.command.Parameters.Add(new SqlParameter("@password", SqlDbType.VarChar,password_varcharSize));
+                //fill in paramaters
+                username.Value = response.username;
+                password.Value = response.password;
+                
+
 
                 int userId = 0;
-                // ExecuteScalar runs the command and returns only a single entry
-                var result = _cmd.ExecuteScalar();
-                if (result != null)
-                    // converts returned ID to int
-                    userId = int.Parse(result.ToString());
                 
-                _con.Close();
+                try
+                {
+                // ExecuteScalar runs the command and returns only a single entry
+                    var result = this.command.ExecuteScalar();
+                      
+                    if (result != null)
+                        userId = int.Parse(result.ToString()); // converts returned ID to int
+
+                }
+                catch(SqlException) 
+                {
+
+                    userId = -404;
+                }
+                
+                
+                this.connection.Close();
 
                 return userId;
 
-            }
+            
         }
 
         // Uses ShowNotification
@@ -104,13 +136,50 @@ namespace Commerce_TransactionApp.Models
         }
             
         // Uses SelectNotification procedure
-        public void SelectNotification(int userId, int notificationId)
+        public int SelectNotification(int userIDInput, int notificationIDInput)
         {
+            int affectedRows;
             
+            this.ConnectDatabase();
+
+            this.connection.Open();
+            this.command.CommandText = "EXECUTE SelectNotification @userID, @userNotificationID;";
+
+           
+
+            //set up parameters
+            SqlParameter userID = this.command.Parameters.Add(new SqlParameter("@userID", SqlDbType.Int));
+            SqlParameter userNotificationID = this.command.Parameters.Add(new SqlParameter("@userNotificationID", SqlDbType.Int));
+            //fill in paramaters
+            userID.Value = userIDInput;
+            userNotificationID.Value = notificationIDInput;
+
+            affectedRows = command.ExecuteNonQuery();
+
+            return affectedRows;
         }
         // Uses UnselectNotification procedure
-        public void UnselectNotification(int userId, int notificationId)
+        public int UnselectNotification(int userIDInput, int notificationIDInput)
         {
+            int affectedRows;
+
+            this.ConnectDatabase();
+
+            this.connection.Open();
+            this.command.CommandText = "EXECUTE UnselectNotification @userID, @userNotificationID;";
+
+
+
+            //set up parameters
+            SqlParameter userID = this.command.Parameters.Add(new SqlParameter("@userID", SqlDbType.Int));
+            SqlParameter userNotificationID = this.command.Parameters.Add(new SqlParameter("@userNotificationID", SqlDbType.Int));
+            //fill in paramaters
+            userID.Value = userIDInput;
+            userNotificationID.Value = notificationIDInput;
+
+            affectedRows = command.ExecuteNonQuery();
+
+            return affectedRows;
 
         }
 
