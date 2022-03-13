@@ -100,14 +100,52 @@ namespace Commerce_TransactionApp.Models
             return null;
         }
         // Uses NotificationProcedure
-        public DataTable GetAllNotifications(int userId)
+        public DataTable GetAllNotifications(int userIdInput)
         {
-            return null;
+            using (SqlConnection _con = new SqlConnection(connectionString))
+            {
+                string storedProcedureName = "NotificationProcedure";
+
+                using (SqlCommand _cmd = new SqlCommand(storedProcedureName, _con))
+                {
+                    _cmd.CommandType = CommandType.StoredProcedure;
+                    _cmd.Parameters.Add("@userID", SqlDbType.Int).Value = userIdInput;
+
+                    System.Data.DataTable notificationTable = new System.Data.DataTable("Notifications");
+                    SqlDataAdapter _dap = new SqlDataAdapter(_cmd);
+
+                    _con.Open();
+                    _dap.Fill(notificationTable);
+                    _con.Close();
+
+                    return notificationTable;
+
+                }
+            }
         }
         // Uses TransactionSummaryProcedure 
-        public DataTable GetTransactionSummary(int userId)
+        public DataTable GetTransactionSummary(int userIdInput)
         {
-            return null;
+            using (SqlConnection _con = new SqlConnection(connectionString))
+            {
+                string storedProcedureName = "TransactionSummaryProcedure";
+
+                using (SqlCommand _cmd = new SqlCommand(storedProcedureName, _con))
+                {
+                    _cmd.CommandType = CommandType.StoredProcedure;
+                    _cmd.Parameters.Add("@userID", SqlDbType.Int).Value = userIdInput;
+
+                    System.Data.DataTable customerTable = new System.Data.DataTable("Accounts");
+                    SqlDataAdapter _dap = new SqlDataAdapter(_cmd);
+
+                    _con.Open();
+                    _dap.Fill(customerTable);
+                    _con.Close();
+
+                    return customerTable;
+
+                }
+            }
         }
         // GetAllTransactions may be a good reference for GetTransactionSummary
 
