@@ -32,11 +32,29 @@ namespace Commerce_TransactionApp
         {
             return View();
         }
+/*        public IActionResult Notifications()
+        {
+            System.Data.DataTable transactionList = db.GetAllTransactions();
+            ViewBag.Total = transactionList.Rows.Count;
 
+            // passes the transaction table to webpage to display
+            return View(transactionList);
+        }
+        [HttpPost]
+        public IActionResult Notifications()
+        {
+            db.AddNewTransaction(response);
+            System.Data.DataTable transactionList = db.GetAllTransactions();
+            ViewBag.Transactions = transactionList;
+            ViewBag.Total = transactionList.Rows.Count;
+
+            return View();
+
+        }*/
 
         public IActionResult Summary()
         {
-            System.Data.DataTable transactionList = db.GetAllTransactions();
+            System.Data.DataTable transactionList = db.GetTransactionSummary(123);
             ViewBag.Total = transactionList.Rows.Count;
 
             // passes the transaction table to webpage to display
@@ -46,11 +64,11 @@ namespace Commerce_TransactionApp
         public IActionResult Summary(Transaction response)
         {
             db.AddNewTransaction(response);
-            System.Data.DataTable transactionList = db.GetAllTransactions();
-            ViewBag.Transactions = transactionList;
-            ViewBag.Total = transactionList.Rows.Count;
+            //System.Data.DataTable transactionList = db.GetTransactionSummary(123);
+            //ViewBag.Transactions = transactionList;
+            //ViewBag.Total = transactionList.Rows.Count;
 
-            return View();
+            return View("Summary");
 
         }
     }
