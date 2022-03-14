@@ -223,31 +223,26 @@ namespace Commerce_TransactionApp.Models
 
         public int AddNewTransaction(Transaction transaction)
         {
-            using (SqlConnection _con = new SqlConnection(connectionString))
-            {
-                string queryStatement = "INSERT INTO dbo.UserTransactions(transactionType,processingDate,description,locations, amount,accountNumber)" +
+            this.ConnectDatabase();
+            string queryStatement = "INSERT INTO dbo.UserTransactions(transactionType,processingDate,description,locations, amount,accountNumber)" +
                     " VALUES (@type, @date, @description, @location,@amount, @accountnumber)";
 
-                using (SqlCommand _cmd = new SqlCommand(queryStatement, _con))
-                {
-                    //_cmd.Parameters.AddWithValue("@transactionid", transaction.transactionID);
-                    _cmd.Parameters.AddWithValue("@balance", transaction.accountBalance);
-                    _cmd.Parameters.AddWithValue("@amount", transaction.transactionAmount);
-                    _cmd.Parameters.AddWithValue("@type", transaction.transactionType);
-                    _cmd.Parameters.AddWithValue("@location", transaction.transactionLocation);
-                    _cmd.Parameters.AddWithValue("@description", transaction.transactionDescription);
-                    _cmd.Parameters.AddWithValue("@date", transaction.processingDate);
-                    _cmd.Parameters.AddWithValue("@accountnumber", transaction.accountNumber);
+            //_cmd.Parameters.AddWithValue("@transactionid", transaction.transactionID);
+            this.command.Parameters.AddWithValue("@balance", transaction.accountBalance);
+            this.command.Parameters.AddWithValue("@amount", transaction.transactionAmount);
+            this.command.Parameters.AddWithValue("@type", transaction.transactionType);
+            this.command.Parameters.AddWithValue("@location", transaction.transactionLocation);
+            this.command.Parameters.AddWithValue("@description", transaction.transactionDescription);
+            this.command.Parameters.AddWithValue("@date", transaction.processingDate);
+            this.command.Parameters.AddWithValue("@accountnumber", transaction.accountNumber);
 
 
-                    _con.Open();
-                    int rows_effected = _cmd.ExecuteNonQuery();
-                    _con.Close();
+            this.connection.Open();
+            int rows_effected = this.command.ExecuteNonQuery();
+            this.connection.Close();
 
-                    return rows_effected;
+            return rows_effected;
 
-                }
-            }
         }
 
     }
