@@ -224,8 +224,9 @@ namespace Commerce_TransactionApp.Models
         public int AddNewTransaction(Transaction transaction)
         {
             this.ConnectDatabase();
-            string queryStatement = "INSERT INTO dbo.UserTransactions(transactionType,processingDate,description,locations, amount,accountNumber)" +
-                    " VALUES (@type, @date, @description, @location,@amount, @accountnumber)";
+
+            this.connection.Open();
+            this.command.CommandText = "EXECUTE TransactionProcedure @userID, @transactionAmount, @transactionLocation, @transactionType, @processingDate, transactionDescription;";
 
             //_cmd.Parameters.AddWithValue("@transactionid", transaction.transactionID);
             this.command.Parameters.AddWithValue("@balance", transaction.accountBalance);
@@ -236,8 +237,7 @@ namespace Commerce_TransactionApp.Models
             this.command.Parameters.AddWithValue("@date", transaction.processingDate);
             this.command.Parameters.AddWithValue("@accountnumber", transaction.accountNumber);
 
-
-            this.connection.Open();
+            
             int rows_effected = this.command.ExecuteNonQuery();
             this.connection.Close();
 
