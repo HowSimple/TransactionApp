@@ -30,6 +30,9 @@ namespace Commerce_TransactionApp
             //services.AddDbContext<Models.TransactionContext>(options =>            options.UseSqlServer(connection));
             //System.Diagnostics.Debug.WriteLine(connection);
             services.AddControllersWithViews();
+            services.AddSession(options=> { 
+                options.IdleTimeout = TimeSpan.FromMinutes(5);
+            });
 
            
         }
@@ -49,7 +52,7 @@ namespace Commerce_TransactionApp
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthorization();

@@ -50,7 +50,7 @@ namespace Commerce_TransactionApp.Models
 
         
         // Uses LoginProcedure
-        public int Login(User response)
+        public int Login(string user, string pass)
         {
                 this.ConnectDatabase();
            
@@ -64,8 +64,8 @@ namespace Commerce_TransactionApp.Models
                 SqlParameter username = this.command.Parameters.Add(new SqlParameter("@username", SqlDbType.VarChar, username_varcharSize));
                 SqlParameter password = this.command.Parameters.Add(new SqlParameter("@password", SqlDbType.VarChar,password_varcharSize));
                 //fill in paramaters
-                username.Value = response.username;
-                password.Value = response.password;
+                username.Value = user;
+                password.Value = pass;
                 
 
 

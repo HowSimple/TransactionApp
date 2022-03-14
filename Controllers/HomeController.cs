@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Configuration;
 using Microsoft.Extensions.Configuration;
 using System.Globalization;
+using Microsoft.AspNetCore.Http;
 
 namespace Commerce_TransactionApp.Controllers
 {
@@ -21,6 +22,20 @@ namespace Commerce_TransactionApp.Controllers
         private readonly IConfiguration _configuration;
         private readonly TransactionDbService db;
 
+        private const string SessionKey_UserId = "id";
+        private const string SessionKey_Username = "username";
+
+        private int getUserId()
+        {
+            return (int)HttpContext.Session.GetInt32(SessionKey_UserId.ToString());
+
+        }
+        private string getUsername()
+        {
+            return (string)HttpContext.Session.GetString(SessionKey_Username.ToString());
+
+        }
+
         public HomeController(ILogger<HomeController> logger, IConfiguration configuration)
         {
             this._logger = logger;
@@ -29,6 +44,24 @@ namespace Commerce_TransactionApp.Controllers
             
 
             
+
+        }
+        // 
+        private void loginUser(string user, string pass)
+        {
+            int userID = db.Login(user,pass);
+            if (userID != 0)
+            {
+                HttpContext.Session.SetInt32("id", userID);
+                HttpContext.Session.SetString("username", user);
+
+
+            }
+            else
+            {
+                
+            }
+
 
         }
 
@@ -42,16 +75,16 @@ namespace Commerce_TransactionApp.Controllers
         [HttpPost]
         public IActionResult Login(User response)
         {
-            int userID = db.Login(response);
-/*            Session("UserId") = userID;
-*/
+            int userID = db.Login(response.username,response.password);
+
+            loginUser(response.username, response.password);
+
+
             //TESTING BUTTON< I USE IT LOL>> > I USE WHAT I GOT.
             //db.UnselectNotification(userID, 1);
             //db.UnselectNotification(userID, 2);
             //db.UnselectNotification(userID, 3);
 
-            ViewBag.user = response.username;
-            ViewBag.id = userID;
             return RedirectToAction("Summary","Transactions");
         }
 

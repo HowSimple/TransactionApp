@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Configuration;
 using Microsoft.Extensions.Configuration;
 using System.Globalization;
+using Microsoft.AspNetCore.Http;
+
 namespace Commerce_TransactionApp
 {
     public class TransactionsController : Controller
@@ -16,8 +18,22 @@ namespace Commerce_TransactionApp
         private readonly ILogger<TransactionsController> _logger;
         private readonly IConfiguration _configuration;
         private readonly TransactionDbService db;
-        public int currentUserId;
-        public SelectedNotifications currentUserNotifications;
+        public SelectedNotifications notificationRules;
+
+
+        private const string SessionKey_UserId = "id";
+        private const string SessionKey_Username = "username";
+
+        private int getUserId()
+        {
+            return (int)HttpContext.Session.GetInt32(SessionKey_UserId.ToString());
+
+        }
+        private string getUsername()
+        {
+            return (string)HttpContext.Session.GetString(SessionKey_Username.ToString());
+
+        }
 
         public TransactionsController(ILogger<TransactionsController> logger, IConfiguration configuration)
         {
@@ -26,9 +42,8 @@ namespace Commerce_TransactionApp
             this.db = new TransactionDbService(this._configuration);
 
             // remove once notification rules are read from DB
-            currentUserNotifications = new SelectedNotifications(false,false,false);
+            notificationRules = new SelectedNotifications(false,false,false);
             // remove once login is working
-            currentUserId = 123;
 
         }
 
@@ -38,22 +53,22 @@ namespace Commerce_TransactionApp
         }
         public IActionResult Notifications()
         {
-            System.Data.DataTable notifications = db.GetAllNotifications(currentUserId);
+            System.Data.DataTable notifications = db.GetAllNotifications(getUserId());
             ViewBag.Notifications = notifications;
 
 
             // passes the transaction table to webpage to display
-            return View(currentUserNotifications);
+            return View(notificationRules);
         }
         [HttpPost]
         public IActionResult Notifications(SelectedNotifications response)
         {
             if (response.lowBalance)
-                db.SelectNotification(currentUserId, 3);
+                db.SelectNotification(getUserId(), 3);
             if (response.outOfState)
-                db.SelectNotification(currentUserId, 2);
+                db.SelectNotification(getUserId(), 2);
             if (response.largeWithdraw)
-                db.SelectNotification(currentUserId, 1);
+                db.SelectNotification(getUserId(), 1);
 
             // shows Notifications() after updating user notifications on DB
 
@@ -63,6 +78,8 @@ namespace Commerce_TransactionApp
 
         public IActionResult Summary()
         {
+            ViewBag.user = getUsername();
+            ViewBag.id = getUserId();
             System.Data.DataTable transactionList = db.GetTransactionSummary(123);
             ViewBag.Total = transactionList.Rows.Count;
 
@@ -72,6 +89,7 @@ namespace Commerce_TransactionApp
         [HttpPost]
         public IActionResult Summary(Transaction response)
         {
+
             db.AddNewTransaction(response);
       
             // shows Summary() after adding new transaction to DB
