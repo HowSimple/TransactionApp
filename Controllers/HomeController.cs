@@ -43,8 +43,8 @@ namespace Commerce_TransactionApp.Controllers
         public IActionResult Login(User response)
         {
             int userID = db.Login(response);
-            Session("UserId") = userID;
-
+/*            Session("UserId") = userID;
+*/
             //TESTING BUTTON< I USE IT LOL>> > I USE WHAT I GOT.
             //db.UnselectNotification(userID, 1);
             //db.UnselectNotification(userID, 2);
@@ -52,7 +52,6 @@ namespace Commerce_TransactionApp.Controllers
 
             ViewBag.user = response.username;
             ViewBag.id = userID;
-            //return View("Summary", "Transactions");
             return RedirectToAction("Summary","Transactions");
         }
 

@@ -4,7 +4,7 @@
 <div>
 
     <a class="btn btn-primary"  data-toggle="collapse" href="#shownotificationform">
-        Add New </a>
+        Change notification settings </a>
         <div class = "collapse" data-toggle="collapse" id="shownotificationform">
          <dl class="row">
              <dt class = "col-sm-2">
@@ -26,7 +26,8 @@
             @Html.CheckBoxFor(model => model.outOfState)
         </dd>
          </dl>
-        
+            <input type="submit" value="Submit" />
+
         </div>
   </div>
   }
