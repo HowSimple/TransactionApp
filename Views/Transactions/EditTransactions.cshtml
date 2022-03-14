@@ -1,0 +1,32 @@
+﻿@model SelectedNotifications
+@using ( Html.BeginForm("Summary" , "Transactions" , FormMethod.Post) )
+{
+<div>
+
+    <a class="btn btn-primary"  data-toggle="collapse" href="#showtransactionform">
+        Add New </a>
+        <div class = "collapse" data-toggle="collapse" id="showtransactionform">
+         <dl class="row">
+             <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.lowBalance)
+        </dt>   `````````````````````````````````````
+        <dd class = "col-sm-10">
+            @Html.CheckBoxFor(model => model.lowBalance)
+        </dd>
+              <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.largeWithdraw)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.CheckBoxFor(model => model.largeWithdraw)
+        </dd>
+              <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.outOfState)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.CheckBoxFor(model => model.outOfState)
+        </dd>
+         </dl>
+        
+        </div>
+  </div>
+  }
