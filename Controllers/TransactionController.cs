@@ -16,15 +16,19 @@ namespace Commerce_TransactionApp
         private readonly ILogger<TransactionsController> _logger;
         private readonly IConfiguration _configuration;
         private readonly TransactionDbService db;
-        public int currentUserId = 123;
+        public int currentUserId;
+        public SelectedNotifications currentUserNotifications;
+
         public TransactionsController(ILogger<TransactionsController> logger, IConfiguration configuration)
         {
             this._logger = logger;
             this._configuration = configuration;
             this.db = new TransactionDbService(this._configuration);
 
-
-
+            // remove once notification rules are read from DB
+            currentUserNotifications = new SelectedNotifications(false,false,false);
+            // remove once login is working
+            currentUserId = 123;
 
         }
 
@@ -35,24 +39,25 @@ namespace Commerce_TransactionApp
         public IActionResult Notifications()
         {
             System.Data.DataTable notifications = db.GetAllNotifications(currentUserId);
-            ViewBag.Notifications = notifications; 
+            ViewBag.Notifications = notifications;
+
+
             // passes the transaction table to webpage to display
-            return View(notifications);
+            return View(currentUserNotifications);
         }
         [HttpPost]
         public IActionResult Notifications(SelectedNotifications response)
         {
-            //b.AddNewTransaction(response);
             if (response.lowBalance)
                 db.SelectNotification(currentUserId, 3);
             if (response.outOfState)
                 db.SelectNotification(currentUserId, 2);
+            if (response.largeWithdraw)
+                db.SelectNotification(currentUserId, 1);
 
+            // shows Notifications() after updating user notifications on DB
 
-            System.Data.DataTable notifications = db.GetAllNotifications(currentUserId);
-            ViewBag.Notifications = notifications;
-
-            return View(notifications);
+            return View("Notifications");
 
         }
 
@@ -68,10 +73,8 @@ namespace Commerce_TransactionApp
         public IActionResult Summary(Transaction response)
         {
             db.AddNewTransaction(response);
-            //System.Data.DataTable transactionList = db.GetTransactionSummary(123);
-            //ViewBag.Transactions = transactionList;
-            //ViewBag.Total = transactionList.Rows.Count;
-
+      
+            // shows Summary() after adding new transaction to DB
             return View("Summary");
 
         }
