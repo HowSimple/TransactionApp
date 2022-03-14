@@ -43,7 +43,7 @@ namespace Commerce_TransactionApp.Controllers
         public IActionResult Login(User response)
         {
             int userID = db.Login(response);
-            db.GetAllTransactions();
+            Session("UserId") = userID;
 
             //TESTING BUTTON< I USE IT LOL>> > I USE WHAT I GOT.
             //db.UnselectNotification(userID, 1);
