@@ -95,9 +95,29 @@ namespace Commerce_TransactionApp.Models
         }
 
         // Uses ShowNotification
-        public DataTable GetUserNotifications(int userId)
+        public DataTable GetUserNotifications(int userIdInput)
         {
-            return null;
+
+            using (SqlConnection _con = new SqlConnection(connectionString))
+            {
+                string storedProcedureName = "ShowNotificationProcedure";
+
+                using (SqlCommand _cmd = new SqlCommand(storedProcedureName, _con))
+                {
+                    _cmd.CommandType = CommandType.StoredProcedure;
+                    _cmd.Parameters.Add("@userID", SqlDbType.Int).Value = userIdInput;
+
+                    System.Data.DataTable notificationTable = new System.Data.DataTable("Notifications");
+                    SqlDataAdapter _dap = new SqlDataAdapter(_cmd);
+
+                    _con.Open();
+                    _dap.Fill(notificationTable);
+                    _con.Close();
+
+                    return notificationTable;
+
+                }
+            }
         }
         // Uses NotificationProcedure
         public DataTable GetAllNotifications(int userIdInput)
