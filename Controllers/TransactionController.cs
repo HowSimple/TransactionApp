@@ -55,6 +55,9 @@ namespace Commerce_TransactionApp
         {
             System.Data.DataTable notifications = db.GetAllNotifications(getUserId());
             ViewBag.Notifications = notifications;
+            ViewBag.Total = notifications.Rows.Count;
+
+
 
 
             // passes the transaction table to webpage to display

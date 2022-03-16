@@ -67,25 +67,26 @@ namespace Commerce_TransactionApp.Controllers
 
         public IActionResult Login()
         {
-            ViewBag.user = "";
-            ViewBag.id = "";
+        
 
             return View();
         }
         [HttpPost]
         public IActionResult Login(User response)
         {
-            int userID = db.Login(response.username,response.password);
+            int userID = db.Login(response.username, response.password);
+            if (userID != 0)
+            {
+                loginUser(response.username, response.password);
+                return RedirectToAction("Summary", "Transactions");
 
-            loginUser(response.username, response.password);
+            }
+            else return View("Login");
 
 
-            //TESTING BUTTON< I USE IT LOL>> > I USE WHAT I GOT.
-            //db.UnselectNotification(userID, 1);
-            //db.UnselectNotification(userID, 2);
-            //db.UnselectNotification(userID, 3);
 
-            return RedirectToAction("Summary","Transactions");
+
+
         }
 
 
@@ -102,7 +103,10 @@ namespace Commerce_TransactionApp.Controllers
         { // requires the user to login to access Summary
             return RedirectToAction("Login");
         }
-
+        public IActionResult Notifications()
+        { // requires the user to login to access Summary
+            return RedirectToAction("Login");
+        }
 
 
         public IActionResult Privacy()

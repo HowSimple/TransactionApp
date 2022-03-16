@@ -8,6 +8,7 @@
             this.lowBalance = lowBalance;
             this.largeWithdraw = largeWithdraw;
         }
+        public SelectedNotifications() { }
 
         public bool outOfState { get; set; }
         public bool lowBalance { get; set; }
