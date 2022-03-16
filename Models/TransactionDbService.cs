@@ -100,7 +100,7 @@ namespace Commerce_TransactionApp.Models
 
             using (SqlConnection _con = new SqlConnection(connectionString))
             {
-                string storedProcedureName = "ShowNotificationProcedure";
+                string storedProcedureName = "ShowNotification";
 
                 using (SqlCommand _cmd = new SqlCommand(storedProcedureName, _con))
                 {
