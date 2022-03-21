@@ -74,7 +74,9 @@ namespace Commerce_TransactionApp.Controllers
         [HttpPost]
         public IActionResult Login(User response)
         {
+
             int userID = db.Login(response.username, response.password);
+
             if (userID != 0)
             {
                 loginUser(response.username, response.password);
@@ -82,10 +84,6 @@ namespace Commerce_TransactionApp.Controllers
 
             }
             else return View("Login");
-
-
-
-
 
         }
 
