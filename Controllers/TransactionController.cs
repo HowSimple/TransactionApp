@@ -78,17 +78,25 @@ namespace Commerce_TransactionApp
         [HttpPost]
         public IActionResult Notifications(SelectedNotifications response)
         {
+            System.Data.DataTable notifications = db.GetAllNotifications(getUserId());
+            ViewBag.Notifications = notifications;
+
+            //if (response.lowBalance != notificationRules.lowBalance) {
+
             if (response.lowBalance)
                 db.SelectNotification(getUserId(), 3);
+            else db.UnselectNotification(getUserId(), 3);
             if (response.outOfState)
                 db.SelectNotification(getUserId(), 2);
+            else db.UnselectNotification(getUserId(), 2);
             if (response.largeWithdraw)
                 db.SelectNotification(getUserId(), 1);
+            else db.UnselectNotification(getUserId(),1);
 
+          
             // shows Notifications() after updating user notifications on DB
 
             return View("Notifications");
-
         }
 
         public IActionResult Summary()
