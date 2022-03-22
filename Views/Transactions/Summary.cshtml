@@ -5,9 +5,13 @@
     @ViewBag.id
 
     <h1 class="display-4">Summary</h1>
+@*    <a href="@Html.Raw(ViewBag.exportTransactionsFile)">Export transactions</a>
+*@   
+    <a href="/Transaction Summary.xml" download>Export transactions</a>
 
     <partial name="TransactionForm" model="ViewBag.test" />
     <partial name="ShowTransactions" model="Model" />
+
+
   
-</div>
 </div>

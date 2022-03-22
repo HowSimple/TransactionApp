@@ -162,6 +162,8 @@ namespace Commerce_TransactionApp.Models
                     _dap.Fill(customerTable);
                     _con.Close();
 
+
+
                     return customerTable;
 
                 }
@@ -263,6 +265,19 @@ namespace Commerce_TransactionApp.Models
 
             return rows_effected;
 
+        }
+
+
+        public void PrintSummary(int userID) {
+            DataTable transactionSummary;
+
+            transactionSummary = GetTransactionSummary(userID);
+
+            transactionSummary.WriteXml("wwwroot/Transaction Summary.xml");
+            
+   
+
+           
         }
 
     }
