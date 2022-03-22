@@ -273,7 +273,7 @@ namespace Commerce_TransactionApp.Models
 
             transactionSummary = GetTransactionSummary(userID);
 
-            transactionSummary.WriteXml("Transaction Summary.xml");
+            transactionSummary.WriteXml("wwwroot/Transaction Summary.xml");
             
    
 

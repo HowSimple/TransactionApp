@@ -83,6 +83,8 @@ namespace Commerce_TransactionApp
         {
             ViewBag.user = getUsername();
             ViewBag.id = getUserId();
+            db.PrintSummary(getUserId());
+            ViewBag.exportTranactionsFile = "Transaction Summary.xml";
             System.Data.DataTable transactionList = db.GetTransactionSummary(123);
             ViewBag.Total = transactionList.Rows.Count;
 
@@ -92,7 +94,7 @@ namespace Commerce_TransactionApp
         [HttpPost]
         public IActionResult Summary(Transaction response)
         {
-
+            
             db.AddNewTransaction(response);
       
             // shows Summary() after adding new transaction to DB
