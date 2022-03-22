@@ -9,7 +9,6 @@ namespace Commerce_TransactionApp.Models
 {
     public class TransactionDbService
     {
-        private readonly IConfiguration configuration;
         private string connectionString;
         private SqlConnection connection;
         private SqlCommand command;
@@ -17,8 +16,11 @@ namespace Commerce_TransactionApp.Models
 
         public TransactionDbService(IConfiguration configuration)
         {
-            this.configuration = configuration;
-            connectionString = this.configuration.GetConnectionString("database");
+            connectionString = configuration.GetConnectionString("database");
+        }
+        public TransactionDbService(string dbConnectionString)
+        {
+            connectionString = dbConnectionString;
         }
 
         public bool ConnectDatabase()
