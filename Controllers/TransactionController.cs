@@ -57,8 +57,20 @@ namespace Commerce_TransactionApp
             ViewBag.Notifications = notifications;
             ViewBag.Total = notifications.Rows.Count;
 
+            // set notification check boxes based on what the user has previously set 
+            System.Data.DataTable userSelectedNotifications = db.GetUserNotifications(getUserId());
 
-
+            foreach(System.Data.DataRow dataRow in userSelectedNotifications.Rows)
+            {
+                foreach(int userNotificationID in dataRow.ItemArray){
+                    if(userNotificationID == 1)
+                        notificationRules.largeWithdraw = true;
+                    else if(userNotificationID == 2)
+                        notificationRules.outOfState = true;
+                    else if(userNotificationID == 3)
+                        notificationRules.lowBalance = true;
+                }
+            }
 
             // passes the transaction table to webpage to display
             return View(notificationRules);
