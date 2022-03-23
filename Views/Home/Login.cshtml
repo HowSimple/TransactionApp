@@ -4,42 +4,45 @@
 {
     
 <section class="vh-100">
-    <div>
+    <div class = "container-fluid h-custom login-form">
     <h4>@ViewBag.id</h4>
-    <hr />
-    
-    
-        
-        <dl class="row">
-                <dt class = "col-sm-2">
-                    @Html.DisplayNameFor(model => model.username)
-                <dd class = "col-sm-10">
-                    @Html.EditorFor(model => model.username, new { @class = "form-control form-control-lg", @placeholder = "Username" })
-                </dd>
-                <dt class = "col-sm-2">
-                    @Html.DisplayNameFor(model => model.password)
-                </dt>
-   
-                <dt class = "col-sm-2">
-                    @Html.EditorFor(model => model.password)
-                </dt>
-        
-            </dl>
+     <div class="divider d-flex align-items-center my-4">
+            <p class="text-center fw-bold mx-3 mb-0">Login to your account</p>
+          </div>
+@*        <div class="row d-flex justify-content-center align-items-center h-100">
+*@             <div class="col-md-9 col-lg-6 col-xl-5">
+        <img src="../Images/smudge-the-cat.png" class="img-fluid"
+          alt="Sample image">
+      </div>
+
+             <div class="form-floating mb-3">
+            @Html.EditorFor(model => model.username, new { htmlAttributes = new { @class = "form-control",@placeholder = "Username",@required="required" } }) @Html.ValidationMessageFor(model => model.username, "", new { @class = "text-danger" })
+            
+        </div>
+            <div class="form-floating">
+                     @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control",@placeholder="Password",@type="password",@required="required" } }) @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+            </div>
      
-        <input type="submit" value="Submit" />
+        <input type="submit" value="Login" />
+         
+            </div>
+     
+    
+        
+       
 
-           </div>
 
-
-   @*bootstrap form: based on https://mdbootstrap.com/docs/standard/extended/login/*@
-@*  <div class="container-fluid h-custom">
+@*
+   bootstrap form: based on https://mdbootstrap.com/docs/standard/extended/login/
+  <div class="container-fluid h-custom">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-md-9 col-lg-6 col-xl-5">
         <img src="../Images/smudge-the-cat.png" class="img-fluid"
           alt="Sample image">
       </div>
       <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-        <form>
+        
+
        
 
           <div class="divider d-flex align-items-center my-4">
@@ -48,10 +51,17 @@
 
           <!-- Username input -->
           <div class="form-outline mb-4">
-              @Html.EditorFor(model => model.username, new { @class = "form-control form-control-lg", @placeholder = "Username" })
+
+
+              @Html.LabelFor(model => model.username) @Html.EditorFor(model => model.username, new { htmlAttributes = new { @class = "form-control" } }) @Html.ValidationMessageFor(model => model.username, "", new { @class = "text-danger" })
+              @Html.LabelFor(model => model.password) @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control" } }) @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+
+@*              @Html.EditorFor(model => model.username, new { @class = "form-control form-control-lg", @placeholder = "Username" })
   
               @Html.EditorFor(model => model.username, new { @class = "form-control", @placeholder = "Username" })
-            <input type="text"  asp-for="username" class="form-control form-control-lg"
+            @Html.LabelFor(model => model.username) @Html.EditorFor(model => model.username, new { htmlAttributes = new { @class = "form-control" } }) @Html.ValidationMessageFor(model => model.username, "", new { @class = "text-danger" })
+
+              <input type="text"  asp-for="username" class="form-control form-control-lg"
               placeholder="Username" />
             <label class="form-label" for="form3Example3">Username</label>
           </div>
@@ -83,7 +93,7 @@
                 class="link-danger">Register</a></p>
           </div>
 
-        </form>
+        
       </div>
     </div>
   </div>*@
