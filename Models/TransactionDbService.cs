@@ -251,15 +251,16 @@ namespace Commerce_TransactionApp.Models
 
             this.connection.Open();
             this.command.CommandText = "EXECUTE TransactionProcedure @userID, @transactionAmount, @transactionLocation, @transactionType, @processingDate, transactionDescription;";
+            this.command.Parameters.AddWithValue("@userID", transaction.accountNumber);
 
             //_cmd.Parameters.AddWithValue("@transactionid", transaction.transactionID);
-            this.command.Parameters.AddWithValue("@balance", transaction.accountBalance);
-            this.command.Parameters.AddWithValue("@amount", transaction.transactionAmount);
-            this.command.Parameters.AddWithValue("@type", transaction.transactionType);
-            this.command.Parameters.AddWithValue("@location", transaction.transactionLocation);
-            this.command.Parameters.AddWithValue("@description", transaction.transactionDescription);
-            this.command.Parameters.AddWithValue("@date", transaction.processingDate);
-            this.command.Parameters.AddWithValue("@accountnumber", transaction.accountNumber);
+            //this.command.Parameters.AddWithValue("@balance", transaction.accountBalance);
+            this.command.Parameters.AddWithValue("@transactionAmount", transaction.transactionAmount);
+            this.command.Parameters.AddWithValue("@transactionType", transaction.transactionType);
+            this.command.Parameters.AddWithValue("@transactionLocation", transaction.transactionLocation);
+            this.command.Parameters.AddWithValue("@transactionDescription", transaction.transactionDescription);
+            this.command.Parameters.AddWithValue("@processingDate", transaction.processingDate);
+
 
             
             int rows_effected = this.command.ExecuteNonQuery();

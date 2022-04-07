@@ -105,7 +105,7 @@ namespace Commerce_TransactionApp
             ViewBag.id = getUserId();
             db.PrintSummary(getUserId());
             ViewBag.exportTranactionsFile = "Transaction Summary.xml";
-            System.Data.DataTable transactionList = db.GetTransactionSummary(123);
+            System.Data.DataTable transactionList = db.GetTransactionSummary(getUserId());
             ViewBag.Total = transactionList.Rows.Count;
 
             // passes the transaction table to webpage to display
@@ -116,9 +116,19 @@ namespace Commerce_TransactionApp
         {
             
             db.AddNewTransaction(response);
-      
+
             // shows Summary() after adding new transaction to DB
-            return View("Summary");
+
+            ViewBag.user = getUsername();
+            ViewBag.id = getUserId();
+            db.PrintSummary(getUserId());
+            ViewBag.exportTranactionsFile = "Transaction Summary.xml";
+            System.Data.DataTable transactionList = db.GetTransactionSummary(getUserId());
+            ViewBag.Total = transactionList.Rows.Count;
+
+            // passes the transaction table to webpage to display
+            return View(transactionList);
+            // return View("Summary");
 
         }
     }
