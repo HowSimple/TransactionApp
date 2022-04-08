@@ -72,6 +72,10 @@ namespace Commerce_TransactionApp
                 }
             }
 
+            // TODO: 
+            // db.SetLimits(response.largeWithdrawLimit,response.lowBalanceLimit)
+
+           
             // passes the transaction table to webpage to display
             return View(notificationRules);
         }
@@ -92,6 +96,9 @@ namespace Commerce_TransactionApp
             if (response.largeWithdraw)
                 db.SelectNotification(getUserId(), 1);
             else db.UnselectNotification(getUserId(),1);
+
+            // TODO: 
+            // db.SetLimits(response.largeWithdrawLimit,response.lowBalanceLimit)
 
           
             // shows Notifications() after updating user notifications on DB
