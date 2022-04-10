@@ -122,7 +122,7 @@ namespace Commerce_TransactionApp
         public IActionResult Summary(Transaction response)
         {
             
-            db.AddNewTransaction(response);
+            db.AddNewTransaction(response,getUserId());
 
             // shows Summary() after adding new transaction to DB
 
