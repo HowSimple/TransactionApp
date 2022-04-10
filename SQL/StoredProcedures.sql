@@ -39,7 +39,8 @@ AS
 	FROM UserTransactions
 	INNER JOIN Account
 	ON Account.userID = @userID
-	WHERE Account.accountNumber = UserTransactions.accountNumber;
+	WHERE Account.accountNumber = UserTransactions.accountNumber
+	ORDER BY processingDate;
 GO
 
 
