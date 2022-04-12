@@ -2,30 +2,34 @@
 @using ( Html.BeginForm("Notifications" , "Transactions" , FormMethod.Post) )
 {
 <div>
-
+    
     <a class="btn btn-primary"  data-toggle="collapse" href="#shownotificationform">
         Change notification settings </a>
-        <div class = "collapse" data-toggle="collapse" id="shownotificationform">
+        <div class = "collapse container" data-toggle="collapse" id="shownotificationform">
          <dl class="row">
-             <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.lowBalance)
-        </dt>  
-        <dd class = "col-sm-10">
-            @Html.CheckBoxFor(model => model.lowBalance)
-        </dd>
-              <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.largeWithdraw)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.CheckBoxFor(model => model.largeWithdraw)
-        </dd>
+           
+              
+    
+             
+      <dt class="col-lg-12 input-group-prepend">
+
+     @Html.DisplayNameFor(model => model.lowBalance) @Html.CheckBoxFor(model => model.lowBalance)
+     <span class="input-group-text">$</span>
+     @Html.EditorFor(model =>model.lowBalanceLimit, new {htmlAttributes= new{@class="form-control",@placeholder="Get alerts when balance is under this amount:",@type="text"}});
+  </dt>
+  <div class="input-group-prepend">
+     @Html.DisplayNameFor(model => model.largeWithdraw) @Html.CheckBoxFor(model => model.largeWithdraw)
+     <span class="input-group-text">$</span>
+     @Html.EditorFor(model =>model.largeWithdrawLimit, new {htmlAttributes= new{@class="form-control",@placeholder="Get alerts for withdraws over this amount:",@type="text"}});
+  </div>
               <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.outOfState)
-        </dt>
-        <dd class = "col-sm-10">
             @Html.CheckBoxFor(model => model.outOfState)
-        </dd>
-         </dl>
+        </dt>
+       
+         
+        
+        
             <input type="submit" value="Submit" />
 
         </div>

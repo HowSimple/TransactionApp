@@ -245,16 +245,15 @@ namespace Commerce_TransactionApp.Models
 
         }
 
-        public int AddNewTransaction(Transaction transaction)
+        public int AddNewTransaction(Transaction transaction, int userId)
         {
             this.ConnectDatabase();
 
             this.connection.Open();
-            this.command.CommandText = "EXECUTE TransactionProcedure @userID, @transactionAmount, @transactionLocation, @transactionType, @processingDate, transactionDescription;";
-            this.command.Parameters.AddWithValue("@userID", transaction.accountNumber);
+            this.command.CommandText = "EXECUTE TransactionProcedure @userID, @transactionAmount, @transactionLocation, @transactionType, @processingDate, @transactionDescription;";
+            this.command.Parameters.AddWithValue("@userID", userId);
 
-            //_cmd.Parameters.AddWithValue("@transactionid", transaction.transactionID);
-            //this.command.Parameters.AddWithValue("@balance", transaction.accountBalance);
+        
             this.command.Parameters.AddWithValue("@transactionAmount", transaction.transactionAmount);
             this.command.Parameters.AddWithValue("@transactionType", transaction.transactionType);
             this.command.Parameters.AddWithValue("@transactionLocation", transaction.transactionLocation);

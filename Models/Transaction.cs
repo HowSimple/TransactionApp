@@ -9,19 +9,18 @@ namespace Commerce_TransactionApp.Models
    
         public Transaction() { }
 
-        public Transaction(int transactionID, string transactionType, DateTime processingDate, string transactionDescription, string transactionLocation, double transactionAmount, int accountNumber, double accountBalance)
+        public Transaction( string transactionType, DateTime processingDate, string transactionDescription, string transactionLocation, double transactionAmount)
         {
-            this.transactionID = transactionID;
+          
             this.transactionType = transactionType;
             this.processingDate = processingDate;
             this.transactionDescription = transactionDescription;
             this.transactionLocation = transactionLocation;
             this.transactionAmount = transactionAmount;
-            this.accountNumber = accountNumber;
-            this.accountBalance = accountBalance;
+          
         }
 
-        public int transactionID { get; set; }
+       
         public string transactionType { get; set; }
 
         public DateTime processingDate { get; set; }
@@ -31,9 +30,7 @@ namespace Commerce_TransactionApp.Models
 
         public double transactionAmount { get; set; }
 
-        public int accountNumber { get; set; }
-        public double accountBalance { get; set; }
-
+     
 
 
 

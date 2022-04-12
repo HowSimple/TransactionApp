@@ -41,18 +41,17 @@ GO
 
 
 -----------------------------------------------------------------
-------------UserTransaction_Out_Of_State_Insert
-------------If user has greater than or equal to 500 notification set up a notification will appear.
+------------UserTransaction_Low_Balance_Insert
 ------------If user has balance lower then 100 then a warning notification of low balance goes out
 
 DROP TRIGGER IF EXISTS UserTransaction_Low_Balance_Insert;
 GO
-CREATE TRIGGER UserTransaction_Low_Balance_Insert ON UserTransactions
-AFTER INSERT
+CREATE TRIGGER UserTransaction_Low_Balance_Insert ON Balance
+AFTER UPDATE
 AS
 	SET NOCOUNT ON;
 	IF 1 = ISNULL((SELECT hasNotification FROM HasNotification Inner Join 
-		(SELECT Users.userId FROM Users Inner Join Account On Account.accountNumber = 
+		(SELECT Users.userId FROM Users Inner Join Balance On Balance.accountNumber = 
 			(SELECT accountNumber from inserted)) as far on far.userId = HasNotification.userID 
 				where userNotificationID = 3) ,0) --------------<<<<< change userNotificationID = 1 to applicaple number based on userNotifactionID 1 over 500,2 out of state,3 low balance 
 		IF (SELECT amount FROM Balance where Balance.accountNumber = (SELECT accountNumber FROM inserted )) < 100.0
