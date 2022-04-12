@@ -69,3 +69,16 @@ CREATE TABLE HasNotification
 
 
 );
+
+CREATE TABLE NotificationEdit (
+accountNumber INT NOT NULL,
+notificationEditID INT IDENTITY(1,1) NOT NULL,
+userNotificationID INT NOT NULL,
+amount Int,
+lowHigh BIT,
+PRIMARY KEY (notificationEditID),
+FOREIGN KEY (userNotificationID) REFERENCES UserNotification(userNotificatonID),
+FOREIGN KEY (accountNumber) REFERENCES Account(accountNumber));
+
+ALTER TABLE HasNotification
+ADD amount INT NULL;
