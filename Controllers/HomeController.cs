@@ -13,11 +13,11 @@ using Microsoft.AspNetCore.Http;
 
 namespace Commerce_TransactionApp.Controllers
 {
-   
+
     public class HomeController : Controller
-    { 
+    {
         //private readonly 
-        
+
         private readonly ILogger<HomeController> _logger;
         private readonly IConfiguration _configuration;
         private readonly TransactionDbService db;
@@ -32,32 +32,33 @@ namespace Commerce_TransactionApp.Controllers
         private string getUsername()
         {
             return (string)HttpContext.Session.GetString(SessionKey_Username.ToString());
-          
+
         }
-        public bool isLoggedIn() {
+        public bool isLoggedIn()
+        {
             return HttpContext.Session.GetInt32(SessionKey_UserId.ToString()) != null;
         }
-  
+
         public HomeController(ILogger<HomeController> logger, IConfiguration configuration)
         {
             this._logger = logger;
             this._configuration = configuration;
             this.db = new TransactionDbService(this._configuration);
-            
 
-            
+
+
 
         }
         // 
         private void loginUser(string user, string pass)
         {
-            int userID = db.Login(user,pass);
+            int userID = db.Login(user, pass);
             if (userID != 0)
             {
                 HttpContext.Session.SetInt32("id", userID);
                 HttpContext.Session.SetString("username", user);
             }
-            
+
         }
 
         public IActionResult Login()
@@ -66,7 +67,7 @@ namespace Commerce_TransactionApp.Controllers
                 return RedirectToAction("Summary", "Transactions");
             else return View("Login");
         }
-    
+
         [HttpPost]
         public IActionResult Login(User response)
         {
@@ -87,23 +88,23 @@ namespace Commerce_TransactionApp.Controllers
         public IActionResult Index()
         {
             // requires the user to login to access Summary if they aren't logged in
-          /*  if( isLoggedIn())
-                return RedirectToAction("Summary", "Transactions");
-           else */
-                return View("Index");
+            /*  if( isLoggedIn())
+                  return RedirectToAction("Summary", "Transactions");
+             else */
+            return View("Index");
         }
 
 
         public IActionResult Summary()
         { // requires the user to login to access Summary if they aren't logged in
-            if (getUserId() != 0)
-                  return RedirectToAction("Summary", "Transactions");
+            if (isLoggedIn())
+                return RedirectToAction("Summary", "Transactions");
             else return RedirectToAction("Login");
         }
         public IActionResult Notifications()
         { // requires the user to login to access Notifications if they aren't logged in
 
-            if (getUserId() != 0)
+            if (isLoggedIn())
                 return RedirectToAction("Notifications", "Transactions");
             else return RedirectToAction("Login");
         }

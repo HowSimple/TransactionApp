@@ -171,73 +171,76 @@ namespace Commerce_TransactionApp.Models
                 }
             }
         }
-        // GetAllTransactions may be a good reference for GetTransactionSummary
 
-        public DataTable GetAllTransactions()
+       
+     
+        public int DeleteNotification(int userID, int userNotificationID)
         {
+            int affectedRows;
 
-            using (SqlConnection _con = new SqlConnection(connectionString))
-            {
-                string queryStatement = "SELECT * FROM dbo.UserTransactions";
+            this.ConnectDatabase();
 
-                using (SqlCommand _cmd = new SqlCommand(queryStatement, _con))
-                {
-                    System.Data.DataTable customerTable = new System.Data.DataTable("Accounts");
+            this.connection.Open();
+            this.command.CommandText = "EXECUTE DeleteNotification @userID, @userNotificationID;";
 
-                    SqlDataAdapter _dap = new SqlDataAdapter(_cmd);
 
-                    _con.Open();
-                    _dap.Fill(customerTable);
-                    _con.Close();
 
-                    return customerTable;
+            //set up parameters
+            SqlParameter _userID = this.command.Parameters.Add(new SqlParameter("@userID", SqlDbType.Int));
+            SqlParameter _userNotificationID = this.command.Parameters.Add(new SqlParameter("@userNotificationID", SqlDbType.Int));
+            //fill in paramaters
+            _userID.Value = userID;
+            _userNotificationID.Value = userNotificationID;
 
-                }
-            }
+            affectedRows = command.ExecuteNonQuery();
 
+            return affectedRows;
         }
-            
+      
         // Uses SelectNotification procedure
-        public int SelectNotification(int userIDInput, int notificationIDInput)
+        public int SelectNotification(int userIDInput, int notificationRuleID, double triggerAmount)
         {
             int affectedRows;
             
             this.ConnectDatabase();
 
             this.connection.Open();
-            this.command.CommandText = "EXECUTE SelectNotification @userID, @userNotificationID;";
+            this.command.CommandText = "EXECUTE SelectNotification @userID, @ruleID,@triggerAmount;";
 
            
 
             //set up parameters
             SqlParameter userID = this.command.Parameters.Add(new SqlParameter("@userID", SqlDbType.Int));
-            SqlParameter userNotificationID = this.command.Parameters.Add(new SqlParameter("@userNotificationID", SqlDbType.Int));
+            SqlParameter NotificationID = this.command.Parameters.Add(new SqlParameter("@ruleID", SqlDbType.Int));
+            SqlParameter _triggerAmount = this.command.Parameters.Add(new SqlParameter("@triggerAmount", SqlDbType.Int));
             //fill in paramaters
             userID.Value = userIDInput;
-            userNotificationID.Value = notificationIDInput;
+            NotificationID.Value = notificationRuleID;
+            _triggerAmount.Value= triggerAmount;
 
             affectedRows = command.ExecuteNonQuery();
 
             return affectedRows;
         }
         // Uses UnselectNotification procedure
-        public int UnselectNotification(int userIDInput, int notificationIDInput)
+        public int UnselectNotification(int userIDInput, int notificationRuleID)
         {
             int affectedRows;
 
             this.ConnectDatabase();
 
             this.connection.Open();
-            this.command.CommandText = "EXECUTE UnselectNotification @userID, @userNotificationID;";
+            this.command.CommandText = "EXECUTE UnselectNotification @userID, @ruleID;";
 
 
 
             //set up parameters
             SqlParameter userID = this.command.Parameters.Add(new SqlParameter("@userID", SqlDbType.Int));
-            SqlParameter userNotificationID = this.command.Parameters.Add(new SqlParameter("@userNotificationID", SqlDbType.Int));
+            SqlParameter NotificationID = this.command.Parameters.Add(new SqlParameter("@ruleID", SqlDbType.Int));
+
             //fill in paramaters
             userID.Value = userIDInput;
-            userNotificationID.Value = notificationIDInput;
+            NotificationID.Value = notificationRuleID;
 
             affectedRows = command.ExecuteNonQuery();
 
