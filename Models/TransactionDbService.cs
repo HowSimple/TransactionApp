@@ -196,7 +196,7 @@ namespace Commerce_TransactionApp.Models
 
             return affectedRows;
         }
-        // Uses SetNotificationRule procedure
+       /* // Uses SetNotificationRule procedure
         public int SetNotificationRule(int userIDInput, int notificationRuleID, int triggerAmount)
         {
             int affectedRows;
@@ -204,7 +204,7 @@ namespace Commerce_TransactionApp.Models
             this.ConnectDatabase();
 
             this.connection.Open();
-            this.command.CommandText = "EXECUTE SetNotificationRule @userID, @ruleID, @triggerAmount;";
+            this.command.CommandText = "EXECUTE  @userID, @ruleID, @triggerAmount;";
 
 
 
@@ -221,25 +221,27 @@ namespace Commerce_TransactionApp.Models
             affectedRows = command.ExecuteNonQuery();
 
             return affectedRows;
-        }
+        }*/
         // Uses SelectNotification procedure
-        public int SelectNotification(int userIDInput, int notificationRuleID)
+        public int SelectNotification(int userIDInput, int notificationRuleID, int triggerAmount)
         {
             int affectedRows;
             
             this.ConnectDatabase();
 
             this.connection.Open();
-            this.command.CommandText = "EXECUTE SelectNotification @userID, @ruleID;";
+            this.command.CommandText = "EXECUTE SelectNotification @userID, @ruleID,@triggerAmount;";
 
            
 
             //set up parameters
             SqlParameter userID = this.command.Parameters.Add(new SqlParameter("@userID", SqlDbType.Int));
             SqlParameter NotificationID = this.command.Parameters.Add(new SqlParameter("@ruleID", SqlDbType.Int));
+            SqlParameter _triggerAmount = this.command.Parameters.Add(new SqlParameter("@triggerAmount", SqlDbType.Int));
             //fill in paramaters
             userID.Value = userIDInput;
             NotificationID.Value = notificationRuleID;
+            _triggerAmount.Value= triggerAmount;
 
             affectedRows = command.ExecuteNonQuery();
 
@@ -260,6 +262,7 @@ namespace Commerce_TransactionApp.Models
             //set up parameters
             SqlParameter userID = this.command.Parameters.Add(new SqlParameter("@userID", SqlDbType.Int));
             SqlParameter NotificationID = this.command.Parameters.Add(new SqlParameter("@ruleID", SqlDbType.Int));
+
             //fill in paramaters
             userID.Value = userIDInput;
             NotificationID.Value = notificationRuleID;
