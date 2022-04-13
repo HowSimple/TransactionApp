@@ -2,11 +2,13 @@
 {
     public class SelectedNotifications
     {
-        public SelectedNotifications(bool outOfState, bool lowBalance, bool largeWithdraw)
+        public SelectedNotifications(bool outOfState, bool lowBalance, bool largeWithdraw, double lowBalanceLimit, double largeWithdrawLimit)
         {
             this.outOfState = outOfState;
             this.lowBalance = lowBalance;
             this.largeWithdraw = largeWithdraw;
+            this.lowBalanceLimit = lowBalanceLimit;
+            this.largeWithdrawLimit = largeWithdrawLimit;
         }
         public SelectedNotifications() { }
 
