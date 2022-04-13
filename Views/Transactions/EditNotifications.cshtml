@@ -15,18 +15,22 @@
 
 
 
-                <dt class="col-md-9 col-lg-6 col-xl-5 input-group-prepend" style="margin-block: 10px;">
+                <dt class="col-md-9 col-lg-6 col-xl-5 input-group-prepend" style="margin-block: 10px">
 
-                    @Html.DisplayNameFor(model => model.lowBalance) @Html.CheckBoxFor(model => model.lowBalance, new { style = "margin-left: 15px" })
+                   Enable @Html.DisplayNameFor(model => model.lowBalance) alerts @Html.CheckBoxFor(model => model.lowBalance, new { style = "margin-left: 15px" })
+                                       Get alerts when balance is under this amount:
+
                     <span class="input-group-text" style="color: white; background-color: #4FA800">$</span>
-                    @Html.EditorFor(model => model.lowBalanceLimit, new { htmlAttributes = new { @class = "form-control", @placeholder = "Get alerts when balance is under this amount:", @type = "text" } });
+                    @Html.EditorFor(model => model.lowBalanceLimit, new { htmlAttributes = new { @class = "form-control", @placeholder = "Get alerts when balance is under this amount:", @type = "text" } })
                 </dt>
-                    <dt class="col-md-9 col-lg-6 col-xl-5 input-group-prepend" style="margin-block: 10px" ;>
-                        @Html.DisplayNameFor(model => model.largeWithdraw) @Html.CheckBoxFor(model => model.largeWithdraw)
+                    <dt class="col-md-9 col-lg-6 col-xl-5 input-group-prepend" style="margin-block: 10px" >
+                       Enable @Html.DisplayNameFor(model => model.largeWithdraw) alerts
+                       @Html.CheckBoxFor(model => model.largeWithdraw)
+                        Get alerts for withdraws over this amount:
                         <span class="input-group-text" style="color: white; background-color: #4FA800">$</span>
-                        @Html.EditorFor(model => model.largeWithdrawLimit, new { htmlAttributes = new { @class = "form-control", @placeholder = "Get alerts for withdraws over this amount:", @type = "text" } });
+                        @Html.EditorFor(model => model.largeWithdrawLimit, new { htmlAttributes = new { @class = "form-control", @placeholder = "Get alerts for withdraws over this amount:", @type = "text" } })
                     </dt>
-                        <dt class="col-sm-2" style="margin-block: 10px;">
+                        <dt class="col-sm-2" style="margin-block: 10px">
                             @Html.DisplayNameFor(model => model.outOfState)
                             @Html.CheckBoxFor(model => model.outOfState)
                         </dt>
