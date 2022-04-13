@@ -62,11 +62,11 @@ namespace Commerce_TransactionApp
 
             foreach (System.Data.DataRow dataRow in userSelectedNotifications.Rows)
             {
-                /*if (dataRow["amount"] != null) 
+                if (dataRow["amount"] != null) 
                     if (dataRow["userNotificationID"].ToString() == "1")
                     notificationRules.largeWithdrawLimit = Double.Parse(dataRow["amount"].ToString());
                     else if (dataRow["userNotificationID"].ToString() == "3")
-                        notificationRules.lowBalanceLimit = Double.Parse(dataRow["amount"].ToString());*/
+                        notificationRules.lowBalanceLimit = Double.Parse(dataRow["amount"].ToString());
                                    
                 if (dataRow["hasNotification"].ToString() == "1")
                     if (dataRow["userNotificationID"].ToString() == "1")
