@@ -113,12 +113,12 @@ EXECUTE TransactionProcedure
 
 DROP PROCEDURE IF EXISTS SelectNotification;
 GO
-CREATE PROCEDURE SelectNotification(@userID as INT, @userNotificationID as INT)
+CREATE PROCEDURE SelectNotification(@userID as INT, @userNotificationID as INT, @amount as FLOAT)
 AS
 	EXECUTE UnselectNotification
 			@userID = @userID,
 			@userNotificationID = @userNotificationID;
-	INSERT INTO HasNotification (userID,userNotificationID,hasNotification) VALUES (@userID, @userNotificationID,1)
+	INSERT INTO HasNotification (userID,userNotificationID,hasNotification,amount) VALUES (@userID, @userNotificationID,1 ,@amount)
 GO
 
 
@@ -146,8 +146,9 @@ DROP PROCEDURE IF EXISTS ShowNotification
 GO
 CREATE PROCEDURE ShowNotification(@userID AS INT)
 AS
-   SELECT userNotificationID FROM HasNotification WHERE userID=@userID;
+   SELECT userNotificationID, amount FROM HasNotification WHERE userID=@userID;
 GO
+
 
 SELECT * 
 FROM UserTransactions;
