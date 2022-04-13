@@ -59,22 +59,24 @@ namespace Commerce_TransactionApp
 
             // set notification check boxes based on what the user has previously set 
             System.Data.DataTable userSelectedNotifications = db.GetUserNotifications(getUserId());
-
             foreach (System.Data.DataRow dataRow in userSelectedNotifications.Rows)
             {
+
+                ViewBag.Total = dataRow["amount"].ToString();
                 if (dataRow["amount"] != null) 
                     if (dataRow["userNotificationID"].ToString() == "1")
                     notificationRules.largeWithdrawLimit = Double.Parse(dataRow["amount"].ToString());
                     else if (dataRow["userNotificationID"].ToString() == "3")
                         notificationRules.lowBalanceLimit = Double.Parse(dataRow["amount"].ToString());
                                    
-                if (dataRow["hasNotification"].ToString() == "1")
+               
                     if (dataRow["userNotificationID"].ToString() == "1")
                         notificationRules.largeWithdraw = true;
                     else if (dataRow["userNotificationID"].ToString() == "2")
                         notificationRules.outOfState = true;
                     else if (dataRow["userNotificationID"].ToString() == "3")
-                        notificationRules.lowBalance = true;            
+                        notificationRules.lowBalance = true; 
+                
                 /* foreach (int userNotificationID in dataRow.ItemArray){
                      if(userNotificationID == 1)
                          notificationRules.largeWithdraw = true;
@@ -87,8 +89,7 @@ namespace Commerce_TransactionApp
                  }*/
             }
 
-            // TODO: 
-            // db.SetLimits(response.largeWithdrawLimit,response.lowBalanceLimit)
+            
 
 
             // passes the transaction table to webpage to display
@@ -103,18 +104,16 @@ namespace Commerce_TransactionApp
             //if (response.lowBalance != notificationRules.lowBalance) {
 
             if (response.lowBalance)
-                db.SelectNotification(getUserId(), 3);
+                db.SelectNotification(getUserId(), 3,response.lowBalanceLimit);
             else db.UnselectNotification(getUserId(), 3);
             if (response.outOfState)
-                db.SelectNotification(getUserId(), 2);
+                db.SelectNotification(getUserId(), 2, 0);
             else db.UnselectNotification(getUserId(), 2);
             if (response.largeWithdraw)
-                db.SelectNotification(getUserId(), 1);
+                db.SelectNotification(getUserId(), 1, response.largeWithdrawLimit);
             else db.UnselectNotification(getUserId(), 1);
 
-            // TODO: 
-            // db.SetLimits(response.largeWithdrawLimit,response.lowBalanceLimit)
-
+            
 
             // shows Notifications() after updating user notifications on DB
 

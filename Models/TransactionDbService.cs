@@ -196,34 +196,9 @@ namespace Commerce_TransactionApp.Models
 
             return affectedRows;
         }
-       /* // Uses SetNotificationRule procedure
-        public int SetNotificationRule(int userIDInput, int notificationRuleID, int triggerAmount)
-        {
-            int affectedRows;
-
-            this.ConnectDatabase();
-
-            this.connection.Open();
-            this.command.CommandText = "EXECUTE  @userID, @ruleID, @triggerAmount;";
-
-
-
-            //set up parameters
-            SqlParameter _userID = this.command.Parameters.Add(new SqlParameter("@userID", SqlDbType.Int));
-            SqlParameter _ruleID = this.command.Parameters.Add(new SqlParameter("@ruleID", SqlDbType.Int));
-            SqlParameter _triggerAmount = this.command.Parameters.Add(new SqlParameter("@triggerAmount", SqlDbType.Int));
-
-            //fill in paramaters
-            _userID.Value = userIDInput;
-            _ruleID.Value = notificationRuleID;
-            _triggerAmount.Value = triggerAmount;
-
-            affectedRows = command.ExecuteNonQuery();
-
-            return affectedRows;
-        }*/
+      
         // Uses SelectNotification procedure
-        public int SelectNotification(int userIDInput, int notificationRuleID, int triggerAmount)
+        public int SelectNotification(int userIDInput, int notificationRuleID, double triggerAmount)
         {
             int affectedRows;
             
