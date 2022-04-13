@@ -62,7 +62,7 @@ namespace Commerce_TransactionApp
             foreach (System.Data.DataRow dataRow in userSelectedNotifications.Rows)
             {
 
-                ViewBag.Total = dataRow["amount"].ToString();
+               
                 if (dataRow["amount"] != null) 
                     if (dataRow["userNotificationID"].ToString() == "1")
                     notificationRules.largeWithdrawLimit = Double.Parse(dataRow["amount"].ToString());
