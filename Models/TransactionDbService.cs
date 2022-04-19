@@ -50,7 +50,48 @@ namespace Commerce_TransactionApp.Models
             
         }
 
-        
+        public int Register(string user, string pass)
+        {
+            this.ConnectDatabase();
+
+            this.connection.Open();
+            this.command.CommandText = "EXECUTE RegisterProcedure @username, @password;";
+
+            const int username_varcharSize = 10;
+            const int password_varcharSize = 15;
+
+            //set up parameters
+            SqlParameter username = this.command.Parameters.Add(new SqlParameter("@username", SqlDbType.VarChar, username_varcharSize));
+            SqlParameter password = this.command.Parameters.Add(new SqlParameter("@password", SqlDbType.VarChar, password_varcharSize));
+            //fill in paramaters
+            username.Value = user;
+            password.Value = pass;
+
+
+
+            int userId = 0;
+
+            try
+            {
+                // ExecuteScalar runs the command and returns only a single entry
+                var result = this.command.ExecuteScalar();
+
+                if (result != null)
+                    userId = int.Parse(result.ToString()); // converts returned ID to int
+
+            }
+            catch (SqlException)
+            {
+
+                userId = -404;
+            }
+
+
+            this.connection.Close();
+
+            return userId;
+
+        }
         // Uses LoginProcedure
         public int Login(string user, string pass)
         {

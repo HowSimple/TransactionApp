@@ -1,0 +1,41 @@
+﻿@model Commerce_TransactionApp.Models.User
+
+@using ( Html.BeginForm("Register" , "Home" , FormMethod.Post, new{htmlAttributes= new{}}))
+{
+    
+
+<section class="vh-100">
+    <div class = "container-fluid h-custom login-form">
+    <h4>@ViewBag.id</h4>
+     <div class="divider d-flex align-items-center my-4">
+            <p class="text-center fw-bold mx-3 mb-0"style="font-family: 'Poppins'; font-size: 25px; color: #77726D">Create a new account</p>
+          </div>
+@*        <div class="row d-flex justify-content-center align-items-center h-100">
+*@             <div class="col-md-9 col-lg-6 col-xl-5">
+        
+      </div>
+
+             <div class="form-floating mb-3">
+            @Html.EditorFor(model => model.username, new { htmlAttributes = new { @class = "form-control",@placeholder = "Username",@required="required" } }) 
+            @Html.ValidationMessageFor(model => model.username,"" , new { @class = "text-danger" })
+            
+        </div>
+            <div class="form-floating">
+                     @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control",@placeholder="Password",@type="password",@required="required" } }) 
+                     @Html.ValidationMessage("Username is required","*")
+            
+                     @*  </div>
+                 <div class="form-floating">
+                     @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control",@placeholder="Password",@type="password",@required="required" } }) @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+            </div>*@
+     
+        <input type="submit" style="color:white; margin-block: 15px; background-color: #007AA3;" value="Register" />
+          <p disabled class="small fw-bold mt-2 pt-1 mb-0">Already have an account? <a href="/Home/Login"
+                class="link-danger">Login</a></p>
+            </div>
+     
+</section>
+}
+
+
+

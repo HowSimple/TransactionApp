@@ -84,6 +84,38 @@ namespace Commerce_TransactionApp.Controllers
 
         }
 
+        public IActionResult Register()
+        {
+            if (isLoggedIn())
+                return RedirectToAction("Summary", "Transactions");
+            else return View("Register");
+        }
+
+        [HttpPost]
+        public IActionResult Register(User response)
+        {
+            int userID = db.Register(response.username, response.password);
+
+            if (userID != 0)
+            {
+                loginUser(response.username, response.password);
+                return RedirectToAction("Summary", "Transactions");
+
+            }
+            return View("Register");
+           // else return RedirectToAction("Summary", "Transactions");
+            /*  int userID = db.Register(response.username, response.password);
+
+              if (userID != 0)
+              {
+                  loginUser(response.username, response.password);
+                  return RedirectToAction("Summary", "Transactions");
+
+              }
+              else*/
+
+
+        } 
 
         public IActionResult Index()
         {
