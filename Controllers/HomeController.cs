@@ -86,33 +86,33 @@ namespace Commerce_TransactionApp.Controllers
 
         public IActionResult Register()
         {
+            
+            ViewBag.Location = "";
             if (isLoggedIn())
                 return RedirectToAction("Summary", "Transactions");
             else return View("Register");
         }
 
         [HttpPost]
-        public IActionResult Register(User response)
+        public IActionResult Register(User response, string confirmPassword, string state)
         {
-            int userID = db.Register(response.username, response.password);
+            ViewBag.Location = state;
 
-            if (userID != 0)
+       
+          
+           /* if (response.password == confirmPassword)
             {
-                loginUser(response.username, response.password);
-                return RedirectToAction("Summary", "Transactions");
+                int userID = db.Register(response.username, response.password, state);
+                if (userID != 0)
+                {
+                    loginUser(response.username, response.password);
+                    return RedirectToAction("Summary", "Transactions");
+                }
+                
+            }*/
+             return View("Register");
+          
 
-            }
-            return View("Register");
-           // else return RedirectToAction("Summary", "Transactions");
-            /*  int userID = db.Register(response.username, response.password);
-
-              if (userID != 0)
-              {
-                  loginUser(response.username, response.password);
-                  return RedirectToAction("Summary", "Transactions");
-
-              }
-              else*/
 
 
         } 
