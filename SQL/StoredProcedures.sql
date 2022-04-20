@@ -5,6 +5,30 @@ USE CommerceTransactionDB;
 --------------------------------------------------------------------------------------
 -- Stored Procedures
 
+
+--Register Procedure
+	--Inputs: userName, password
+	--Output: userID
+
+DROP PROCEDURE IF EXISTS RegisterProcedure;
+
+GO
+CREATE PROCEDURE RegisterProcedure(@username AS VARCHAR(10), @location AS VARCHAR(2), @password AS VARCHAR(15), @accountNumber AS INT)
+AS
+	INSERT INTO Users (password, locations, userName) VALUES (@password, @location, @username);
+	INSERT INTO Account (accountNumber, userID) VALUES (@accountNumber, (SELECT userId FROM Users WHERE userName = @username AND password = @password));
+	SELECT userId FROM Users WHERE userName = @username AND password = @password; 
+
+GO
+--- execute procedure
+EXECUTE RegisterProcedure
+	@username = 'testing',
+	@location = 'KS',
+	@password = 'testpassword',
+	@accountNumber = 1234567;
+
+
+
 --Login Procedure:
     --Inputs: userName, password
     --Output: userID
@@ -18,7 +42,6 @@ AS
 	FROM Users
 	WHERE userName = @username AND password = @password;
 GO
-
 
 --- execute procedure
 EXECUTE LoginProcedure

@@ -3,7 +3,7 @@ CREATE SCHEMA userServices;
 GO
 
 CREATE TABLE Users (
-userId INT NOT NULL,
+userId INT IDENTITY(1,1) NOT NULL,
 password VARCHAR(15) NOT NULL,
 locations varchar(2) NOT NULL,
 userName varchar(10) NOT NULL,
@@ -21,7 +21,7 @@ FOREIGN KEY (userID) REFERENCES Users(userID)
 
 
 CREATE TABLE Balance (
-balanceID INT NOT NULL,
+balanceID INT IDENTITY(1,1) NOT NULL,
 amount FLOAT NOT NULL,
 accountNumber INT,
 PRIMARY KEY (balanceID),
