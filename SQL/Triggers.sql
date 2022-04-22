@@ -17,10 +17,9 @@ AS
 											(SELECT Users.userId FROM Users Inner Join Account On Account.accountNumber = 
 											(SELECT accountNumber from inserted)) as far on far.userId = HasNotification.userID 
 											 where userNotificationID = 1)
-			INSERT INTO Notifications (description,accountNumber)
-			VALUES (CONCAT('The amount of ',(SELECT amount FROM inserted),' was withdrawn from account #',(SELECT accountNumber FROM inserted)), (SELECT accountNumber FROM inserted))	
+			INSERT INTO Notifications (description,accountNumber,userNotificationID,processingDate)
+			VALUES (CONCAT('The amount of ',(SELECT amount FROM inserted),' was withdrawn from account #',(SELECT accountNumber FROM inserted)), (SELECT accountNumber FROM inserted),1,(SELECT processingDate FROM inserted))	
 GO
-
 
 -----------------------------------------------------------------
 ------------UserTransaction_Out_Of_State_Insert
@@ -38,8 +37,8 @@ AS
 			(SELECT accountNumber from inserted)) as far on far.userId = HasNotification.userID 
 				where userNotificationID = 2) ,0) --------------<<<<< change userNotificationID = 1 to applicaple number based on userNotifactionID 1 over 500,2 out of state,3 low balance 
 		IF (SELECT locations FROM inserted) != (SELECT locations FROM Users Inner Join Account on Account.accountNumber = (SELECT accountNumber from inserted) where  Users.userId = Account.userID )
-			INSERT INTO Notifications (description,accountNumber)
-				VALUES (CONCAT('Out of State Transaction from the state of ',(SELECT locations FROM inserted)), (SELECT accountNumber FROM inserted))	
+			INSERT INTO Notifications (description,accountNumber,userNotificationID,processingDate)
+				VALUES (CONCAT('Out of State Transaction from the state of ',(SELECT locations FROM inserted)), (SELECT accountNumber FROM inserted),2,(SELECT processingDate FROM inserted))	
 GO
 
 
@@ -61,6 +60,7 @@ AS
 											(SELECT Users.userId FROM Users Inner Join Account On Account.accountNumber = 
 											(SELECT accountNumber from inserted)) as far on far.userId = HasNotification.userID 
 											 where userNotificationID = 3)
-			INSERT INTO Notifications (description,accountNumber)
-				VALUES (CONCAT('You have low balance of ',(SELECT amount FROM Balance where Balance.accountNumber = (SELECT accountNumber FROM inserted ))), (SELECT accountNumber FROM inserted))	
+			INSERT INTO Notifications (description,accountNumber,userNotificationID,processingDate)
+				VALUES (CONCAT('You have low balance of ',(SELECT amount FROM Balance where Balance.accountNumber = (SELECT accountNumber FROM inserted ))), (SELECT accountNumber FROM inserted),3, GETDATE())	
 GO
+
