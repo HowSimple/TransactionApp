@@ -23,7 +23,7 @@ UNIQUE (userName)
 
 DROP TABLE IF EXISTS Account;
 CREATE TABLE Account (
-accountNumber INT NOT NULL,
+accountNumber INT IDENTITY(1,1) NOT NULL,
 userID INT,
 PRIMARY KEY (accountNumber),
 FOREIGN KEY (userID) REFERENCES Users(userID)
