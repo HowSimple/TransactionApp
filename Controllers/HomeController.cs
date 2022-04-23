@@ -89,28 +89,30 @@ namespace Commerce_TransactionApp.Controllers
             
             ViewBag.Location = "";
             if (isLoggedIn())
-                return RedirectToAction("Summary", "Transactions");
+                return RedirectToAction("Summary", "Home");
             else return View("Register");
         }
 
         [HttpPost]
-        public IActionResult Register(User response, string confirmPassword, string state)
+        public IActionResult Register(User response, string confirmPassword, string state, int accountNumber)
         {
             ViewBag.Location = state;
 
        
           
-           /* if (response.password == confirmPassword)
+            if (response.password == confirmPassword)
             {
-                int userID = db.Register(response.username, response.password, state);
+                int userID = db.Register(response.username, response.password, state,accountNumber);
                 if (userID != 0)
-                {
-                    loginUser(response.username, response.password);
-                    return RedirectToAction("Summary", "Transactions");
-                }
                 
-            }*/
-             return View("Register");
+                    db.Login(response.username, response.password);
+                    loginUser(response.username, response.password);        
+                    return RedirectToAction("Summary", "Transactions");
+                
+                
+            }
+            ViewBag.Location = "Try again: Passwords are not matching.";
+            return View("Register");
           
 
 
