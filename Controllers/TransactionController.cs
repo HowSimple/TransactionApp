@@ -23,16 +23,18 @@ namespace Commerce_TransactionApp
 
         private const string SessionKey_UserId = "id";
         private const string SessionKey_Username = "username";
-
         private int getUserId()
         {
             return (int)HttpContext.Session.GetInt32(SessionKey_UserId.ToString());
-
         }
         private string getUsername()
         {
             return (string)HttpContext.Session.GetString(SessionKey_Username.ToString());
 
+        }
+        public bool isLoggedIn()
+        {
+            return HttpContext.Session.GetInt32(SessionKey_UserId.ToString()) != null;
         }
 
         public TransactionsController(ILogger<TransactionsController> logger, IConfiguration configuration)

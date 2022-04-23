@@ -50,7 +50,52 @@ namespace Commerce_TransactionApp.Models
             
         }
 
-        
+        public int Register(string user, string pass, string location, int accountNumber)
+        {
+            this.ConnectDatabase();
+
+            this.connection.Open();
+            this.command.CommandText = "EXECUTE RegisterProcedure @username, @location,  @password";
+
+            const int username_varcharSize = 10;
+            const int password_varcharSize = 15;
+            const int state_varcharSize = 15;
+            //set up parameters
+            SqlParameter username = this.command.Parameters.Add(new SqlParameter("@username", SqlDbType.VarChar, username_varcharSize));
+            SqlParameter password = this.command.Parameters.Add(new SqlParameter("@password", SqlDbType.VarChar, password_varcharSize));
+            SqlParameter state = this.command.Parameters.Add(new SqlParameter("@location", SqlDbType.VarChar, state_varcharSize));
+            //SqlParameter accountNum = this.command.Parameters.Add(new SqlParameter("@account", SqlDbType.VarChar, username_varcharSize));
+            //fill in paramaters
+            username.Value = user;
+            password.Value = pass;
+            state.Value = location;
+           // accountNum.Value = accountNumber;
+
+
+
+            int userId = 0;
+
+            try
+            {
+                // ExecuteScalar runs the command and returns only a single entry
+                var result = this.command.ExecuteScalar();
+
+                if (result != null)
+                    userId = int.Parse(result.ToString()); // converts returned ID to int
+
+            }
+            catch (SqlException)
+            {
+
+                userId = -404;
+            }
+
+
+            this.connection.Close();
+
+            return userId;
+
+        }
         // Uses LoginProcedure
         public int Login(string user, string pass)
         {
@@ -256,9 +301,14 @@ namespace Commerce_TransactionApp.Models
             this.command.CommandText = "EXECUTE TransactionProcedure @userID, @transactionAmount, @transactionLocation, @transactionType, @processingDate, @transactionDescription;";
             this.command.Parameters.AddWithValue("@userID", userId);
 
-        
+            
             this.command.Parameters.AddWithValue("@transactionAmount", transaction.transactionAmount);
-            this.command.Parameters.AddWithValue("@transactionType", transaction.transactionType);
+            string transactionType;
+            if (transaction.isDeposit)
+                transactionType = "CR";
+            else transactionType = "WD";
+
+            this.command.Parameters.AddWithValue("@transactionType", transactionType);
             this.command.Parameters.AddWithValue("@transactionLocation", transaction.transactionLocation);
             this.command.Parameters.AddWithValue("@transactionDescription", transaction.transactionDescription);
             this.command.Parameters.AddWithValue("@processingDate", transaction.processingDate);

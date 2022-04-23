@@ -9,10 +9,10 @@ namespace Commerce_TransactionApp.Models
    
         public Transaction() { }
 
-        public Transaction( string transactionType, DateTime processingDate, string transactionDescription, string transactionLocation, double transactionAmount)
+        public Transaction( bool isDeposit, DateTime processingDate, string transactionDescription, string transactionLocation, double transactionAmount)
         {
           
-            this.transactionType = transactionType;
+            this.isDeposit = isDeposit;
             this.processingDate = processingDate;
             this.transactionDescription = transactionDescription;
             this.transactionLocation = transactionLocation;
@@ -21,7 +21,7 @@ namespace Commerce_TransactionApp.Models
         }
 
        
-        public string transactionType { get; set; }
+        public bool isDeposit { get; set; }
 
         public DateTime processingDate { get; set; }
         public string transactionDescription { get; set; }

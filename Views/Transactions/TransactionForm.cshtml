@@ -1,4 +1,5 @@
 ﻿@model Commerce_TransactionApp.Models.Transaction
+@using System.Text.RegularExpressions;
 
 
 <div>
@@ -14,34 +15,47 @@
     {
         <dl class="row">
          
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.transactionAmount)
+        <dt class = "col-sm-5">
+           Transaction Amount
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-5">
             @Html.EditorFor(model => model.transactionAmount)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.transactionType)
+        <dt class = "col-sm-5">
+           Deposit?
         </dt>
-        <dd class = "col-sm-10">
-            @Html.EditorFor(model => model.transactionType)
+        <dd class = "col-sm-5">
+            @Html.EditorFor(model => model.isDeposit)
+
+            
+@*div class="form-check">
+  <input class="form-check-input" type="radio" name="transactionType" id="flexRadioDefault2" checked>
+  <label class="form-check-label" for="flexRadioDefault2">
+    Deposit
+  </label>
+</div>
+<input class="form-check-input" type="radio" name="transactionType" id="flexRadioDefault1">
+  <label class="form-check-label" for="flexRadioDefault1">
+    Withdraw
+  </label>*@
+
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.transactionLocation)
+        <dt class = "col-sm-5">
+            Transaction Location
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-5">
             @Html.EditorFor(model => model.transactionLocation)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.transactionDescription)
+        <dt class = "col-sm-5">
+           Transaction Description
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-5">
             @Html.EditorFor(model => model.transactionDescription)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.processingDate)
+        <dt class = "col-sm-5">
+            Processing Date
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-5">
             @Html.EditorFor(model => model.processingDate)
         </dd>
         

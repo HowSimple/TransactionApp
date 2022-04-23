@@ -84,6 +84,40 @@ namespace Commerce_TransactionApp.Controllers
 
         }
 
+        public IActionResult Register()
+        {
+            
+            ViewBag.Location = "";
+            if (isLoggedIn())
+                return RedirectToAction("Summary", "Home");
+            else return View("Register");
+        }
+
+        [HttpPost]
+        public IActionResult Register(User response, string confirmPassword, string state, int accountNumber)
+        {
+            ViewBag.Location = state;
+
+       
+          
+            if (response.password == confirmPassword)
+            {
+                int userID = db.Register(response.username, response.password, state,accountNumber);
+                if (userID != 0)
+                
+                    db.Login(response.username, response.password);
+                    loginUser(response.username, response.password);        
+                    return RedirectToAction("Summary", "Transactions");
+                
+                
+            }
+            ViewBag.Location = "Try again: Passwords are not matching.";
+            return View("Register");
+          
+
+
+
+        } 
 
         public IActionResult Index()
         {
