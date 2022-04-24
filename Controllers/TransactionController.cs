@@ -53,6 +53,12 @@ namespace Commerce_TransactionApp
         {
             return View();
         }
+        public IActionResult Dashboard() {
+            ViewBag.TotalNotifications = db.GetAllNotifications(getUserId()).Rows.Count;
+            //System.Data.DataTable notificationOverview = db.GetNotificationTotals();
+            return View();
+        }
+ 
         public IActionResult Notifications()
         {
             System.Data.DataTable notifications = db.GetAllNotifications(getUserId());
