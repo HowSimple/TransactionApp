@@ -53,6 +53,12 @@ namespace Commerce_TransactionApp
         {
             return View();
         }
+        public IActionResult Dashboard() {
+            ViewBag.TotalNotifications = db.GetAllNotifications(getUserId()).Rows.Count;
+            System.Data.DataTable notificationOverview = db.GetTriggerCounts(getUserId());
+            return View();
+        }
+ 
         public IActionResult Notifications()
         {
             System.Data.DataTable notifications = db.GetAllNotifications(getUserId());
@@ -130,7 +136,12 @@ namespace Commerce_TransactionApp
             ViewBag.exportTranactionsFile = "Transaction Summary.xml";
             System.Data.DataTable transactionList = db.GetTransactionSummary(getUserId());
             ViewBag.Total = transactionList.Rows.Count;
+            
+            System.Data.DataTable notifications = db.GetAllNotifications(getUserId());
+            
+            System.Data.DataTable notificationOverview = db.GetTriggerCounts(getUserId());
 
+            ViewBag.Dashboard = notificationOverview;
             // passes the transaction table to webpage to display
             return View(transactionList);
         }
@@ -149,9 +160,13 @@ namespace Commerce_TransactionApp
             System.Data.DataTable transactionList = db.GetTransactionSummary(getUserId());
             ViewBag.Total = transactionList.Rows.Count;
 
+            System.Data.DataTable notifications = db.GetAllNotifications(getUserId());
+
+            System.Data.DataTable notificationOverview = db.GetTriggerCounts(getUserId());
+
+            ViewBag.Dashboard = notificationOverview;
             // passes the transaction table to webpage to display
             return View(transactionList);
-            // return View("Summary");
 
         }
     }
