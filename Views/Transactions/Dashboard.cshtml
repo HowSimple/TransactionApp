@@ -3,44 +3,44 @@
 
 
 <div>
-    
-  
-
 </div>
-@model DataTable 
+@model DataTable
 
 <div class="container">
-  You have @ViewBag.TotalNotifications notifications.     
+    You have @ViewBag.TotalNotifications notifications.
 
     @*    https://getbootstrap.com/docs/4.0/content/tables/*@
-        <table class="table table-sm table-striped">
-            <thead class="thead-light">
-                <tr>
-                    <th scope="col"></th>
-                    <th scope="col">Monthly</th>
-                    <th scope="col">Yearly</th>
-                  
-                </tr>
-            </thead>
-            <tbody>
-                
-        {
-                <tr>
-                    <th scope="row">Low balance:</th>
-                    <td> @Model.Rows[0]["monthly"]</td>
-                    <td>@Model.Rows[0]["yearly"]</td>
-                </tr>
-                  <tr>
-                    <th scope="row">Large withdraw:</th>
-                    <td> @Model.Rows[1]["monthly"]</td>
-                    <td>@Model.Rows[1]["yearly"]</td>
-                </tr>
-                  <tr>
-                    <th scope="row">Out of state:</th>
-                    <td> @Model.Rows[2]["monthly"]</td>
-                    <td>@Model.Rows[2]["yearly"]</td>
-                </tr>
-        }
+    <table class="table table-sm table-striped">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Monthly</th>
+                <th scope="col">Yearly</th>
+
+            </tr>
+        </thead>
+        <tbody>
+
+            
+            <tr>
+                <th scope="row">Large withdraw:</th>
+                <td> @Model.Rows[0]["Monthly"]</td>
+                <td>@Model.Rows[0]["Yearly"]</td>
+            </tr>
+            <tr>
+                <th scope="row">Out of state:</th>
+                <td> @Model.Rows[1]["Monthly"]</td>
+                <td>@Model.Rows[1]["Yearly"]</td>
+            </tr>
+            <tr>
+                <th scope="row">Low balance:</th>
+                <td> @Model.Rows[2]["Monthly"]</td>
+                <td>@Model.Rows[2]["Yearly"]</td>
+            </tr>
+
+                <a href="/Home/Notifications"
+                                        class="link-danger">See all notifications</a>
+            
         </tbody>
-        </table>
-       </div>
+    </table>
+</div>
