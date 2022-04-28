@@ -166,6 +166,52 @@ namespace Commerce_TransactionApp.Models
                 }
             }
         }
+        public DataTable GetTriggerCounts(int userIdInput)
+        {
+            using (SqlConnection _con = new SqlConnection(connectionString))
+            {
+                string storedProcedureName = "NotificationProcedure";
+
+                using (SqlCommand _cmd = new SqlCommand(storedProcedureName, _con))
+                {
+                    _cmd.CommandType = CommandType.StoredProcedure;
+                    _cmd.Parameters.Add("@userID", SqlDbType.Int).Value = userIdInput;
+
+                    System.Data.DataTable notificationTable = new System.Data.DataTable("Notifications");
+                    SqlDataAdapter _dap = new SqlDataAdapter(_cmd);
+
+                    _con.Open();
+                    _dap.Fill(notificationTable);
+                    _con.Close();
+
+                    var lastMonth =DateTime.Now.AddMonths(-1);
+                    var lastYear = DateTime.Now.AddYears(-1);
+                                        
+                    var filter = "userNotificationID = '{0}' AND processingDate > '{1}'";
+                    int largeWithdraw_MonthlyCount = notificationTable.Select(string.Format(filter, 1, lastMonth)).Length;
+                    int largeWithdraw_yearlyCount = notificationTable.Select(string.Format(filter, 1, lastYear)).Length;
+
+                    int outOfState_MonthlyCount = notificationTable.Select(string.Format(filter, 2, lastMonth)).Length;
+                    int outOfState_YearlyCount = notificationTable.Select(string.Format(filter, 2, lastYear)).Length;
+
+                    int lowBalance_MonthlyCount = notificationTable.Select(string.Format(filter, 3, lastMonth)).Length;
+                    int lowBalance_YearlyCount = notificationTable.Select(string.Format(filter, 3, lastYear)).Length;
+                    var resultTable = new DataTable();
+                    resultTable.Columns.Add("Monthly");
+                    resultTable.Columns.Add("Yearly");
+
+                    resultTable.Rows.Add(largeWithdraw_MonthlyCount,largeWithdraw_yearlyCount);
+                    resultTable.Rows.Add(outOfState_MonthlyCount, outOfState_YearlyCount);
+                    resultTable.Rows.Add(lowBalance_MonthlyCount, lowBalance_YearlyCount);
+
+                    return resultTable;
+
+
+                }
+            }
+
+
+        }
         // Uses NotificationProcedure
         public DataTable GetAllNotifications(int userIdInput)
         {
@@ -184,11 +230,14 @@ namespace Commerce_TransactionApp.Models
                     _con.Open();
                     _dap.Fill(notificationTable);
                     _con.Close();
-
+                    
                     return notificationTable;
+
 
                 }
             }
+
+
         }
         // Uses TransactionSummaryProcedure 
         public DataTable GetTransactionSummary(int userIdInput)
