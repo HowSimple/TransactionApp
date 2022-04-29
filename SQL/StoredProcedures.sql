@@ -6,6 +6,33 @@ USE CommerceTransactionDB;
 -- Stored Procedures
 
 
+--------------------------------------------------------------------------------------
+--Balance Procedure:
+    --Input: userID
+    --Output: Balance of Account
+
+DROP PROCEDURE IF EXISTS BalanceProcedure;
+GO
+CREATE PROCEDURE BalanceProcedure(@userID AS INT)
+AS
+	SELECT amount
+	FROM Balance
+	INNER JOIN Account
+	ON Account.userID = @userID
+	WHERE Account.accountNumber = Balance.accountNumber;
+	
+GO
+
+--- execute procedure
+EXECUTE BalanceProcedure
+	@userID = 1;
+
+
+
+
+
+-------------------------------------------------------------------------------------
+
 --Register Procedure
 	--Inputs: userName, password
 	--Output: userID
@@ -54,8 +81,8 @@ EXECUTE LoginProcedure
 --------------------------------------------------------------------------------------
 --Transaction Summary Procedure:
     --Input: userID
-    --Output: table All transactions related to UserID accounts. order by date
-
+    --Output: table All transactions related to UserID accounts. order by date in descending order
+    
 DROP PROCEDURE IF EXISTS TransactionSummaryProcedure;
 GO
 CREATE PROCEDURE TransactionSummaryProcedure(@userID AS INT)
@@ -65,7 +92,7 @@ AS
 	INNER JOIN Account
 	ON Account.userID = @userID
 	WHERE Account.accountNumber = UserTransactions.accountNumber
-	ORDER BY processingDate;
+	ORDER BY processingDate DESC;
 GO
 
 
@@ -77,7 +104,8 @@ EXECUTE TransactionSummaryProcedure
 --------------------------------------------------------------------------------------
 --Notification Procedure:
 	--Input: userID
-	--Output: table ALL notifications related to userID accounts
+	--Output: table ALL notifications related to userID accounts, order by date in descending order
+	
 DROP PROCEDURE IF EXISTS NotificationProcedure;
 GO
 CREATE PROCEDURE NotificationProcedure(@userId AS INT)
@@ -86,7 +114,8 @@ AS
 	FROM Notifications
 	INNER JOIN Account
 	ON Account.userID = @userID
-	WHERE Account.accountNumber = Notifications.accountNumber;
+	WHERE Account.accountNumber = Notifications.accountNumber
+	ORDER BY processingDate DESC;
 GO
 
 
