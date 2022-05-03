@@ -65,13 +65,30 @@ namespace Commerce_TransactionApp.Controllers
         {
             if (isLoggedIn())
                 return RedirectToAction("Summary", "Transactions");
-            else return View("Login");
+            else {
+                ViewBag.Login = "Login";
+                return View("Login");
+            }
+           
         }
-
+        public IActionResult Logout()
+        {
+            
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index", "Home");
+        }
+      
+        public IActionResult AccountButton()
+        {
+           
+            //var partialViewModel = new PartialViewModel(isLoggedIn());
+            
+            return PartialView("AccountButton", isLoggedIn());
+        }
         [HttpPost]
         public IActionResult Login(User response)
         {
-
+            ViewBag.Login = "Login";
             int userID = db.Login(response.username, response.password);
 
             if (userID != 0)
@@ -86,7 +103,7 @@ namespace Commerce_TransactionApp.Controllers
 
         public IActionResult Register()
         {
-            
+            ViewBag.Login = "Login";
             ViewBag.Location = "";
             if (isLoggedIn())
                 return RedirectToAction("Summary", "Home");
@@ -97,9 +114,9 @@ namespace Commerce_TransactionApp.Controllers
         public IActionResult Register(User response, string confirmPassword, string state, int accountNumber)
         {
             ViewBag.Location = state;
+            ViewBag.Login = "Login";
 
-       
-          
+
             if (response.password == confirmPassword)
             {
                 int userID = db.Register(response.username, response.password, state,accountNumber);
@@ -125,6 +142,7 @@ namespace Commerce_TransactionApp.Controllers
             /*  if( isLoggedIn())
                   return RedirectToAction("Summary", "Transactions");
              else */
+            ViewBag.Login = "Login";
             return View("Index");
         }
 
@@ -146,6 +164,7 @@ namespace Commerce_TransactionApp.Controllers
 
         public IActionResult Privacy()
         {
+            ViewBag.Login = "Login";
             return View();
         }
 

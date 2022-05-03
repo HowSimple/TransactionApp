@@ -242,7 +242,7 @@ namespace Commerce_TransactionApp.Models
 
 
         //Uses BalancePocedure
-        public DataTable GetBalance(int userIdInput)
+        public string GetBalance(int userIdInput)
         {
             using (SqlConnection _con = new SqlConnection(connectionString))
             {
@@ -253,7 +253,7 @@ namespace Commerce_TransactionApp.Models
                     _cmd.CommandType = CommandType.StoredProcedure;
                     _cmd.Parameters.Add("@userID", SqlDbType.Int).Value = userIdInput;
 
-                    System.Data.DataTable Balance = new System.Data.DataTable("Balance");
+                    System.Data.DataTable Balance = new System.Data.DataTable();
                     SqlDataAdapter _dap = new SqlDataAdapter(_cmd);
 
                     _con.Open();
@@ -262,7 +262,7 @@ namespace Commerce_TransactionApp.Models
 
 
 
-                    return Balance;
+                    return "$"+Balance.Rows[0][0].ToString();
 
                 }
             }
