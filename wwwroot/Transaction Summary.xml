@@ -1,0 +1,14 @@
+<?xml version="1.0" standalone="yes"?>
+<DocumentElement>
+  <Accounts>
+    <transactionID>7</transactionID>
+    <transactionType>CR</transactionType>
+    <processingDate>2022-05-02T00:00:00-05:00</processingDate>
+    <description>PayCheck</description>
+    <locations>MO</locations>
+    <amount>4900</amount>
+    <accountNumber>3</accountNumber>
+    <accountNumber1>3</accountNumber1>
+    <userID>3</userID>
+  </Accounts>
+</DocumentElement>
