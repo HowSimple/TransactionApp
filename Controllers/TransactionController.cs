@@ -36,7 +36,7 @@ namespace Commerce_TransactionApp
         {
             return HttpContext.Session.GetInt32(SessionKey_UserId.ToString()) != null;
         }
-
+        
         public TransactionsController(ILogger<TransactionsController> logger, IConfiguration configuration)
         {
             this._logger = logger;
@@ -55,6 +55,7 @@ namespace Commerce_TransactionApp
         }
         public IActionResult Dashboard() {
             ViewBag.TotalNotifications = db.GetAllNotifications(getUserId()).Rows.Count;
+            ViewBag.Balance = db.GetBalance(getUserId());
             System.Data.DataTable notificationOverview = db.GetTriggerCounts(getUserId());
             return View();
         }
@@ -136,11 +137,12 @@ namespace Commerce_TransactionApp
             ViewBag.exportTranactionsFile = "Transaction Summary.xml";
             System.Data.DataTable transactionList = db.GetTransactionSummary(getUserId());
             ViewBag.Total = transactionList.Rows.Count;
-            
+                    
             System.Data.DataTable notifications = db.GetAllNotifications(getUserId());
             
             System.Data.DataTable notificationOverview = db.GetTriggerCounts(getUserId());
-
+            ViewBag.TotalNotifications = db.GetAllNotifications(getUserId()).Rows.Count;
+            ViewBag.Balance = db.GetBalance(getUserId());
             ViewBag.Dashboard = notificationOverview;
             // passes the transaction table to webpage to display
             return View(transactionList);
@@ -163,7 +165,8 @@ namespace Commerce_TransactionApp
             System.Data.DataTable notifications = db.GetAllNotifications(getUserId());
 
             System.Data.DataTable notificationOverview = db.GetTriggerCounts(getUserId());
-
+            ViewBag.TotalNotifications = db.GetAllNotifications(getUserId()).Rows.Count;
+            ViewBag.Balance = db.GetBalance(getUserId());
             ViewBag.Dashboard = notificationOverview;
             // passes the transaction table to webpage to display
             return View(transactionList);
