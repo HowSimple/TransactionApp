@@ -51,20 +51,22 @@ namespace Commerce_TransactionApp
 
         public IActionResult Index()
         {
+            ViewBag.Login = "Logout";
             return View();
         }
         public IActionResult Dashboard() {
             ViewBag.TotalNotifications = db.GetAllNotifications(getUserId()).Rows.Count;
             ViewBag.Balance = db.GetBalance(getUserId());
+            ViewBag.Login = "Logout";
             System.Data.DataTable notificationOverview = db.GetTriggerCounts(getUserId());
             return View();
         }
  
         public IActionResult Notifications()
         {
-            System.Data.DataTable notifications = db.GetAllNotifications(getUserId());
-            ViewBag.Notifications = notifications;
-            ViewBag.Total = notifications.Rows.Count;
+            
+            ViewBag.Notifications = db.GetAllNotifications(getUserId());
+            ViewBag.Login = "Logout";
 
             // set notification check boxes based on what the user has previously set 
             System.Data.DataTable userSelectedNotifications = db.GetUserNotifications(getUserId());
@@ -109,7 +111,7 @@ namespace Commerce_TransactionApp
         {
             System.Data.DataTable notifications = db.GetAllNotifications(getUserId());
             ViewBag.Notifications = notifications;
-
+            ViewBag.Login = "Logout";
             //if (response.lowBalance != notificationRules.lowBalance) {
 
             if (response.lowBalance)
@@ -132,7 +134,7 @@ namespace Commerce_TransactionApp
         public IActionResult Summary()
         {
             ViewBag.user = getUsername();
-            ViewBag.id = getUserId();
+            ViewBag.Login = "Logout";
             db.PrintSummary(getUserId());
             ViewBag.exportTranactionsFile = "Transaction Summary.xml";
             System.Data.DataTable transactionList = db.GetTransactionSummary(getUserId());
@@ -156,7 +158,8 @@ namespace Commerce_TransactionApp
             // shows Summary() after adding new transaction to DB
 
             ViewBag.user = getUsername();
-            ViewBag.id = getUserId();
+            ViewBag.Login = "Logout";
+
             db.PrintSummary(getUserId());
             ViewBag.exportTranactionsFile = "Transaction Summary.xml";
             System.Data.DataTable transactionList = db.GetTransactionSummary(getUserId());
