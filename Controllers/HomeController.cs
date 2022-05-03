@@ -78,13 +78,7 @@ namespace Commerce_TransactionApp.Controllers
             return RedirectToAction("Index", "Home");
         }
       
-        public IActionResult AccountButton()
-        {
-           
-            //var partialViewModel = new PartialViewModel(isLoggedIn());
-            
-            return PartialView("AccountButton", isLoggedIn());
-        }
+ 
         [HttpPost]
         public IActionResult Login(User response)
         {
