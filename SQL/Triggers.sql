@@ -2,21 +2,21 @@
 ------------Triggers
 ------------UserTransaction_500_Insert
 ------------If user has greater than or equal to 500 notification set up a notification will appear.
-
 DROP TRIGGER IF EXISTS UserTransactions_500_Insert;
 GO
 CREATE TRIGGER UserTransactions_500_INSERT ON UserTransactions
 AFTER INSERT
 AS
 	SET NOCOUNT ON;
+	
 	IF 1 = ISNULL((SELECT hasNotification FROM HasNotification Inner Join 
-		(SELECT Users.userId FROM Users Inner Join Account On Account.accountNumber = 
-			(SELECT accountNumber from inserted)) as far on far.userId = HasNotification.userID 
+		(SELECT Users.userId FROM Users Inner Join Account On Account.userID = Users.userId
+		WHERE Account.accountNumber = (SELECT accountNumber from inserted)) as far on far.userId = HasNotification.userID 
 				where userNotificationID = 1) ,0) --------------<<<<< change userNotificationID = 1 to applicaple number based on userNotifactionID 1 over 500,2 out of state,3 low balance 
 		IF (SELECT amount FROM inserted) >= (SELECT amount FROM HasNotification Inner Join 
-											(SELECT Users.userId FROM Users Inner Join Account On Account.accountNumber = 
-											(SELECT accountNumber from inserted)) as far on far.userId = HasNotification.userID 
-											 where userNotificationID = 1)
+											(SELECT Users.userId FROM Users Inner Join Account On Account.userID = Users.userId
+											WHERE Account.accountNumber = (SELECT accountNumber from inserted)) as far on far.userId = HasNotification.userID 
+											WHERE userNotificationID = 1) AND 'WD' = (SELECT transactionType from inserted) 
 			INSERT INTO Notifications (description,accountNumber,userNotificationID,processingDate)
 			VALUES (CONCAT('The amount of ',(SELECT amount FROM inserted),' was withdrawn from account #',(SELECT accountNumber FROM inserted)), (SELECT accountNumber FROM inserted),1,(SELECT processingDate FROM inserted))	
 GO
@@ -33,10 +33,10 @@ AFTER INSERT
 AS
 	SET NOCOUNT ON;
 	IF 1 = ISNULL((SELECT hasNotification FROM HasNotification Inner Join 
-		(SELECT Users.userId FROM Users Inner Join Account On Account.accountNumber = 
-			(SELECT accountNumber from inserted)) as far on far.userId = HasNotification.userID 
+		(SELECT Users.userId FROM Users Inner Join Account On Account.userID = Users.userId
+		WHERE Account.accountNumber = (SELECT accountNumber from inserted)) as far on far.userId = HasNotification.userID 
 				where userNotificationID = 2) ,0) --------------<<<<< change userNotificationID = 1 to applicaple number based on userNotifactionID 1 over 500,2 out of state,3 low balance 
-		IF (SELECT locations FROM inserted) != (SELECT locations FROM Users Inner Join Account on Account.accountNumber = (SELECT accountNumber from inserted) where  Users.userId = Account.userID )
+		IF (SELECT locations FROM inserted) != (SELECT locations FROM Users Inner Join Account on Account.userID = Users.userId WHERE Account.accountNumber = (SELECT accountNumber from inserted) )
 			INSERT INTO Notifications (description,accountNumber,userNotificationID,processingDate)
 				VALUES (CONCAT('Out of State Transaction from the state of ',(SELECT locations FROM inserted)), (SELECT accountNumber FROM inserted),2,(SELECT processingDate FROM inserted))	
 GO
@@ -53,13 +53,13 @@ AFTER UPDATE
 AS
 	SET NOCOUNT ON;
 	IF 1 = ISNULL((SELECT hasNotification FROM HasNotification Inner Join 
-		(SELECT Users.userId FROM Users Inner Join Balance On Balance.accountNumber = 
-			(SELECT accountNumber from inserted)) as far on far.userId = HasNotification.userID 
+		(SELECT Users.userId FROM Users Inner Join Account On Account.userID = Users.userId
+		WHERE Account.accountNumber = (SELECT accountNumber from inserted)) as far on far.userId = HasNotification.userID 
 				where userNotificationID = 3) ,0) --------------<<<<< change userNotificationID = 1 to applicaple number based on userNotifactionID 1 over 500,2 out of state,3 low balance 
 		IF (SELECT amount FROM Balance where Balance.accountNumber = (SELECT accountNumber FROM inserted )) < (SELECT amount FROM HasNotification Inner Join 
-											(SELECT Users.userId FROM Users Inner Join Account On Account.accountNumber = 
-											(SELECT accountNumber from inserted)) as far on far.userId = HasNotification.userID 
-											 where userNotificationID = 3)
+											(SELECT Users.userId FROM Users Inner Join Account On Account.userID = Users.userId
+											WHERE Account.accountNumber = (SELECT accountNumber from inserted)) as far on far.userId = HasNotification.userID 
+											WHERE userNotificationID = 3)
 			INSERT INTO Notifications (description,accountNumber,userNotificationID,processingDate)
 				VALUES (CONCAT('You have low balance of ',(SELECT amount FROM Balance where Balance.accountNumber = (SELECT accountNumber FROM inserted ))), (SELECT accountNumber FROM inserted),3, GETDATE())	
 GO
