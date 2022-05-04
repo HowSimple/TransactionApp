@@ -156,12 +156,6 @@ namespace Commerce_TransactionApp.Controllers
         }
 
 
-        public IActionResult Privacy()
-        {
-            ViewBag.Login = "Login";
-            return View();
-        }
-
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

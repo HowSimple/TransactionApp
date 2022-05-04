@@ -20,7 +20,14 @@
                 <tr>
                     <th scope="row">@row["transactionID"]</th>
                     <td> @row["description"]</td>
-                    <td>$@row["amount"]</td>
+                        @if (row["transactionType"].ToString()=="WD")
+                        {
+                        <td>-$@row["amount"]</td>
+                    }
+                    else
+                    {
+                        <td>$@row["amount"]</td>
+                    }
                     <td>@row["locations"]</td>
                     <td>@row["processingDate"]</td>
                 </tr>
