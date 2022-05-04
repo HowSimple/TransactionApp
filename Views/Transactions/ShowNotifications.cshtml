@@ -18,9 +18,9 @@
                 @foreach (DataRow row in ViewBag.Notifications.Rows)
         {
                 <tr>
-                    <th scope="row">@row["notificationID"]</th>
+                   
                     <td> @row["description"]</td>
-                    <td>@row["accountNumber"]</td>
+                    <td>@row["processingDate"]</td>
            
                 </tr>
         }
