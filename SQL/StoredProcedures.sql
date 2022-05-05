@@ -42,11 +42,15 @@ DROP PROCEDURE IF EXISTS RegisterProcedure;
 GO
 CREATE PROCEDURE RegisterProcedure(@username AS VARCHAR(10), @location AS VARCHAR(2), @password AS VARCHAR(15))
 AS
-	INSERT INTO Users (password, locations, userName) VALUES (@password, @location, @username);
-	INSERT INTO Account (userID) VALUES ((SELECT userId FROM Users WHERE userName = @username AND password = @password));
-	INSERT INTO Balance (amount, accountNumber) VALUES (0,(SELECT accountNumber FROM Account WHERE userID = 
-			(SELECT userId FROM Users WHERE userName = @username AND password = @password)));
-	SELECT userId FROM Users WHERE userName = @username AND password = @password; 
+	IF 0 = ISNULL( (SELECT userName FROM Users WHERE userName = @username) , 0 )
+	BEGIN
+		INSERT INTO Users (password, locations, userName) VALUES (@password, @location, @username);
+		INSERT INTO Account (userID) VALUES ((SELECT userId FROM Users WHERE userName = @username AND password = @password));
+		INSERT INTO Balance (amount, accountNumber) VALUES (0,(SELECT accountNumber FROM Account WHERE userID = 
+				(SELECT userId FROM Users WHERE userName = @username AND password = @password)));
+		SELECT userId FROM Users WHERE userName = @username AND password = @password; 
+	END
+		
 
 GO
 --- execute procedure
