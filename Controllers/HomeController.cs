@@ -126,9 +126,6 @@ namespace Commerce_TransactionApp.Controllers
                 ViewBag.error += "Please enter a secure password:\n 8+ characters\n At least 1 capital\n At least 1 lowercase\n At least 1 number";
             return View("Register");
           
-
-
-
         } 
 
         public IActionResult Index()

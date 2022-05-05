@@ -64,14 +64,10 @@ namespace Commerce_TransactionApp.Models
             SqlParameter username = this.command.Parameters.Add(new SqlParameter("@username", SqlDbType.VarChar, username_varcharSize));
             SqlParameter password = this.command.Parameters.Add(new SqlParameter("@password", SqlDbType.VarChar, password_varcharSize));
             SqlParameter state = this.command.Parameters.Add(new SqlParameter("@location", SqlDbType.VarChar, state_varcharSize));
-            //SqlParameter accountNum = this.command.Parameters.Add(new SqlParameter("@account", SqlDbType.VarChar, username_varcharSize));
             //fill in paramaters
             username.Value = user;
             password.Value = pass;
             state.Value = location;
-           // accountNum.Value = accountNumber;
-
-
 
             int userId = 0;
 
