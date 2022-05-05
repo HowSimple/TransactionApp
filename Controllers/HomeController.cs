@@ -1,15 +1,9 @@
 ﻿using Commerce_TransactionApp.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Configuration;
-using Microsoft.Extensions.Configuration;
-using System.Globalization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using System.Diagnostics;
 using System.Text.RegularExpressions;
 namespace Commerce_TransactionApp.Controllers
 {
@@ -40,7 +34,8 @@ namespace Commerce_TransactionApp.Controllers
         }
         bool validatePassword(string password)
         {
-            Regex regex = new Regex(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).{8,}$");
+            Regex regex = new Regex(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$"
+);
             return regex.IsMatch(password);
         }
         
@@ -112,20 +107,21 @@ namespace Commerce_TransactionApp.Controllers
         public IActionResult Register(User response, string confirmPassword, string state, int accountNumber)
         {
             ViewBag.Login = "Login";
-            
-          
-            if (response.password == confirmPassword)
+
+
+            if (response.password == confirmPassword && validatePassword(response.password))
             {
-                int userID = db.Register(response.username, response.password, state,accountNumber);
+                int userID = db.Register(response.username, response.password, state, accountNumber);
                 if (userID != 0)
-                
+
                     db.Login(response.username, response.password);
-                    loginUser(response.username, response.password);        
-                    return RedirectToAction("Summary", "Transactions");
-                
-                
+                loginUser(response.username, response.password);
+                return RedirectToAction("Summary", "Transactions");
+
+
             }
-            ViewBag.error += "Try again: Passwords are not matching.    \n";
+            if (response.password != confirmPassword)
+            { ViewBag.error += "Try again: Passwords are not matching.    \n"; }
             if (!validatePassword(response.password))
                 ViewBag.error += "Please enter a secure password:\n 8+ characters\n At least 1 capital\n At least 1 lowercase\n At least 1 number";
             return View("Register");
@@ -138,9 +134,7 @@ namespace Commerce_TransactionApp.Controllers
         public IActionResult Index()
         {
             // requires the user to login to access Summary if they aren't logged in
-            /*  if( isLoggedIn())
-                  return RedirectToAction("Summary", "Transactions");
-             else */
+            
             ViewBag.Login = "Login";
             return View("Index");
         }

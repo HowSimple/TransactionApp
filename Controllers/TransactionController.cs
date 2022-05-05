@@ -88,20 +88,8 @@ namespace Commerce_TransactionApp
                     else if (dataRow["userNotificationID"].ToString() == "3")
                         notificationRules.lowBalance = true; 
                 
-                /* foreach (int userNotificationID in dataRow.ItemArray){
-                     if(userNotificationID == 1)
-                         notificationRules.largeWithdraw = true;
-                     else if(userNotificationID == 2)
-                         notificationRules.outOfState = true; 
-                     else if(userNotificationID == 3)
-                         notificationRules.lowBalance = true;
-
-
-                 }*/
+              
             }
-
-            
-
 
             // passes the transaction table to webpage to display
             return View(notificationRules);
@@ -133,33 +121,31 @@ namespace Commerce_TransactionApp
 
         public IActionResult Summary()
         {
-            ViewBag.user = getUsername();
             ViewBag.Login = "Logout";
+            ViewBag.user = getUsername();
+            
             db.PrintSummary(getUserId());
             ViewBag.exportTranactionsFile = "Transaction Summary.xml";
             System.Data.DataTable transactionList = db.GetTransactionSummary(getUserId());
             ViewBag.Total = transactionList.Rows.Count;
                     
             System.Data.DataTable notifications = db.GetAllNotifications(getUserId());
-            
-            System.Data.DataTable notificationOverview = db.GetTriggerCounts(getUserId());
+
+            ViewBag.Dashboard  = db.GetTriggerCounts(getUserId());
             ViewBag.TotalNotifications = db.GetAllNotifications(getUserId()).Rows.Count;
             ViewBag.Balance = db.GetBalance(getUserId());
-            ViewBag.Dashboard = notificationOverview;
+           
             // passes the transaction table to webpage to display
             return View(transactionList);
         }
         [HttpPost]
         public IActionResult Summary(Transaction response)
         {
+            ViewBag.Login = "Logout";
+            ViewBag.user = getUsername();
 
             db.AddNewTransaction(response, getUserId());
-
-            // shows Summary() after adding new transaction to DB
-
-            ViewBag.user = getUsername();
-            ViewBag.Login = "Logout";
-
+            
             db.PrintSummary(getUserId());
             ViewBag.exportTranactionsFile = "Transaction Summary.xml";
             System.Data.DataTable transactionList = db.GetTransactionSummary(getUserId());
@@ -167,10 +153,10 @@ namespace Commerce_TransactionApp
 
             System.Data.DataTable notifications = db.GetAllNotifications(getUserId());
 
-            System.Data.DataTable notificationOverview = db.GetTriggerCounts(getUserId());
+            ViewBag.Dashboard = db.GetTriggerCounts(getUserId());
             ViewBag.TotalNotifications = db.GetAllNotifications(getUserId()).Rows.Count;
             ViewBag.Balance = db.GetBalance(getUserId());
-            ViewBag.Dashboard = notificationOverview;
+          
             // passes the transaction table to webpage to display
             return View(transactionList);
 

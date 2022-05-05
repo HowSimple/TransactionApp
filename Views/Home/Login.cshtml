@@ -8,10 +8,7 @@
      <div class="divider d-flex align-items-center my-4">
             <p class="text-center fw-bold mx-3 mb-0"style="font-family: 'Poppins'; font-size: 25px; color: #77726D">Login to your account</p>
           </div>
-@*        <div class="row d-flex justify-content-center align-items-center h-100">
-*@             <div class="col-md-9 col-lg-6 col-xl-5">
-        
-      </div>
+
 
              <div class="form-floating mb-3">
             @Html.EditorFor(model => model.username, new { htmlAttributes = new { @class = "form-control",@placeholder = "Username",@required="required" } }) @Html.ValidationMessageFor(model => model.username, "", new { @class = "text-danger" })
@@ -20,9 +17,7 @@
             <div class="form-floating">
                      @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control",@placeholder="Password",@type="password",@required="required" } }) @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
             </div>
-        @*    <div class="form-floating">
-                     @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control",@placeholder="Password",@type="password",@required="required" } }) @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
-            </div>*@
+       
      
         <input type="submit" style="color:white; margin-block: 15px; background-color: #007AA3;" value="Login" />
           <p disabled class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a  href="/Home/Register"
@@ -31,16 +26,3 @@
      
 </section>
 }
-@*
-
-
-            
-    <a class="btn btn-primary"  data-toggle="collapse" href="#showlogin" style="margin-block: 10px; background-color: #007AA3"> 
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
-        </svg>
-       Register</a>
-           <div class = "collapse" data-toggle="collapse" id="showlogin">
-               
-               <partial name="Register" />
-</div>*@
