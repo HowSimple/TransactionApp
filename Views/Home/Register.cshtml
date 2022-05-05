@@ -7,7 +7,7 @@
 
     <section class="vh-100">
         <div class="container-fluid h-custom login-form">
-            <h4>@ViewBag.id</h4>
+            <pre>@ViewBag.error</pre>
             <div class="divider d-flex align-items-center my-4">
                 <p class="text-center fw-bold mx-3 mb-0" style="font-family: 'Poppins'; font-size: 25px; color: #77726D">Create a new account</p>
             </div>
@@ -16,7 +16,7 @@
             <div class="form-floating mb-3">
 
                 @Html.EditorFor(model => model.username, new { htmlAttributes = new { @class = "form-control",@placeholder = "Username",@required="required" } })
-            @*    @Html.ValidationMessageFor(model => model.username,"" , new { @class = "text-danger" })*@
+            
 
             </div>
             <div class="form-floating">
@@ -24,6 +24,7 @@
                 @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control",@placeholder="Password",@type="password",@required="required" } })
 
                 <input name="confirmPassword" style="margin-block: 15px" placeholder="Confirm Password" type="password" required class="form-control">
+                    
             </div>
             <label for="state" class="col-sm-2 control-label">State</label>
             <div class="col-sm-10">

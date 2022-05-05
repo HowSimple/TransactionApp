@@ -10,7 +10,7 @@ using System.Configuration;
 using Microsoft.Extensions.Configuration;
 using System.Globalization;
 using Microsoft.AspNetCore.Http;
-
+using System.Text.RegularExpressions;
 namespace Commerce_TransactionApp.Controllers
 {
 
@@ -38,7 +38,12 @@ namespace Commerce_TransactionApp.Controllers
         {
             return HttpContext.Session.GetInt32(SessionKey_UserId.ToString()) != null;
         }
-
+        bool validatePassword(string password)
+        {
+            Regex regex = new Regex(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).{8,}$");
+            return regex.IsMatch(password);
+        }
+        
         public HomeController(ILogger<HomeController> logger, IConfiguration configuration)
         {
             this._logger = logger;
@@ -94,11 +99,10 @@ namespace Commerce_TransactionApp.Controllers
             else return View("Login");
 
         }
-
+   
         public IActionResult Register()
         {
             ViewBag.Login = "Login";
-            ViewBag.Location = "";
             if (isLoggedIn())
                 return RedirectToAction("Summary", "Home");
             else return View("Register");
@@ -107,10 +111,9 @@ namespace Commerce_TransactionApp.Controllers
         [HttpPost]
         public IActionResult Register(User response, string confirmPassword, string state, int accountNumber)
         {
-            ViewBag.Location = state;
             ViewBag.Login = "Login";
-
-
+            
+          
             if (response.password == confirmPassword)
             {
                 int userID = db.Register(response.username, response.password, state,accountNumber);
@@ -122,7 +125,9 @@ namespace Commerce_TransactionApp.Controllers
                 
                 
             }
-            ViewBag.Location = "Try again: Passwords are not matching.";
+            ViewBag.error += "Try again: Passwords are not matching.    \n";
+            if (!validatePassword(response.password))
+                ViewBag.error += "Please enter a secure password:\n 8+ characters\n At least 1 capital\n At least 1 lowercase\n At least 1 number";
             return View("Register");
           
 
