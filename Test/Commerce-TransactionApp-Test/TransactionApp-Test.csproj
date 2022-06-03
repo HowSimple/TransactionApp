@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Commerce-TransactionApp.csproj" />
+    <ProjectReference Include="..\..\TransactionApp.csproj" />
   </ItemGroup>
 
   <ItemGroup>

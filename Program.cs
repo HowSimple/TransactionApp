@@ -10,7 +10,7 @@ using System.Configuration;
 
 
 
-namespace Commerce_TransactionApp
+namespace TransactionApp
 {
     public class Program
     {   

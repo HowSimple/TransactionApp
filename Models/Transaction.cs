@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Commerce_TransactionApp.Models
+namespace TransactionApp.Models
 {
     public class Transaction
     {

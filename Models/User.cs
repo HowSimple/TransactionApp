@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-namespace Commerce_TransactionApp.Models
+namespace TransactionApp.Models
 {
 
 

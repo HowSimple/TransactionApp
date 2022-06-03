@@ -1,4 +1,5 @@
-﻿using Commerce_TransactionApp.Models;
+﻿using TransactionApp.Models;
+using TransactionApp.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -11,7 +12,7 @@ using Microsoft.Extensions.Configuration;
 using System.Globalization;
 using Microsoft.AspNetCore.Http;
 
-namespace Commerce_TransactionApp
+namespace TransactionApp
 {
     public class TransactionsController : Controller
     {
@@ -41,6 +42,7 @@ namespace Commerce_TransactionApp
         {
             this._logger = logger;
             this._configuration = configuration;
+           
             this.db = new TransactionDbService(this._configuration);
 
             // remove once notification rules are read from DB

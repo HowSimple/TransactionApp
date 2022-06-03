@@ -1,11 +1,12 @@
-﻿using Commerce_TransactionApp.Models;
+﻿using TransactionApp.Models;
+using TransactionApp.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
-namespace Commerce_TransactionApp.Controllers
+namespace TransactionApp.Controllers
 {
 
     public class HomeController : Controller
