@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Data;
-using System.Linq;
+﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Data.SqlClient;
 using System;
+using System.Data;
+using TransactionApp.Models;
 
-namespace Commerce_TransactionApp.Models
+namespace TransactionApp.Services
 {
     public class TransactionDbService
     {
@@ -31,23 +30,24 @@ namespace Commerce_TransactionApp.Models
                 this.command = new SqlCommand(null, connection);
                 return true;
             }
-            catch(SqlException)
+            catch (SqlException)
             {
                 return false;
             }
         }
-        public bool IsDatabaseConnected() {
-            
-                try
-                {
-                    connection.Open();
-                    return true;
-                }
-                catch (SqlException)
-                {
-                    return false;
-                }
-            
+        public bool IsDatabaseConnected()
+        {
+
+            try
+            {
+                connection.Open();
+                return true;
+            }
+            catch (SqlException)
+            {
+                return false;
+            }
+
         }
 
         public int Register(string user, string pass, string location, int accountNumber)
@@ -95,46 +95,46 @@ namespace Commerce_TransactionApp.Models
         // Uses LoginProcedure
         public int Login(string user, string pass)
         {
-                this.ConnectDatabase();
-           
-                this.connection.Open();
-                this.command.CommandText = "EXECUTE LoginProcedure @username, @password;";
+            this.ConnectDatabase();
 
-                const int username_varcharSize = 10;
-                const int password_varcharSize = 15;
+            this.connection.Open();
+            this.command.CommandText = "EXECUTE LoginProcedure @username, @password;";
 
-                //set up parameters
-                SqlParameter username = this.command.Parameters.Add(new SqlParameter("@username", SqlDbType.VarChar, username_varcharSize));
-                SqlParameter password = this.command.Parameters.Add(new SqlParameter("@password", SqlDbType.VarChar,password_varcharSize));
-                //fill in paramaters
-                username.Value = user;
-                password.Value = pass;
-                
+            const int username_varcharSize = 10;
+            const int password_varcharSize = 15;
+
+            //set up parameters
+            SqlParameter username = this.command.Parameters.Add(new SqlParameter("@username", SqlDbType.VarChar, username_varcharSize));
+            SqlParameter password = this.command.Parameters.Add(new SqlParameter("@password", SqlDbType.VarChar, password_varcharSize));
+            //fill in paramaters
+            username.Value = user;
+            password.Value = pass;
 
 
-                int userId = 0;
-                
-                try
-                {
+
+            int userId = 0;
+
+            try
+            {
                 // ExecuteScalar runs the command and returns only a single entry
-                    var result = this.command.ExecuteScalar();
-                      
-                    if (result != null)
-                        userId = int.Parse(result.ToString()); // converts returned ID to int
+                var result = this.command.ExecuteScalar();
 
-                }
-                catch(SqlException) 
-                {
+                if (result != null)
+                    userId = int.Parse(result.ToString()); // converts returned ID to int
 
-                    userId = -404;
-                }
-                
-                
-                this.connection.Close();
+            }
+            catch (SqlException)
+            {
 
-                return userId;
+                userId = -404;
+            }
 
-            
+
+            this.connection.Close();
+
+            return userId;
+
+
         }
 
         // Uses ShowNotification
@@ -180,9 +180,9 @@ namespace Commerce_TransactionApp.Models
                     _dap.Fill(notificationTable);
                     _con.Close();
 
-                    var lastMonth =DateTime.Now.AddMonths(-1);
+                    var lastMonth = DateTime.Now.AddMonths(-1);
                     var lastYear = DateTime.Now.AddYears(-1);
-                                        
+
                     var filter = "userNotificationID = '{0}' AND processingDate > '{1}'";
                     int largeWithdraw_MonthlyCount = notificationTable.Select(string.Format(filter, 1, lastMonth)).Length;
                     int largeWithdraw_yearlyCount = notificationTable.Select(string.Format(filter, 1, lastYear)).Length;
@@ -196,7 +196,7 @@ namespace Commerce_TransactionApp.Models
                     resultTable.Columns.Add("Monthly");
                     resultTable.Columns.Add("Yearly");
 
-                    resultTable.Rows.Add(largeWithdraw_MonthlyCount,largeWithdraw_yearlyCount);
+                    resultTable.Rows.Add(largeWithdraw_MonthlyCount, largeWithdraw_yearlyCount);
                     resultTable.Rows.Add(outOfState_MonthlyCount, outOfState_YearlyCount);
                     resultTable.Rows.Add(lowBalance_MonthlyCount, lowBalance_YearlyCount);
 
@@ -226,7 +226,7 @@ namespace Commerce_TransactionApp.Models
                     _con.Open();
                     _dap.Fill(notificationTable);
                     _con.Close();
-                    
+
                     return notificationTable;
 
 
@@ -258,7 +258,7 @@ namespace Commerce_TransactionApp.Models
 
 
 
-                    return "$"+Balance.Rows[0][0].ToString();
+                    return "$" + Balance.Rows[0][0].ToString();
 
                 }
             }
@@ -295,8 +295,8 @@ namespace Commerce_TransactionApp.Models
             }
         }
 
-       
-     
+
+
         public int DeleteNotification(int userID, int userNotificationID)
         {
             int affectedRows;
@@ -319,18 +319,18 @@ namespace Commerce_TransactionApp.Models
 
             return affectedRows;
         }
-      
+
         // Uses SelectNotification procedure
         public int SelectNotification(int userIDInput, int notificationRuleID, double triggerAmount)
         {
             int affectedRows;
-            
+
             this.ConnectDatabase();
 
             this.connection.Open();
             this.command.CommandText = "EXECUTE SelectNotification @userID, @ruleID,@triggerAmount;";
 
-           
+
 
             //set up parameters
             SqlParameter userID = this.command.Parameters.Add(new SqlParameter("@userID", SqlDbType.Int));
@@ -339,7 +339,7 @@ namespace Commerce_TransactionApp.Models
             //fill in paramaters
             userID.Value = userIDInput;
             NotificationID.Value = notificationRuleID;
-            _triggerAmount.Value= triggerAmount;
+            _triggerAmount.Value = triggerAmount;
 
             affectedRows = command.ExecuteNonQuery();
 
@@ -379,7 +379,7 @@ namespace Commerce_TransactionApp.Models
             this.command.CommandText = "EXECUTE TransactionProcedure @userID, @transactionAmount, @transactionLocation, @transactionType, @processingDate, @transactionDescription;";
             this.command.Parameters.AddWithValue("@userID", userId);
 
-            
+
             this.command.Parameters.AddWithValue("@transactionAmount", transaction.transactionAmount);
             string transactionType;
             if (transaction.isDeposit)
@@ -392,7 +392,7 @@ namespace Commerce_TransactionApp.Models
             this.command.Parameters.AddWithValue("@processingDate", transaction.processingDate);
 
 
-            
+
             int rows_effected = this.command.ExecuteNonQuery();
             this.connection.Close();
 
@@ -401,16 +401,17 @@ namespace Commerce_TransactionApp.Models
         }
 
 
-        public void PrintSummary(int userID) {
+        public void PrintSummary(int userID)
+        {
             DataTable transactionSummary;
 
             transactionSummary = GetTransactionSummary(userID);
 
             transactionSummary.WriteXml("wwwroot/Transaction Summary.xml");
-            
-   
 
-           
+
+
+
         }
 
     }

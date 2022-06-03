@@ -1,11 +1,12 @@
-﻿using Commerce_TransactionApp.Models;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
-namespace Commerce_TransactionApp.Controllers
+using TransactionApp.Models;
+using TransactionApp.Services;
+namespace TransactionApp.Controllers
 {
 
     public class HomeController : Controller
@@ -38,7 +39,7 @@ namespace Commerce_TransactionApp.Controllers
 );
             return regex.IsMatch(password);
         }
-        
+
         public HomeController(ILogger<HomeController> logger, IConfiguration configuration)
         {
             this._logger = logger;
@@ -65,20 +66,21 @@ namespace Commerce_TransactionApp.Controllers
         {
             if (isLoggedIn())
                 return RedirectToAction("Summary", "Transactions");
-            else {
+            else
+            {
                 ViewBag.Login = "Login";
                 return View("Login");
             }
-           
+
         }
         public IActionResult Logout()
         {
-            
+
             HttpContext.Session.Clear();
             return RedirectToAction("Index", "Home");
         }
-      
- 
+
+
         [HttpPost]
         public IActionResult Login(User response)
         {
@@ -94,7 +96,7 @@ namespace Commerce_TransactionApp.Controllers
             else return View("Login");
 
         }
-   
+
         public IActionResult Register()
         {
             ViewBag.Login = "Login";
@@ -125,13 +127,13 @@ namespace Commerce_TransactionApp.Controllers
             if (!validatePassword(response.password))
                 ViewBag.error += "Please enter a secure password:\n 8+ characters\n At least 1 capital\n At least 1 lowercase\n At least 1 number";
             return View("Register");
-          
-        } 
+
+        }
 
         public IActionResult Index()
         {
             // requires the user to login to access Summary if they aren't logged in
-            
+
             ViewBag.Login = "Login";
             return View("Index");
         }

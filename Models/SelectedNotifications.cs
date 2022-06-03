@@ -1,4 +1,4 @@
-﻿namespace Commerce_TransactionApp.Models
+﻿namespace TransactionApp.Models
 {
     public class SelectedNotifications
     {
