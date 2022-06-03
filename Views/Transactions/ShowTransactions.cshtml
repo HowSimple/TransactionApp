@@ -1,4 +1,5 @@
 ﻿@using System.Data
+
 @*displays everything in table passed by TransactionController*@
 @model DataTable 
 <div class="container">
@@ -30,7 +31,7 @@
                         <td>$@row["amount"]</td>
                     }
                     <td>@row["locations"]</td>
-                    <td>@row["processingDate"]</td>
+                    <td>@row["processingDate"].ToString().Split(" ")[0]</td>
                 </tr>
         }
         </tbody>
