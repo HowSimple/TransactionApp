@@ -10,18 +10,14 @@
     </div>
 
     <div class="col-sm">
-      Logged in: @ViewBag.user
+                Logged in: @ViewBag.user
     </div>
   </div>
 </div>
    
-
-   
-  
-    
-    <partial name="Dashboard" model="ViewBag.Dashboard"/>
-    <partial name="TransactionForm" model="ViewBag.test" />
-    <partial name="ShowTransactions" model="Model" />
+    <partial name="_Dashboard" model="ViewBag.Dashboard"/>
+    <partial name="_TransactionForm" model="ViewBag.test" />
+    <partial name="_ShowTransactions" model="Model" />
 
 
   
