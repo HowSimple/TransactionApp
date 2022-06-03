@@ -141,11 +141,11 @@ namespace TransactionApp
             return View(transactionList);
         }
         [HttpPost]
-        public IActionResult Summary(Transaction response)
+        public IActionResult Summary(Transaction response, string state)
         {
             ViewBag.Login = "Logout";
             ViewBag.user = getUsername();
-
+            response.transactionLocation = state;
             db.AddNewTransaction(response, getUserId());
             
             db.PrintSummary(getUserId());
