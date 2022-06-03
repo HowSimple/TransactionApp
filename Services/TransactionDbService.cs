@@ -4,8 +4,9 @@ using System.Linq;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Data.SqlClient;
 using System;
+using TransactionApp.Models;
 
-namespace Commerce_TransactionApp.Models
+namespace TransactionApp.Services
 {
     public class TransactionDbService
     {
