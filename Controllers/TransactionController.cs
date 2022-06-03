@@ -1,16 +1,10 @@
-﻿using TransactionApp.Models;
-using TransactionApp.Services;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Configuration;
-using Microsoft.Extensions.Configuration;
-using System.Globalization;
-using Microsoft.AspNetCore.Http;
+using TransactionApp.Models;
+using TransactionApp.Services;
 
 namespace TransactionApp
 {
@@ -37,16 +31,16 @@ namespace TransactionApp
         {
             return HttpContext.Session.GetInt32(SessionKey_UserId.ToString()) != null;
         }
-        
+
         public TransactionsController(ILogger<TransactionsController> logger, IConfiguration configuration)
         {
             this._logger = logger;
             this._configuration = configuration;
-           
+
             this.db = new TransactionDbService(this._configuration);
 
             // remove once notification rules are read from DB
-            notificationRules = new SelectedNotifications(false, false, false,0,0);
+            notificationRules = new SelectedNotifications(false, false, false, 0, 0);
             // remove once login is working
 
         }
@@ -56,17 +50,18 @@ namespace TransactionApp
             ViewBag.Login = "Logout";
             return View();
         }
-        public IActionResult Dashboard() {
+        public IActionResult Dashboard()
+        {
             ViewBag.TotalNotifications = db.GetAllNotifications(getUserId()).Rows.Count;
             ViewBag.Balance = db.GetBalance(getUserId());
             ViewBag.Login = "Logout";
             System.Data.DataTable notificationOverview = db.GetTriggerCounts(getUserId());
             return View();
         }
- 
+
         public IActionResult Notifications()
         {
-            
+
             ViewBag.Notifications = db.GetAllNotifications(getUserId());
             ViewBag.Login = "Logout";
 
@@ -75,22 +70,22 @@ namespace TransactionApp
             foreach (System.Data.DataRow dataRow in userSelectedNotifications.Rows)
             {
 
-               
-                if (dataRow["amount"] != null) 
+
+                if (dataRow["amount"] != null)
                     if (dataRow["userNotificationID"].ToString() == "1")
-                    notificationRules.largeWithdrawLimit = Double.Parse(dataRow["amount"].ToString());
+                        notificationRules.largeWithdrawLimit = Double.Parse(dataRow["amount"].ToString());
                     else if (dataRow["userNotificationID"].ToString() == "3")
                         notificationRules.lowBalanceLimit = Double.Parse(dataRow["amount"].ToString());
-                                   
-               
-                    if (dataRow["userNotificationID"].ToString() == "1")
-                        notificationRules.largeWithdraw = true;
-                    else if (dataRow["userNotificationID"].ToString() == "2")
-                        notificationRules.outOfState = true;
-                    else if (dataRow["userNotificationID"].ToString() == "3")
-                        notificationRules.lowBalance = true; 
-                
-              
+
+
+                if (dataRow["userNotificationID"].ToString() == "1")
+                    notificationRules.largeWithdraw = true;
+                else if (dataRow["userNotificationID"].ToString() == "2")
+                    notificationRules.outOfState = true;
+                else if (dataRow["userNotificationID"].ToString() == "3")
+                    notificationRules.lowBalance = true;
+
+
             }
 
             // passes the transaction table to webpage to display
@@ -105,7 +100,7 @@ namespace TransactionApp
             //if (response.lowBalance != notificationRules.lowBalance) {
 
             if (response.lowBalance)
-                db.SelectNotification(getUserId(), 3,response.lowBalanceLimit);
+                db.SelectNotification(getUserId(), 3, response.lowBalanceLimit);
             else db.UnselectNotification(getUserId(), 3);
             if (response.outOfState)
                 db.SelectNotification(getUserId(), 2, 0);
@@ -114,7 +109,7 @@ namespace TransactionApp
                 db.SelectNotification(getUserId(), 1, response.largeWithdrawLimit);
             else db.UnselectNotification(getUserId(), 1);
 
-            
+
 
             // shows Notifications() after updating user notifications on DB
 
@@ -125,29 +120,7 @@ namespace TransactionApp
         {
             ViewBag.Login = "Logout";
             ViewBag.user = getUsername();
-            
-            db.PrintSummary(getUserId());
-            ViewBag.exportTranactionsFile = "Transaction Summary.xml";
-            System.Data.DataTable transactionList = db.GetTransactionSummary(getUserId());
-            ViewBag.Total = transactionList.Rows.Count;
-                    
-            System.Data.DataTable notifications = db.GetAllNotifications(getUserId());
 
-            ViewBag.Dashboard  = db.GetTriggerCounts(getUserId());
-            ViewBag.TotalNotifications = db.GetAllNotifications(getUserId()).Rows.Count;
-            ViewBag.Balance = db.GetBalance(getUserId());
-           
-            // passes the transaction table to webpage to display
-            return View(transactionList);
-        }
-        [HttpPost]
-        public IActionResult Summary(Transaction response, string state)
-        {
-            ViewBag.Login = "Logout";
-            ViewBag.user = getUsername();
-            response.transactionLocation = state;
-            db.AddNewTransaction(response, getUserId());
-            
             db.PrintSummary(getUserId());
             ViewBag.exportTranactionsFile = "Transaction Summary.xml";
             System.Data.DataTable transactionList = db.GetTransactionSummary(getUserId());
@@ -158,7 +131,29 @@ namespace TransactionApp
             ViewBag.Dashboard = db.GetTriggerCounts(getUserId());
             ViewBag.TotalNotifications = db.GetAllNotifications(getUserId()).Rows.Count;
             ViewBag.Balance = db.GetBalance(getUserId());
-          
+
+            // passes the transaction table to webpage to display
+            return View(transactionList);
+        }
+        [HttpPost]
+        public IActionResult Summary(Transaction response, string state)
+        {
+            ViewBag.Login = "Logout";
+            ViewBag.user = getUsername();
+            response.transactionLocation = state;
+            db.AddNewTransaction(response, getUserId());
+
+            db.PrintSummary(getUserId());
+            ViewBag.exportTranactionsFile = "Transaction Summary.xml";
+            System.Data.DataTable transactionList = db.GetTransactionSummary(getUserId());
+            ViewBag.Total = transactionList.Rows.Count;
+
+            System.Data.DataTable notifications = db.GetAllNotifications(getUserId());
+
+            ViewBag.Dashboard = db.GetTriggerCounts(getUserId());
+            ViewBag.TotalNotifications = db.GetAllNotifications(getUserId()).Rows.Count;
+            ViewBag.Balance = db.GetBalance(getUserId());
+
             // passes the transaction table to webpage to display
             return View(transactionList);
 

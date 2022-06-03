@@ -1,11 +1,11 @@
-﻿using TransactionApp.Models;
-using TransactionApp.Services;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+using TransactionApp.Models;
+using TransactionApp.Services;
 namespace TransactionApp.Controllers
 {
 
@@ -39,7 +39,7 @@ namespace TransactionApp.Controllers
 );
             return regex.IsMatch(password);
         }
-        
+
         public HomeController(ILogger<HomeController> logger, IConfiguration configuration)
         {
             this._logger = logger;
@@ -66,20 +66,21 @@ namespace TransactionApp.Controllers
         {
             if (isLoggedIn())
                 return RedirectToAction("Summary", "Transactions");
-            else {
+            else
+            {
                 ViewBag.Login = "Login";
                 return View("Login");
             }
-           
+
         }
         public IActionResult Logout()
         {
-            
+
             HttpContext.Session.Clear();
             return RedirectToAction("Index", "Home");
         }
-      
- 
+
+
         [HttpPost]
         public IActionResult Login(User response)
         {
@@ -95,7 +96,7 @@ namespace TransactionApp.Controllers
             else return View("Login");
 
         }
-   
+
         public IActionResult Register()
         {
             ViewBag.Login = "Login";
@@ -126,13 +127,13 @@ namespace TransactionApp.Controllers
             if (!validatePassword(response.password))
                 ViewBag.error += "Please enter a secure password:\n 8+ characters\n At least 1 capital\n At least 1 lowercase\n At least 1 number";
             return View("Register");
-          
-        } 
+
+        }
 
         public IActionResult Index()
         {
             // requires the user to login to access Summary if they aren't logged in
-            
+
             ViewBag.Login = "Login";
             return View("Index");
         }
