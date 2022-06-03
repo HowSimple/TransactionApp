@@ -455,3 +455,4 @@ $RECYCLE.BIN/
 !.vscode/launch.json
 !.vscode/extensions.json
 *.xml
+wwwroot/Transaction Summary.xml
