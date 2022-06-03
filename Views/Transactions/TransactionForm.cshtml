@@ -1,25 +1,41 @@
-﻿@model Commerce_TransactionApp.Models.Transaction
+﻿@model TransactionApp.Models.Transaction
 @using System.Text.RegularExpressions;
 
 
 <div>
-
-    <a class="btn btn-primary"  data-toggle="collapse" href="#showtransactionform" style="margin-block: 10px; background-color: #007AA3"> 
+      <div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <a class="btn btn-primary"  data-toggle="collapse" href="#showtransactionform" style="margin-block: 10px; background-color: #007AA3"> 
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
         </svg>
         Add New Transaction</a>
     <hr />
+    </div>
+    <div class="col-sm">
+        <a class="btn btn-primary"  data-toggle="collapse" href="/Transaction Summary.xml" download style="margin-block: 10px; background-color: #007AA3"> 
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+        </svg>
+        Export transactions to file</a>
+    <hr />
+      
+    </div>u
+    
+  </div>
+</div>
+    
     <div class = "collapse" data-toggle="collapse" id="showtransactionform">
       @using ( Html.BeginForm("Summary" , "Transactions" , FormMethod.Post) )
     {
-        <dl class="row">
+        <dl class="row">u
          
         <dt class = "col-sm-5">
            Transaction Amount
         </dt>
         <dd class = "col-sm-5">
-            @Html.EditorFor(model => model.transactionAmount, new { htmlAttributes = new {@required="required" } }))
+            @Html.EditorFor(model => model.transactionAmount, new { htmlAttributes = new {@required="required" } })
         </dd>
         <dt class = "col-sm-5">
            Deposit?
@@ -31,26 +47,26 @@
             Transaction Location
         </dt>
         <dd class = "col-sm-5">
-            @Html.EditorFor(model => model.transactionLocation, new { htmlAttributes = new {@required="required" } }))
+            @Html.EditorFor(model => model.transactionLocation, new { htmlAttributes = new {@required="required" } })
         </dd>
         <dt class = "col-sm-5">
            Transaction Description
         </dt>
         <dd class = "col-sm-5">
-            @Html.EditorFor(model => model.transactionDescription, new { htmlAttributes = new {@required="required" } }))
+            @Html.EditorFor(model => model.transactionDescription, new { htmlAttributes = new {@required="required" } })
         </dd>
         <dt class = "col-sm-5">
             Processing Date
         </dt>
         <dd class = "col-sm-5">
-            @Html.EditorFor(model => model.processingDate, new { htmlAttributes = new {@required="required" } }) )
+            @Html.EditorFor(model => model.processingDate, new { htmlAttributes = new {@required="required" } }) 
         </dd>
         
     </dl>
 
 <div>
     <input type="submit" style="color:white; background-color: #007AA3; margin-block: 10px;" value="Submit" />
-    <a asp-action="Index">Back to List</a>
+    
 </div>
 
     }

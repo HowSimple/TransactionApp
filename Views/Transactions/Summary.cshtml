@@ -1,12 +1,26 @@
 ﻿@using System.Data
 @model DataTable
 <div class="text-center">
-    Logged in: @ViewBag.user
-  
+     <h1 class="display-4">Account Summary</h1>
+    <div class="container">
+  <div class="row">
+    <div class="col-sm">
+        
+    Balance: @ViewBag.Balance
+    </div>
+    @*<div class="col-sm">
+ You have @ViewBag.TotalNotifications notifications.
+ </div>*@
+    <div class="col-sm">
+      Logged in: @ViewBag.user
+    </div>
+  </div>
+</div>
+   
 
-    <h1 class="display-4">Summary</h1>
+   
   
-    <a href="/Transaction Summary.xml" download>Export transactions</a>
+    
     <partial name="Dashboard" model="ViewBag.Dashboard"/>
     <partial name="TransactionForm" model="ViewBag.test" />
     <partial name="ShowTransactions" model="Model" />
