@@ -6,7 +6,7 @@
 @*     
     @*    https://getbootstrap.com/docs/4.0/content/tables/*@
         <table class="table table-sm table-striped">
-            <thead class="thead-light"> Total notifications: @ViewBag.Notifications.Rows.Count
+            <thead name= "totalNotifcations" class="thead-light"> Total notifications: @ViewBag.Notifications.Rows.Count
                 <tr>
                     <th scope="col">Description</th>
                     <th scope="col">Date</th>
@@ -19,8 +19,8 @@
         {
                 <tr>
                    
-                    <td> @row["description"]</td>
-                    <td>@row["processingDate"]</td>
+                    <td name="notificationDescription" > @row["description"]</td>
+                    <td name="date">@row["processingDate"]</td>
            
                 </tr>
         }

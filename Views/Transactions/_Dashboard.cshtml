@@ -25,9 +25,9 @@
             
             <tr>
                 <th scope="row">Notifications this month:</th>
-                <td> @Model.Rows[0]["Monthly"]</td>
-                <td> @Model.Rows[1]["Monthly"]</td>
-                <td> @Model.Rows[2]["Monthly"]</td>
+                <td name="largeWithdraw-monthly"> @Model.Rows[0]["Monthly"]</td>
+                <td name="outOfState-monthly"> @Model.Rows[1]["Monthly"]</td>
+                <td name="lowBalance-monthly"> @Model.Rows[2]["Monthly"]</td>
             </tr>
            
 
@@ -35,7 +35,7 @@
             
         </tbody>
     </table>
-    You have @ViewBag.TotalNotifications notifications.
+    You have <span name="totalNotifications">@ViewBag.TotalNotifications</span> notifications.
      <a href="/Home/Notifications"
                                         class="link-danger">See all notifications</a>
 </div>

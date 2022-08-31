@@ -5,7 +5,7 @@
 <div class="container">
 @*     
     @*    https://getbootstrap.com/docs/4.0/content/tables/*@
-        <table class="table table-sm table-striped">
+        <table name="transactions" class="table table-sm table-striped">
             <thead class="thead-light">
                 <tr>
                    
@@ -21,18 +21,19 @@
         {
                 <tr>
                     
-                    <td> @row["description"]</td>
+                    <td name="description"> @row["description"]</td>
                         @if (row["transactionType"].ToString()=="WD")
                         {
-                        <td>-$@row["amount"]</td>
+                        <td name="transaction-amount">-$@row["amount"]</td>
                     }
                     else
                     {
-                        <td>$@row["amount"]</td>
+                        <td name="transaction-amount">$@row["amount"]</td>
                     }
-                    <td>@row["locations"]</td>
-                    <td>@row["processingDate"].ToString().Split(" ")[0]</td>
+                    <td name="location">@row["locations"]</td>
+                    <td name="date">@row["processingDate"].ToString().Split(" ")[0]</td>
                 </tr>
         }
         </tbody>
         </table>
+</div>
